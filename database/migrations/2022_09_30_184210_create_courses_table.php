@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->foreignId('partner_id')
                   ->nullable()
                   ->constrained()
-                  ->nullOnDelete();
+                  ->cascadeOnDelete();
             $table->foreignId('realization_id')
                   ->constrained()
                   ->restrictOnDelete();
