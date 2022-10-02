@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Orchid\Platform\Models\User as Authenticatable;
 
 class User extends Authenticatable
@@ -35,8 +36,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'permissions'          => 'array',
-        'email_verified_at'    => 'datetime',
+        'permissions'       => 'array',
+        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -63,4 +64,118 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
     ];
+
+    /**
+     * Relationship - user to institutes
+     * @return HasMany
+     */
+    public function institutes(): HasMany {
+        return $this->hasMany(Institute::class);
+    }
+
+    /**
+     * Relationship - user to educational directions
+     * @return HasMany
+     */
+    public function educationalDirections(): HasMany {
+        return $this->hasMany(EducationalDirection::class);
+    }
+
+    /**
+     * Relationship - user to semesters
+     * @return HasMany
+     */
+    public function semesters(): HasMany {
+        return $this->hasMany(Semester::class);
+    }
+
+    /**
+     * Relationship - user to frequently asked question
+     * @return HasMany
+     */
+    public function frequentlyAskedQuestions(): HasMany {
+        return $this->hasMany(FrequentlyAskedQuestion::class);
+    }
+
+    /**
+     * Relationship - user to educational modules
+     * @return HasMany
+     */
+    public function educationalModules(): HasMany {
+        return $this->hasMany(EducationalModule::class);
+    }
+
+
+    /**
+     * Relationship - user to disciplines
+     * @return HasMany
+     */
+    public function disciplines(): HasMany {
+        return $this->hasMany(Discipline::class);
+    }
+
+    /**
+     * Relationship - user to professional trajectories
+     * @return HasMany
+     */
+    public function professionalTrajectories(): HasMany {
+        return $this->hasMany(ProfessionalTrajectory::class);
+    }
+
+    /**
+     * Relationship - user to professions
+     * @return HasMany
+     */
+    public function professions(): HasMany {
+        return $this->hasMany(Profession::class);
+    }
+
+    /**
+     * Relationship - user to skills
+     * @return HasMany
+     */
+    public function skills(): HasMany {
+        return $this->hasMany(Skill::class);
+    }
+
+    /**
+     * Relationship - user to realizations
+     * @return HasMany
+     */
+    public function realizations(): HasMany {
+        return $this->hasMany(Realization::class);
+    }
+
+    /**
+     * Relationship - user to partners
+     * @return HasMany
+     */
+    public function partners(): HasMany {
+        return $this->hasMany(Partner::class);
+    }
+
+    /**
+     * Relationship - user to courses
+     * @return HasMany
+     */
+    public function courses(): HasMany {
+        return $this->hasMany(Course::class);
+    }
+
+    /**
+     * Relationship - user to employees
+     * @return HasMany
+     */
+    public function employees(): HasMany {
+        return $this->hasMany(Employee::class);
+    }
+
+    /**
+     * Relationship - positions to employees
+     * @return HasMany
+     */
+    public function positions(): HasMany {
+        return $this->hasMany(Position::class);
+    }
+
 }
