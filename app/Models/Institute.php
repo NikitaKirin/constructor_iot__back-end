@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Institute extends Model
@@ -21,5 +22,13 @@ class Institute extends Model
      */
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relationship - institute to educational directions
+     * @return HasMany
+     */
+    public function educationalDirections(  ): HasMany {
+        return $this->hasMany(EducationalDirection::class);
     }
 }

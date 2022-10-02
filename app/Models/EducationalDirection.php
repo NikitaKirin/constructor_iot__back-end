@@ -32,4 +32,12 @@ class EducationalDirection extends Model
     public function educationalModules(  ): BelongsToMany {
         return $this->belongsToMany(EducationalModule::class);
     }
+
+    /**
+     * Relationship - educational direction to institute
+     * @return BelongsTo
+     */
+    public function institute(  ): BelongsTo {
+        return $this->belongsTo(Institute::class);
+    }
 }
