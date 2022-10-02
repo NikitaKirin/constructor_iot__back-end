@@ -14,6 +14,7 @@ return new class extends Migration {
         Schema::create('institutes', function ( Blueprint $table ) {
             $table->increments('id');
             $table->string('title')->unique();
+            $table->string('abbreviation')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
