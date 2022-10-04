@@ -30,14 +30,14 @@ class EducationalDirectionSeeder extends Seeder
      * @return void
      */
     public function run() {
-        $rtf = Institute::where('abbreviation', 'ILIKE', 'ИРИТ-РТФ')
-                        ->first()
-                        ->get();
+        $rtf = Institute::where('abbreviation', 'ILIKE', 'ИРИТ-РТФ')->get()->first();
         collect($this->educationalDirections)->each(function ( $educationalDirection ) use ( $rtf ) {
-            EducationalDirection::create([
-                'title'  => $educationalDirection['title'],
-                'cipher' => $educationalDirection['cipher'],
-            ])->institute()->associate($rtf);
+            $rtf->educationalDirections()->create(
+                [
+                    'title'  => $educationalDirection['title'],
+                    'cipher' => $educationalDirection['cipher'],
+                ]
+            )->save();
         });
     }
 }
