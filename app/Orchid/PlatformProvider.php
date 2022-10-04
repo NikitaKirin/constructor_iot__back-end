@@ -32,6 +32,9 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make(__('Институты'))
             ->route('platform.institutes'),
 
+            Menu::make(__('Направления подготовки'))
+                ->route('platform.educationalDirections'),
+
             Menu::make('Example screen')
                 ->icon('monitor')
                 ->route('platform.example')

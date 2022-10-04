@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Institute;
+namespace App\Http\Requests\EducationalDirection;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class CreateInstituteRequest extends FormRequest
+class CreateEducationalDirectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,25 +16,20 @@ class CreateInstituteRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules() {
-        $instituteId = $this->query->get('institute');
+        $educationalDirectionId = $this->query->get('educationalDirection');
         return [
-            'title'        => [
+            'title'  => [
                 'required',
                 'string',
-                Rule::unique('institutes')->where(fn( $query ) => $query->where
-                ('id', '<>', $instituteId)),
+                Rule::unique('educational_directions')->where(fn( $query ) => $query->where
+                ('id', '<>', $educationalDirectionId)),
             ],
-            'abbreviation' => [
+            'cipher' => [
                 'required',
                 'string',
-                Rule::unique('institutes')->where(fn( $query ) => $query->where
-                ('id', '<>', $instituteId)),
+                Rule::unique('educational_directions')->where(fn( $query ) => $query->where
+                ('id', '<>', $educationalDirectionId)),
                 'max: 15',
             ],
         ];

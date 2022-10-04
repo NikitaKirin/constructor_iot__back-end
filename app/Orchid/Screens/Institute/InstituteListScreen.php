@@ -81,6 +81,7 @@ class InstituteListScreen extends Screen
 
         $institute->fill($request->validated())
                   ->save();
+
         $institute->user()->associate(Auth::user())->save();
 
         Toast::info(__('Институт успешно сохранен'));

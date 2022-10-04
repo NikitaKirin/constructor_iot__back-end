@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->increments('id');
             $table->string('title')->unique();
             $table->string('cipher')->unique();
-            $table->foreignId('institute_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('institute_id')->constrained()->restrictOnDelete();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();

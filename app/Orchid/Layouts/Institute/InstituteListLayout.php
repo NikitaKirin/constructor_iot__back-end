@@ -64,7 +64,7 @@ class InstituteListLayout extends Table
                   return $institute->user->name ?? __('Не определено');
               }),
 
-            TD::make('updated_at', __('Дата и время создания/изменения'))
+            TD::make('updated_at', __('Дата и время последнего изменения'))
               ->sort()
               ->render(function ( Institute $institute ) {
                   return $institute->updated_at;

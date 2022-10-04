@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\EducationalDirection\EducationalDirectionListScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
 use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
@@ -100,12 +101,12 @@ Route::screen('roles', RoleListScreen::class)
 
 //Platform > Institutes > Create
 Route::screen('institutes/create', InstituteEditScreen::class)
-    ->name('platform.institutes.create')
-    ->breadcrumbs(function (Trail $trail){
-       return $trail
-       ->parent('platform.institutes')
-       ->push(__('Create'), route('platform.institutes.create'));
-    });
+     ->name('platform.institutes.create')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.institutes')
+             ->push(__('Create'), route('platform.institutes.create'));
+     });
 
 // Platform > Institutes
 Route::screen('institutes', InstituteListScreen::class)
@@ -114,6 +115,15 @@ Route::screen('institutes', InstituteListScreen::class)
          return $trail
              ->parent('platform.index')
              ->push(__('Институты'), route('platform.institutes'));
+     });
+
+//Platform > Educational Directions
+Route::screen('educational-directions', EducationalDirectionListScreen::class)
+     ->name('platform.educationalDirections')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__('Направления подготовки'), route('platform.educationalDirections'));
      });
 
 // Example...
