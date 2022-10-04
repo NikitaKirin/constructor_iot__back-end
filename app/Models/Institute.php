@@ -7,13 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Orchid\Filters\Filterable;
+use Orchid\Screen\AsSource;
 
 class Institute extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, AsSource, Filterable;
 
     protected $fillable = [
         'title',
+        'abbreviation',
+    ];
+
+    protected array $allowedSorts = [
+        'title',
+        'abbreviation',
+        'updated_at',
     ];
 
     /**
@@ -28,7 +37,7 @@ class Institute extends Model
      * Relationship - institute to educational directions
      * @return HasMany
      */
-    public function educationalDirections(  ): HasMany {
+    public function educationalDirections(): HasMany {
         return $this->hasMany(EducationalDirection::class);
     }
 }
