@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
+use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
@@ -23,9 +24,10 @@ class EmployeeEditScreen extends Screen
      * @return array
      */
     public function query( Employee $employee ): iterable {
+        $employee->load(['position', 'attachment']);
         return [
             'employee' => $employee,
-            'position' => $employee->position
+            'position' => $employee->position,
         ];
     }
 
@@ -55,24 +57,33 @@ class EmployeeEditScreen extends Screen
     public function layout(): iterable {
         return [
             Layout::block(EmployeeEditLayout::class)
-                  ->title('Основная информация')
-                  ->description('Обновите информацию о сотруднике, заполнив соответсвующее поля.')
+                  ->title(__('Основная информация'))
+                  ->description(__('Обновите информацию о сотруднике, заполнив соответсвующее поля.'))
                   ->commands([
                       Button::make(__('Save'))
                             ->type(Color::SUCCESS())
                             ->method('save'),
                   ]),
-
         ];
     }
 
     public function save( Employee $employee, EmployeeCreateRequest $request ) {
+
         $employee->fill($request->validated())
                  ->user()->associate(Auth::user())
                  ->save();
 
-        Toast::success('Пользователь успешно обновлен');
+        if ( $request->input('photo_id') ) {
 
+            $employee->attachment()->syncWithoutDetaching(
+                $request->input('photo_id', []),
+            );
+            $employee->photo_id = $employee->attachment()->first()?->id;
+            $employee->save();
+        }
+        else {
+            $employee->photo->delete();
+        }
         return redirect()->route('platform.employees');
     }
 }

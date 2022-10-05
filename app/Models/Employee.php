@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Attachment\Attachable;
+use Orchid\Attachment\Models\Attachment;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
@@ -23,6 +25,7 @@ class Employee extends Model
         'audience',
         'additional_information',
         'position_id',
+        'photo_id',
     ];
 
     protected $allowedSorts = [
@@ -45,5 +48,9 @@ class Employee extends Model
      */
     public function position(): BelongsTo {
         return $this->belongsTo(Position::class);
+    }
+
+    public function photo(): HasOne {
+        return $this->hasOne(Attachment::class, 'id', 'photo_id')->withDefault();
     }
 }

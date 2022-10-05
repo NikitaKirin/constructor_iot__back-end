@@ -38,7 +38,9 @@ class EmployeeListLayout extends Table
 
             TD::make('photo', __('Фотография'))
               ->render(function ( Employee $employee ) {
-                  return "link";
+                  $link = $employee->photo()->first()
+                                   ?->url() ?? "https://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mp";
+                  return "<img width=20 height=20 src='{$link}'";
               }),
 
             TD::make('full_name', __('ФИО'))

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Employee;
+use App\Observers\EmployeeObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -20,13 +22,19 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
+
+    protected $observers = [
+        Employee::class => [
+            EmployeeObserver::class,
+        ],
+    ];
+
     /**
      * Register any events for your application.
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         //
     }
 
@@ -35,8 +43,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @return bool
      */
-    public function shouldDiscoverEvents()
-    {
+    public function shouldDiscoverEvents() {
         return false;
     }
 }
