@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Orchid\Screens\EducationalDirection\EducationalDirectionListScreen;
+use App\Orchid\Screens\Employee\EmployeeEditScreen;
+use App\Orchid\Screens\Employee\EmployeeListScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
 use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
@@ -124,6 +126,31 @@ Route::screen('educational-directions', EducationalDirectionListScreen::class)
          return $trail
              ->parent('platform.index')
              ->push(__('Направления подготовки'), route('platform.educationalDirections'));
+     });
+
+// Platform > Employees
+Route::screen('employees', EmployeeListScreen::class)
+     ->name('platform.employees')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__('Сотрудники'), route('platform.employees'));
+     });
+
+Route::screen('employees/create', EmployeeEditScreen::class)
+     ->name('platform.employees.create')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.employees')
+             ->push(__('Создать нового сотрудника'), route('platform.employees.create'));
+     });
+
+Route::screen('employees/{employee}/edit', EmployeeEditScreen::class)
+     ->name('platform.employees.edit')
+     ->breadcrumbs(function ( Trail $trail, $employee ) {
+         return $trail
+             ->parent('platform.employees')
+             ->push(__('Изменить данные сотрудника'), route('platform.employees.edit', $employee));
      });
 
 // Example...

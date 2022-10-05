@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->string('audience')->nullable();
-            $table->string('additional_Information')->nullable();
+            $table->string('additional_information')->nullable();
             $table->foreignId('photo_id')->nullable()
                   ->constrained('attachments', 'id')
                   ->nullOnDelete();
