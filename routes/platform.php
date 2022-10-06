@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Employee;
+use App\Models\Partner;
 use App\Orchid\Screens\EducationalDirection\EducationalDirectionListScreen;
 use App\Orchid\Screens\Employee\EmployeeEditScreen;
 use App\Orchid\Screens\Employee\EmployeeListScreen;
@@ -16,6 +17,9 @@ use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\Institute\InstituteEditScreen;
 use App\Orchid\Screens\Institute\InstituteListScreen;
+use App\Orchid\Screens\Partner\PartnerEditScreen;
+use App\Orchid\Screens\Partner\PartnerListScreen;
+use App\Orchid\Screens\Partner\PartnerProfileScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -139,6 +143,7 @@ Route::screen('employees', EmployeeListScreen::class)
              ->push(__('Сотрудники'), route('platform.employees'));
      });
 
+// Platform > Employees > Create
 Route::screen('employees/create', EmployeeEditScreen::class)
      ->name('platform.employees.create')
      ->breadcrumbs(function ( Trail $trail ) {
@@ -147,6 +152,7 @@ Route::screen('employees/create', EmployeeEditScreen::class)
              ->push(__('Создать нового сотрудника'), route('platform.employees.create'));
      });
 
+// Platform > Employees > Edit
 Route::screen('employees/{employee}/edit', EmployeeEditScreen::class)
      ->name('platform.employees.edit')
      ->breadcrumbs(function ( Trail $trail, $employee ) {
@@ -155,12 +161,47 @@ Route::screen('employees/{employee}/edit', EmployeeEditScreen::class)
              ->push(__('Изменить данные сотрудника'), route('platform.employees.edit', $employee));
      });
 
+// Platform > Employees > Profile
 Route::screen('employees/{employee}/profile', EmployeeProfileScreen::class)
      ->name('platform.employees.profile')
      ->breadcrumbs(function ( Trail $trail, Employee $employee ) {
          return $trail
              ->parent('platform.employees')
              ->push(__("$employee->full_name"), route('platform.employees.profile', $employee));
+     });
+
+// Platform > Partners
+Route::screen('partners', PartnerListScreen::class)
+     ->name('platform.partners')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__("Партнеры"), route('platform.partners'));
+     });
+
+Route::screen('partners/{partner}/profile', PartnerProfileScreen::class)
+     ->name('platform.partners.profile')
+     ->breadcrumbs(function ( Trail $trail, Partner $partner ) {
+         return $trail
+             ->parent('platform.partners')
+             ->push(__("$partner->title"), route('platform.partners.profile', $partner));
+     });
+
+Route::screen('partners/create', PartnerEditScreen::class)
+     ->name('platform.partners.create')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.partners')
+             ->push(__("Добавить нового партнера"), route('platform.partners.create'));
+     });
+
+Route::screen('partners/{partner}/edit', PartnerEditScreen::class)
+     ->name('platform.partners.edit')
+     ->breadcrumbs(function ( Trail $trail, Partner $partner ) {
+         $title = $partner->exists() ? "Изменить $partner->title" : "Добавить нового партнера";
+         return $trail
+             ->parent('platform.partners')
+             ->push(__("$title"), route('platform.partners.edit', $partner));
      });
 
 // Example...

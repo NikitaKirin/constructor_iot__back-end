@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Employee;
+use App\Models\Partner;
 use App\Observers\EmployeeObserver;
+use App\Observers\PartnerObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -26,6 +28,9 @@ class EventServiceProvider extends ServiceProvider
     protected $observers = [
         Employee::class => [
             EmployeeObserver::class,
+        ],
+        Partner::class  => [
+            PartnerObserver::class,
         ],
     ];
 
