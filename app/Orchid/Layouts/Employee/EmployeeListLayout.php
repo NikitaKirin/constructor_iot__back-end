@@ -3,6 +3,7 @@
 namespace App\Orchid\Layouts\Employee;
 
 use App\Models\Employee;
+use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
@@ -39,26 +40,31 @@ class EmployeeListLayout extends Table
             TD::make('photo', __('Фотография'))
               ->render(function ( Employee $employee ) {
                   $link = $employee->photo()->first()
-                                   ?->url() ?? "https://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mp";
+                                   ?->url() ?? Config::get('constants.avatar.url');
                   return "<img width=20 height=20 src='{$link}'";
               }),
 
             TD::make('full_name', __('ФИО'))
               ->sort()
               ->filter()
-              ->cantHide(),
+              ->cantHide()
+              ->render(function ( Employee $employee ) {
+                  return Link::make("$employee->full_name")
+                             ->icon('user')
+                             ->route('platform.employees.profile', $employee);
+              }),
 
-            TD::make('email', __('E-mail'))
-              ->filter(),
+            /*            TD::make('email', __('E-mail'))
+                          ->filter(),
 
-            TD::make('phone_number', __('Номер телефона'))
-              ->filter(),
+                        TD::make('phone_number', __('Номер телефона'))
+                          ->filter(),
 
-            TD::make('address', __('Адрес')),
+                        TD::make('address', __('Адрес')),
 
-            TD::make('audience', __('Аудитория')),
+                        TD::make('audience', __('Аудитория')),
 
-            TD::make('additional_information', __('Дополнительная информация')),
+                        TD::make('additional_information', __('Дополнительная информация')),*/
 
             TD::make('position_id', __('Должность'))
               ->render(function ( Employee $employee ) {
@@ -82,6 +88,11 @@ class EmployeeListLayout extends Table
                   return DropDown::make()
                                  ->icon('options-vertical')
                                  ->list([
+
+                                     Link::make(__("Открыть"))
+                                         ->icon('user')
+                                         ->route('platform.employees.profile', $employee),
+
                                      Link::make(__('Edit'))
                                          ->icon('pencil')
                                          ->route('platform.employees.edit', $employee),

@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Models\Employee;
 use App\Orchid\Screens\EducationalDirection\EducationalDirectionListScreen;
 use App\Orchid\Screens\Employee\EmployeeEditScreen;
 use App\Orchid\Screens\Employee\EmployeeListScreen;
+use App\Orchid\Screens\Employee\EmployeeProfileScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
 use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
@@ -151,6 +153,14 @@ Route::screen('employees/{employee}/edit', EmployeeEditScreen::class)
          return $trail
              ->parent('platform.employees')
              ->push(__('Изменить данные сотрудника'), route('platform.employees.edit', $employee));
+     });
+
+Route::screen('employees/{employee}/profile', EmployeeProfileScreen::class)
+     ->name('platform.employees.profile')
+     ->breadcrumbs(function ( Trail $trail, Employee $employee ) {
+         return $trail
+             ->parent('platform.employees')
+             ->push(__("$employee->full_name"), route('platform.employees.profile', $employee));
      });
 
 // Example...

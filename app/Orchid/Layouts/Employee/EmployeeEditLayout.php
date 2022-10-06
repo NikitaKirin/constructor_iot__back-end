@@ -4,6 +4,7 @@ namespace App\Orchid\Layouts\Employee;
 
 use App\Models\Employee;
 use App\Models\Position;
+use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Input;
@@ -71,7 +72,7 @@ class EmployeeEditLayout extends Rows
                    ->height(1000)
                    ->targetId()
                    ->title(__('Фото сотрудника'))
-                   ->value($this->query->get('employee')->photo->url()),
+                   ->value($this->query->get('employee')?->photo?->url()),
         ];
     }
 }
