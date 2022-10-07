@@ -93,6 +93,8 @@ class PartnerEditScreen extends Screen
 
     public function destroy( Request $request ) {
         Partner::findOrFail($request->get('id'))->forceDelete();
+
         Toast::success(__('Партнёр успешно удален'));
+        return redirect()->route('platform.partners');
     }
 }

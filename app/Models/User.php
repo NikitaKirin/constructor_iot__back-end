@@ -180,4 +180,11 @@ class User extends Authenticatable
         return $this->hasMany(Position::class);
     }
 
+    /**
+     * Relationship - user to reviews
+     * @return HasMany
+     */
+    public function reviews(  ): HasMany {
+        return $this->hasMany(Review::class);
+    }
 }

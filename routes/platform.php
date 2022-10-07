@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Employee;
 use App\Models\Partner;
+use App\Models\Review;
 use App\Orchid\Screens\EducationalDirection\EducationalDirectionListScreen;
 use App\Orchid\Screens\Employee\EmployeeEditScreen;
 use App\Orchid\Screens\Employee\EmployeeListScreen;
@@ -21,6 +22,9 @@ use App\Orchid\Screens\Partner\PartnerEditScreen;
 use App\Orchid\Screens\Partner\PartnerListScreen;
 use App\Orchid\Screens\Partner\PartnerProfileScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\Review\ReviewEditScreen;
+use App\Orchid\Screens\Review\ReviewListScreen;
+use App\Orchid\Screens\Review\ReviewProfileScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -179,6 +183,7 @@ Route::screen('partners', PartnerListScreen::class)
              ->push(__("Партнеры"), route('platform.partners'));
      });
 
+// Platform > Partners > Profile
 Route::screen('partners/{partner}/profile', PartnerProfileScreen::class)
      ->name('platform.partners.profile')
      ->breadcrumbs(function ( Trail $trail, Partner $partner ) {
@@ -187,6 +192,7 @@ Route::screen('partners/{partner}/profile', PartnerProfileScreen::class)
              ->push(__("$partner->title"), route('platform.partners.profile', $partner));
      });
 
+// Platform > Partners > Create
 Route::screen('partners/create', PartnerEditScreen::class)
      ->name('platform.partners.create')
      ->breadcrumbs(function ( Trail $trail ) {
@@ -195,6 +201,7 @@ Route::screen('partners/create', PartnerEditScreen::class)
              ->push(__("Добавить нового партнера"), route('platform.partners.create'));
      });
 
+// Platform > Partners > Edit
 Route::screen('partners/{partner}/edit', PartnerEditScreen::class)
      ->name('platform.partners.edit')
      ->breadcrumbs(function ( Trail $trail, Partner $partner ) {
@@ -202,6 +209,42 @@ Route::screen('partners/{partner}/edit', PartnerEditScreen::class)
          return $trail
              ->parent('platform.partners')
              ->push(__("$title"), route('platform.partners.edit', $partner));
+     });
+
+// Platform > Reviews
+Route::screen('reviews', ReviewListScreen::class)
+     ->name('platform.reviews')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.partners')
+             ->push(__('Список отзывов'), route('platform.reviews'));
+     });
+
+// Platform > Reviews > Profile
+Route::screen('reviews/{review}/profile', ReviewProfileScreen::class)
+     ->name('platform.reviews.profile')
+     ->breadcrumbs(function ( Trail $trail, Review $review ) {
+         return $trail
+             ->parent('platform.reviews')
+             ->push(__("Отзыв: {$review->author}"), route('platform.reviews.profile', $review));
+     });
+
+// Platform > Reviews > Create
+Route::screen('reviews/create', ReviewEditScreen::class)
+     ->name('platform.reviews.create')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.reviews')
+             ->push(__('Добавить отзыв'), route('platform.reviews.create'));
+     });
+
+// Platform > Reviews > Edit
+Route::screen('reviews/{review}/edit', ReviewEditScreen::class)
+     ->name('platform.reviews.edit')
+     ->breadcrumbs(function ( Trail $trail, Review $review ) {
+         return $trail
+             ->parent('platform.reviews')
+             ->push(__("Изменить отзыв: {$review->author}"), route('platform.reviews.edit', $review));
      });
 
 // Example...
