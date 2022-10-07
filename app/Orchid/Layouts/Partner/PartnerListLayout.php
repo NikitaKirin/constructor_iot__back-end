@@ -66,7 +66,7 @@ class PartnerListLayout extends Table
                   return DropDown::make()
                                  ->icon('options-vertical')
                                  ->list([
-                                     Link::make(__('Edit'))
+                                     Link::make(__('Открыть'))
                                          ->icon('open')
                                          ->route('platform.partners.profile', $partner),
                                      Link::make(__('Edit'))

@@ -64,18 +64,23 @@ class PartnerProfileScreen extends Screen
      */
     public function layout(): iterable {
         return [
-            Layout::legend("partner", [
-                Sight::make('logo_id', __('Логотип'))
-                     ->render(function () {
-                         $link = $this->partner?->logo?->url() ?? Config::get('constants.avatar.url');
-                         return "<img src='$link' alt='Логотип компании: {$this->partner->title}'";
-                     }),
-                Sight::make('title', __("Название компании")),
-                Sight::make("description", __('Описание'))
-                     ->render(function () {
-                         return $this->partner->description;
-                     }),
+            Layout::tabs([
+                __('Основная информация') =>
+                    Layout::legend("partner", [
+                        Sight::make('logo_id', __('Логотип'))
+                             ->render(function () {
+                                 $link = $this->partner?->logo?->url() ?? Config::get('constants.avatar.url');
+                                 return "<img src='$link' alt='Логотип компании: {$this->partner->title}'";
+                             }),
+                        Sight::make('title', __("Название компании")),
+                        Sight::make("description", __('Описание'))
+                             ->render(function () {
+                                 return $this->partner->description;
+                             }),
+                    ]),
+                __("Курсы партнёра")      => Layout::rows([]),
             ]),
+
         ];
     }
 
