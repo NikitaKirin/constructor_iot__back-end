@@ -36,10 +36,8 @@ class PartnerEditLayout extends Rows
                  ->value($this->query->get('partner.description')),
 
             Cropper::make('logo_id')
-                   ->width("100")
-                   ->height("100")
                    ->targetId()
-                   ->value($this->query->get('partner')?->logo?->url()),
+                   ->value($this->query->get('partner')?->logo_id),
         ];
     }
 }

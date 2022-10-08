@@ -29,29 +29,29 @@ class ReviewEditLayout extends Rows
                  ->title(__('Автор'))
                  ->type('text')
                  ->required()
-                 ->value($this->query->get('review')->author),
+                 ->value($this->query->get('review')?->author),
 
             TextArea::make('text')
                     ->title(__('Основной текст'))
                     ->rows(10)
                     ->required()
-                    ->value($this->query->get('review')->text),
+                    ->value($this->query->get('review')?->text),
 
             Input::make('additional_information')
                  ->title(__('Дополнительная информация (курс, направление, год выпуска)'))
                  ->type('text')
                  ->required()
-                 ->value($this->query->get('review')->additional_information),
+                 ->value($this->query->get('review')?->additional_information),
 
             CheckBox::make('hidden')
                     ->title(__('Скрыть'))
                     ->sendTrueOrFalse()
-                    ->value($this->query->get('review')->hidden),
+                    ->value($this->query->get('review')?->hidden),
 
             Cropper::make('photo_id')
                    ->targetId()
                    ->title(__("Фото"))
-                   ->value($this->query->get('review')?->photo?->url()),
+                   ->value($this->query->get('review')?->photo_id),
         ];
     }
 }

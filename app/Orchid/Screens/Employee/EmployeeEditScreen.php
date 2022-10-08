@@ -84,6 +84,10 @@ class EmployeeEditScreen extends Screen
         else {
             $employee->photo->delete();
         }
+
+        Toast::success(__('Сотрудник успешно обновлен'))
+             ->autoHide();
+
         return redirect()->route('platform.employees');
     }
 }

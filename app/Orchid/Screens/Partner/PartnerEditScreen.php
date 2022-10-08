@@ -61,7 +61,7 @@ class PartnerEditScreen extends Screen
                       Button::make(__('Save'))
                             ->type(Color::SUCCESS())
                             ->method("save"),
-                      Button::make(__("Destroy"))
+                      Button::make(__("Delete"))
                             ->canSee($this->partner->exists())
                             ->type(Color::DANGER())
                             ->method("destroy", ['id' => $this->partner->id]),

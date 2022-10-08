@@ -72,7 +72,7 @@ class EmployeeEditLayout extends Rows
                    ->height(1000)
                    ->targetId()
                    ->title(__('Фото сотрудника'))
-                   ->value($this->query->get('employee')?->photo?->url()),
+                   ->value($this->query->get('employee')?->photo_id),
         ];
     }
 }
