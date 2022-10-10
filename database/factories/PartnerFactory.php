@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Partner>
  */
-class PartnersFactory extends Factory
+class PartnerFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition()
-    {
+    public function definition() {
         return [
-            //
+            'title'       => fake('ru_RU')->company(),
+            'description' => fake('ru_RU')->realText(300),
         ];
     }
 }
