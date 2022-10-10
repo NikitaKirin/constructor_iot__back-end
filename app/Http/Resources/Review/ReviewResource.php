@@ -21,7 +21,7 @@ class ReviewResource extends JsonResource
             'author'                 => $this->author,
             'text'                   => $this->text,
             'additional_information' => $this->additional_information,
-            'photo_id'               => $this->photo?->url() ?? Config::get('constants.avatar.url'),
+            'photo'                  => $this->photo?->url() ?? Config::get('constants.avatar.url'),
             'created_at'             => $this->created_at,
             'updated_at'             => $this->updated_at,
         ];
