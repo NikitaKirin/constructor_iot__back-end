@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class EducationalDirectionScreenTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function testGetEducationalDirectionListScreen(): void {
         $user = User::factory()->create([

@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class PlatformTest extends TestCase
 {
-    use ScreenTesting, DatabaseMigrations;
+    use ScreenTesting, RefreshDatabase;
 
     /**
      * A basic feature test example.

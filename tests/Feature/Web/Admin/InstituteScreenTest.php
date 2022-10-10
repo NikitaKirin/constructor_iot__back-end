@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class InstituteScreenTest extends TestCase
 {
-    use ScreenTesting, DatabaseMigrations;
+    use ScreenTesting, RefreshDatabase;
 
 
     public function testGetInstituteListScreen(): void {
