@@ -14,10 +14,11 @@ class ReviewFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
-    {
+    public function definition() {
         return [
-            //
+            'author'                 => fake()->name(),
+            'text'                   => fake()->realText(),
+            'additional_information' => fake()->realText(20),
         ];
     }
 }

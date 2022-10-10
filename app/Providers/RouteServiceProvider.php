@@ -33,7 +33,8 @@ class RouteServiceProvider extends ServiceProvider
                  ->group(function () {
                      require_once base_path('routes/api.php');
                      require_once base_path('routes/api/v1/partners.php');
-                }
+                     require_once base_path('routes/api/v1/reviews.php');
+                 }
                  );
 
             Route::middleware('web')
