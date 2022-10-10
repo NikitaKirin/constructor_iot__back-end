@@ -89,6 +89,6 @@ class EducationalDirectionListScreen extends Screen
     public function remove( Request $request ) {
         EducationalDirection::findOrFail($request->get('id'))->forceDelete();
 
-        Toast::info(__('Направление подготовки успешно успешно удалено'));
+        Toast::info(__('Направление подготовки успешно удалено'));
     }
 }

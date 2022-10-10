@@ -15,8 +15,7 @@ class PlatformProvider extends OrchidServiceProvider
     /**
      * @param Dashboard $dashboard
      */
-    public function boot(Dashboard $dashboard): void
-    {
+    public function boot( Dashboard $dashboard ): void {
         parent::boot($dashboard);
 
         // ...
@@ -25,15 +24,63 @@ class PlatformProvider extends OrchidServiceProvider
     /**
      * @return Menu[]
      */
-    public function registerMainMenu(): array
-    {
+    public function registerMainMenu(): array {
         return [
 
             Menu::make(__('Институты'))
-            ->route('platform.institutes'),
+                ->icon('building')
+                ->list([
+                    Menu::make(__('Список институтов'))
+                        ->icon('list')
+                        ->route('platform.institutes'),
+                    Menu::make(__('Добавить новый'))
+                        ->icon('plus')
+                        ->route('platform.institutes.create'),
+                ])->title(__('Основное')),
+
 
             Menu::make(__('Направления подготовки'))
-                ->route('platform.educationalDirections'),
+                ->icon('graduation')
+                ->list([
+                    Menu::make(__('Список всех направлений'))
+                        ->icon('list')
+                        ->route('platform.educationalDirections'),
+                ]),
+
+            Menu::make(__('Сотрудники'))
+                ->icon('people')
+                ->list([
+                    Menu::make(__('Список всех сотрудников'))
+                        ->icon('list')
+                        ->route('platform.employees'),
+                    Menu::make(__('Добавить нового'))
+                        ->icon('plus')
+                        ->route('platform.employees.create'),
+                ]),
+
+            Menu::make(__('Партнеры'))
+                ->icon('briefcase')
+                ->list([
+                    Menu::make(__('Список всех партнеров'))
+                        ->icon('list')
+                        ->route('platform.partners'),
+                    Menu::make(__('Добавить нового'))
+                        ->icon('plus')
+                        ->route('platform.partners.create'),
+                ]),
+
+            Menu::make(__('Отзывы'))
+                ->icon('briefcase')
+                ->list([
+                    Menu::make(__('Список всех отзывов'))
+                        ->icon('list')
+                        ->route('platform.reviews'),
+                    Menu::make(__('Добавить новый'))
+                        ->icon('plus')
+                        ->route('platform.reviews.create'),
+                ])
+                ->icon('like'),
+
 
             Menu::make('Example screen')
                 ->icon('monitor')
@@ -106,8 +153,7 @@ class PlatformProvider extends OrchidServiceProvider
     /**
      * @return Menu[]
      */
-    public function registerProfileMenu(): array
-    {
+    public function registerProfileMenu(): array {
         return [
             Menu::make('Profile')
                 ->route('platform.profile')
@@ -118,12 +164,11 @@ class PlatformProvider extends OrchidServiceProvider
     /**
      * @return ItemPermission[]
      */
-    public function registerPermissions(): array
-    {
+    public function registerPermissions(): array {
         return [
             ItemPermission::group(__('System'))
-                ->addPermission('platform.systems.roles', __('Roles'))
-                ->addPermission('platform.systems.users', __('Users')),
+                          ->addPermission('platform.systems.roles', __('Roles'))
+                          ->addPermission('platform.systems.users', __('Users')),
         ];
     }
 }
