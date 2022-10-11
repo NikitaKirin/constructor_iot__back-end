@@ -37,7 +37,7 @@ class EmployeeEditScreen extends Screen
      * @return string|null
      */
     public function name(): ?string {
-        return $this->employee->exists() ? 'Изменить данные сотрудника' : 'Создать нового сотрудника';
+        return $this->employee->exists ? 'Изменить данные сотрудника' : 'Создать нового сотрудника';
     }
 
     /**

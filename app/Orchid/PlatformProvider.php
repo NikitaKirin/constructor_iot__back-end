@@ -47,6 +47,17 @@ class PlatformProvider extends OrchidServiceProvider
                         ->route('platform.educationalDirections'),
                 ]),
 
+            Menu::make(__('Образовательны модули'))
+                ->icon('graduation')
+                ->list([
+                    Menu::make(__('Список всех модулей'))
+                        ->icon('list')
+                        ->route('platform.educationalModules'),
+                    Menu::make(__('Добавить новый'))
+                        ->icon('plus')
+                        ->route('platform.educationalModules.create'),
+                ]),
+
             Menu::make(__('Семестры'))
                 ->icon('number-list')
                 ->route('platform.semesters'),

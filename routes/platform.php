@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Models\EducationalModule;
 use App\Models\Employee;
 use App\Models\Partner;
 use App\Models\Review;
 use App\Orchid\Screens\EducationalDirection\EducationalDirectionListScreen;
+use App\Orchid\Screens\EducationalModule\EducationalModuleEditScreen;
+use App\Orchid\Screens\EducationalModule\EducationalModuleListScreen;
+use App\Orchid\Screens\EducationalModule\EducationalModuleProfileScreen;
 use App\Orchid\Screens\Employee\EmployeeEditScreen;
 use App\Orchid\Screens\Employee\EmployeeListScreen;
 use App\Orchid\Screens\Employee\EmployeeProfileScreen;
@@ -256,6 +260,43 @@ Route::screen('semesters', SemesterListScreen::class)
          return $trail
              ->parent('platform.index')
              ->push(__('Список семестров'), route('platform.semesters'));
+     });
+
+// Platform > EducationalModules
+Route::screen('educational-modules', EducationalModuleListScreen::class)
+     ->name('platform.educationalModules')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__("Список образовательных модулей"), \route('platform.educationalModules'));
+     });
+
+// Platform > EducationalModules > Create
+Route::screen('educational-modules/create', EducationalModuleEditScreen::class)
+     ->name('platform.educationalModules.create')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.educationalModules')
+             ->push(__('Добавить образовательный модуль'), route('platform.educationalModules.create'));
+     });
+
+// Platform > EducationalModules > Profile
+Route::screen('educational-modules/{educationalModule}/profile', EducationalModuleProfileScreen::class)
+     ->name('platform.educationalModules.profile')
+     ->breadcrumbs(function ( Trail $trail, EducationalModule $educationalModule ) {
+         return $trail
+             ->parent('platform.educationalModules')
+             ->push(__("$educationalModule->title"), route('platform.educationalModules.profile', $educationalModule));
+     });
+
+// Platform > EducationalModules > Edit
+Route::screen('educational-modules/{educationalModule}/edit', EducationalModuleEditScreen::class)
+     ->name('platform.educationalModules.edit')
+     ->breadcrumbs(function ( Trail $trail, EducationalModule $educationalModule ) {
+         return $trail
+             ->parent('platform.reviews')
+             ->push(__("Изменить образовательную программу: {$educationalModule->title}"),
+                 route('platform.educationalModules.edit', $educationalModule));
      });
 
 // Example...
