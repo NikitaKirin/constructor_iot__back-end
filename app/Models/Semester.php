@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Orchid\Screen\AsSource;
 
 class Semester extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, AsSource;
 
     protected $fillable = [
         'text_representation',
@@ -22,7 +23,7 @@ class Semester extends Model
      * @return BelongsTo
      */
     public function user(): BelongsTo {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault(['name' => __('Не определено')]);
     }
 
     /**

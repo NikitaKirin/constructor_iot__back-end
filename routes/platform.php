@@ -27,6 +27,7 @@ use App\Orchid\Screens\Review\ReviewListScreen;
 use App\Orchid\Screens\Review\ReviewProfileScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\Semester\SemesterListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -216,7 +217,7 @@ Route::screen('reviews', ReviewListScreen::class)
      ->name('platform.reviews')
      ->breadcrumbs(function ( Trail $trail ) {
          return $trail
-             ->parent('platform.partners')
+             ->parent('platform.index')
              ->push(__('Список отзывов'), route('platform.reviews'));
      });
 
@@ -245,6 +246,16 @@ Route::screen('reviews/{review}/edit', ReviewEditScreen::class)
          return $trail
              ->parent('platform.reviews')
              ->push(__("Изменить отзыв: {$review->author}"), route('platform.reviews.edit', $review));
+     });
+
+
+// Platform > Semesters
+Route::screen('semesters', SemesterListScreen::class)
+     ->name('platform.semesters')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__('Список семестров'), route('platform.semesters'));
      });
 
 // Example...
