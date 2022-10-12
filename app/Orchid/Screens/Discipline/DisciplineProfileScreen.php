@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Orchid\Screens\EducationalModule;
+namespace App\Orchid\Screens\Discipline;
 
-use App\Models\EducationalModule;
+use App\Models\Discipline;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -14,18 +14,19 @@ use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
-class EducationalModuleProfileScreen extends Screen
+class DisciplineProfileScreen extends Screen
 {
-    public EducationalModule $educationalModule;
+    public Discipline $discipline;
 
     /**
      * Query data.
      *
      * @return array
      */
-    public function query( EducationalModule $educationalModule ): iterable {
+    public function query( Discipline $discipline ): iterable {
+        $discipline->load(['educationalModules']);
         return [
-            'educationalModule' => $educationalModule,
+            'discipline' => $discipline,
         ];
     }
 
@@ -35,7 +36,7 @@ class EducationalModuleProfileScreen extends Screen
      * @return string|null
      */
     public function name(): ?string {
-        return __("Образовательный модуль: {$this->educationalModule->title}");
+        return __("Дисциплина: {$this->discipline->title}");
     }
 
     /**
@@ -47,12 +48,12 @@ class EducationalModuleProfileScreen extends Screen
         return [
             Link::make(__('Edit'))
                 ->icon("pencil")
-                ->route("platform.educationalModules.edit", $this->educationalModule),
+                ->route("platform.disciplines.edit", $this->discipline),
             Button::make(__("Delete"))
                   ->icon('trash')
                   ->type(Color::DANGER())
-                  ->confirm(__("Вы уверены, что хотите удалить партнера? Данное действие нельзя будет отменить."))
-                  ->method('destroy', ['id' => $this->educationalModule->id]),
+                  ->confirm(__(Config::get('toasts.confirm.forceDelete')))
+                  ->method('destroy', ['id' => $this->discipline->id]),
         ];
     }
 
@@ -65,17 +66,17 @@ class EducationalModuleProfileScreen extends Screen
         return [
             Layout::tabs([
                 __('Основная информация') =>
-                    Layout::legend("educationalModule", [
+                    Layout::legend("discipline", [
                         Sight::make('title', __('Название')),
-                        Sight::make("choice_limit", __('Лимит выбора')),
+                        Sight::make("description", __('Описание')),
                     ]),
-                __("Курсы модуля")        => Layout::rows([]),
+                __("Курсы дисциплины")    => Layout::rows([]),
             ]),
         ];
     }
 
-    public function destroy( Request $request): RedirectResponse {
-        EducationalModule::findOrFail($request->input('id'))->forceDelete();
+    public function destroy( Request $request ): RedirectResponse {
+        Discipline::findOrFail($request->input('id'))->forceDelete();
 
         Toast::success(__(Config::get('toasts.toasts.delete.success')));
 

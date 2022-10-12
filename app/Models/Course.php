@@ -32,4 +32,12 @@ class Course extends Model
     public function partner(): BelongsTo {
         return $this->belongsTo(Partner::class);
     }
+
+    /**
+     * Relationship - course to discipline
+     * @return BelongsTo
+     */
+    public function discipline(  ): BelongsTo {
+        return $this->belongsTo(Discipline::class);
+    }
 }

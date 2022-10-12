@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Models\Discipline;
 use App\Models\EducationalModule;
 use App\Models\Employee;
 use App\Models\Partner;
 use App\Models\Review;
+use App\Orchid\Screens\Discipline\DisciplineEditScreen;
+use App\Orchid\Screens\Discipline\DisciplineListScreen;
+use App\Orchid\Screens\Discipline\DisciplineProfileScreen;
 use App\Orchid\Screens\EducationalDirection\EducationalDirectionListScreen;
 use App\Orchid\Screens\EducationalModule\EducationalModuleEditScreen;
 use App\Orchid\Screens\EducationalModule\EducationalModuleListScreen;
@@ -297,6 +301,43 @@ Route::screen('educational-modules/{educationalModule}/edit', EducationalModuleE
              ->parent('platform.reviews')
              ->push(__("Изменить образовательную программу: {$educationalModule->title}"),
                  route('platform.educationalModules.edit', $educationalModule));
+     });
+
+// Platform > Disciplines
+Route::screen('disciplines', DisciplineListScreen::class)
+     ->name('platform.disciplines')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__("Список дисциплин"), \route('platform.disciplines'));
+     });
+
+// Platform > Disciplines > Create
+Route::screen('disciplines/create', DisciplineEditScreen::class)
+     ->name('platform.disciplines.create')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.disciplines')
+             ->push(__('Добавить новую дисциплину'), route('platform.disciplines.create'));
+     });
+
+// Platform > Disciplines > Profile
+Route::screen('disciplines/{disciplines}/profile', DisciplineProfileScreen::class)
+     ->name('platform.disciplines.profile')
+     ->breadcrumbs(function ( Trail $trail, Discipline $discipline ) {
+         return $trail
+             ->parent('platform.disciplines')
+             ->push(__("$discipline->title"), route('platform.disciplines.profile', $discipline));
+     });
+
+// Platform > Disciplines > Edit
+Route::screen('disciplines/{discipline}/edit', DisciplineEditScreen::class)
+     ->name('platform.disciplines.edit')
+     ->breadcrumbs(function ( Trail $trail, Discipline $discipline ) {
+         return $trail
+             ->parent('platform.disciplines')
+             ->push(__("Изменить дисциплину: {$discipline->title}"),
+                 route('platform.disciplines.edit', $discipline));
      });
 
 // Example...

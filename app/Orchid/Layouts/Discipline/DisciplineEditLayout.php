@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Orchid\Layouts\EducationalModule;
+namespace App\Orchid\Layouts\Discipline;
 
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Layouts\Rows;
 
-class EducationalModuleEditLayout extends Rows
+class DisciplineEditLayout extends Rows
 {
     /**
      * Used to create the title of a group of form elements.
@@ -27,13 +28,13 @@ class EducationalModuleEditLayout extends Rows
                  ->type('text')
                  ->title(__('Название'))
                  ->required()
-                 ->value($this->query->get('educationalModule.title')),
+                 ->value($this->query->get('discipline.title')),
 
-            Input::make('choice_limit')
-                 ->type('number')
-                 ->title(__('Лимит выбора'))
+            Quill::make('description')
+                 ->toolbar(["text", "color", "header", "list", "format"])
+                 ->title(__('Описание'))
                  ->required()
-                 ->value($this->query->get('educationalModule.choice_limit')),
+                 ->value($this->query->get('discipline.description')),
 
         ];
     }
