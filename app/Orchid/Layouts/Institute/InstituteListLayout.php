@@ -76,11 +76,15 @@ class InstituteListLayout extends Table
                   return DropDown::make()
                                  ->icon('options-vertical')
                                  ->list([
-                                     /*ModalToggle::make(__('Edit'))
+                                     Link::make(__('Открыть'))
+                                         ->icon('open')
+                                         ->route('platform.institutes.profile', $institute),
+                                     ModalToggle::make(__('Edit'))
                                                 ->modal('asyncEditInstituteModal')
+                                                ->asyncParameters(['institute' => $institute->id])
                                                 ->async()
                                                 ->method('save')
-                                                ->icon('pencil'),*/
+                                                ->icon('pencil'),
                                      Button::make(__('Delete'))
                                            ->icon('trash')
                                          //->canSee(((int)$tag->lessons_count === 0) && ((int)$tag->fragments_count

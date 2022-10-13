@@ -2,9 +2,11 @@
 
 namespace App\Orchid\Screens\Institute;
 
+use App\Http\Requests\Institute\CreateInstituteRequest;
 use App\Models\Institute;
 use App\Orchid\Layouts\Institute\InstituteEditLayout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
@@ -69,16 +71,13 @@ class InstituteEditScreen extends Screen
         ];
     }
 
-    public function save( Institute $institute, Request $request ) {
-        $request->validate([
-            'title'        => 'required|string|unique:institutes',
-            'abbreviation' => 'required|string|unique:institutes|max:15',
-        ]);
+    public function save( Institute $institute, CreateInstituteRequest $request ) {
 
-        $institute->fill($request->collect('institute')->toArray())
+        $institute->fill($request->validated())
                   ->save();
 
-        Toast::info(__('Institute was saved.'));
+        Toast::info(__(Config::get('toasts.toasts.update.success')))
+             ->autoHide();
 
         return redirect()->route('platform.institutes');
     }

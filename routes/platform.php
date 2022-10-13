@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Discipline;
 use App\Models\EducationalModule;
 use App\Models\Employee;
+use App\Models\Institute;
 use App\Models\Partner;
 use App\Models\Review;
 use App\Orchid\Screens\Discipline\DisciplineEditScreen;
@@ -26,6 +27,7 @@ use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\Institute\InstituteEditScreen;
 use App\Orchid\Screens\Institute\InstituteListScreen;
+use App\Orchid\Screens\Institute\InstituteProfileScreen;
 use App\Orchid\Screens\Partner\PartnerEditScreen;
 use App\Orchid\Screens\Partner\PartnerListScreen;
 use App\Orchid\Screens\Partner\PartnerProfileScreen;
@@ -128,6 +130,26 @@ Route::screen('institutes/create', InstituteEditScreen::class)
              ->parent('platform.institutes')
              ->push(__('Create'), route('platform.institutes.create'));
      });
+
+// Platform > Institutes > Profile
+Route::screen('institutes/{institute}/profile', InstituteProfileScreen::class)
+     ->name('platform.institutes.profile')
+     ->breadcrumbs(function ( Trail $trail, Institute $institute ) {
+         return $trail
+             ->parent('platform.institutes')
+             ->push(__("{$institute->title}"), route('platform.institutes.profile', $institute));
+     });
+
+
+// Platform > Institutes > Edit
+Route::screen('institutes/{institute}/edit', InstituteEditScreen::class)
+     ->name('platform.institutes.edit')
+     ->breadcrumbs(function ( Trail $trail, Institute $institute ) {
+         return $trail
+             ->parent('platform.institutes')
+             ->push(__('Изменить данные об институте'), route('platform.institutes.edit', $institute));
+     });
+
 
 // Platform > Institutes
 Route::screen('institutes', InstituteListScreen::class)
