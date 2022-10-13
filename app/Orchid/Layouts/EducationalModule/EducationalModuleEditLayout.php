@@ -2,8 +2,10 @@
 
 namespace App\Orchid\Layouts\EducationalModule;
 
+use App\Models\Semester;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Layouts\Rows;
 
 class EducationalModuleEditLayout extends Rows
@@ -34,6 +36,13 @@ class EducationalModuleEditLayout extends Rows
                  ->title(__('Лимит выбора'))
                  ->required()
                  ->value($this->query->get('educationalModule.choice_limit')),
+
+            Relation::make('semesters.')
+                    ->fromModel(Semester::class, 'text_representation')
+                    ->multiple()
+                    ->title(__('Семестры'))
+                    ->required()
+                    ->value($this->query->get('educationalModule')->semesters),
 
         ];
     }

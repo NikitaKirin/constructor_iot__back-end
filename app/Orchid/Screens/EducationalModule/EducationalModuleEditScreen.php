@@ -77,6 +77,9 @@ class EducationalModuleEditScreen extends Screen
                           ->user()->associate(Auth::user())
                           ->save();
 
+        $educationalModule->semesters()
+                          ->sync($request->get('semesters', []));
+
         Toast::success(__('Образовательный модуль успешно обновлен'))
              ->autoHide();
 
