@@ -344,7 +344,7 @@ Route::screen('disciplines/create', DisciplineEditScreen::class)
      });
 
 // Platform > Disciplines > Profile
-Route::screen('disciplines/{disciplines}/profile', DisciplineProfileScreen::class)
+Route::screen('disciplines/{discipline}/profile', DisciplineProfileScreen::class)
      ->name('platform.disciplines.profile')
      ->breadcrumbs(function ( Trail $trail, Discipline $discipline ) {
          return $trail

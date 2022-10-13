@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
                 PositionsSeeder::class,
                 SemesterSeeder::class,
                 EmployeeSeeder::class,
+                PartnerSeeder::class,
             ]);
         });
     }
