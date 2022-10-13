@@ -280,13 +280,13 @@ Route::screen('reviews/{review}/edit', ReviewEditScreen::class)
 
 
 // Platform > Semesters
-Route::screen('semesters', SemesterListScreen::class)
+/*Route::screen('semesters', SemesterListScreen::class)
      ->name('platform.semesters')
      ->breadcrumbs(function ( Trail $trail ) {
          return $trail
              ->parent('platform.index')
              ->push(__('Список семестров'), route('platform.semesters'));
-     });
+     });*/
 
 // Platform > EducationalModules
 Route::screen('educational-modules', EducationalModuleListScreen::class)
