@@ -76,7 +76,13 @@ class ReviewProfileScreen extends Screen
 
                     Sight::make('text', __('Текст')),
 
-                    Sight::make('additional_information', __('Дополнительная информация')),
+                    Sight::make('educational_direction', __('Дополнительная информация')),
+
+                    Sight::make('year_of_issue', __('Год выпуска'))
+                         ->canSee($this->review->year_of_issue ?? false),
+
+                    Sight::make('course', __('Курс обучения'))
+                         ->canSee($this->review->course ?? false),
                 ])
                   ->title(__('Основная информация')),
         ];

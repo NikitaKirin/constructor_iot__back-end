@@ -15,7 +15,9 @@ return new class extends Migration {
             $table->increments('id');
             $table->string('author');
             $table->text('text');
-            $table->string('additional_information');
+            $table->string('educational_direction');
+            $table->year('year_of_issue')->nullable();
+            $table->string('course')->nullable();
             $table->boolean('hidden')
                   ->default(false);
             $table->foreignId('photo_id')

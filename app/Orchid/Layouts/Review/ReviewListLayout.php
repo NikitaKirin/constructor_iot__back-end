@@ -44,10 +44,11 @@ class ReviewListLayout extends Table
 
             TD::make('author', __('Автор')),
 
-            TD::make('text', __('Текст')),
+            TD::make('text', __('Текст'))
+            ->width(200),
 
-            TD::make('additional_information',
-                __("Дополнительная информация (курс обучения, направление, год выпуска")),
+            TD::make('educational_direction',
+                __("Направление")),
 
             TD::make('hidden', __('Скрыто'))
               ->render(function ( Review $review ) {

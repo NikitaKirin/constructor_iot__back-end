@@ -18,7 +18,9 @@ class Review extends Model
     protected $fillable = [
         'author',
         'text',
-        'additional_information',
+        'educational_direction',
+        'year_of_issue',
+        'course',
         'hidden',
         'photo_id',
     ];

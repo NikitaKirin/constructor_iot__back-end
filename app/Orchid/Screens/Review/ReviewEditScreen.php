@@ -102,8 +102,6 @@ class ReviewEditScreen extends Screen
 
         Toast::success('Отзыв успешно обновлен');
 
-        return redirect()->route('platform.reviews');
-
     }
 
     public function destroy( Request $request ) {

@@ -8,9 +8,11 @@ class CreateReviewRequest extends FormRequest
 {
     public function rules(): array {
         return [
-            'author'                 => ['required', 'string'],
-            'text'                   => ['required', 'string'],
-            'additional_information' => ['required', 'string'],
+            'author'                => ['required', 'string'],
+            'text'                  => ['required', 'string'],
+            'educational_direction' => ['required', 'string'],
+            'year_of_issue'         => ['nullable', 'digits:4', 'integer', 'min:1900', 'max:' . date('Y')],
+            'course'                => ['nullable', 'between:1,5'],
         ];
     }
 

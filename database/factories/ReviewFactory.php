@@ -16,9 +16,12 @@ class ReviewFactory extends Factory
      */
     public function definition() {
         return [
-            'author'                 => fake()->name(),
-            'text'                   => fake()->realText(),
-            'additional_information' => fake()->realText(20),
+            'author'                => fake()->name(),
+            'text'                  => fake()->realText(),
+            'educational_direction' => 'Программная инженерия',
+            'year_of_issue'         => fake()->year(),
+            'course'                => fake()->numberBetween(1, 5),
+            'hidden'                => fake()->boolean(),
         ];
     }
 }
