@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
+use App\Models\Course;
 use App\Models\Discipline;
 use App\Models\EducationalModule;
 use App\Models\Employee;
 use App\Models\Institute;
 use App\Models\Partner;
 use App\Models\Review;
+use App\Orchid\Screens\Course\CourseEditScreen;
+use App\Orchid\Screens\Course\CourseListScreen;
+use App\Orchid\Screens\Course\CourseProfileScreen;
 use App\Orchid\Screens\Discipline\DisciplineEditScreen;
 use App\Orchid\Screens\Discipline\DisciplineListScreen;
 use App\Orchid\Screens\Discipline\DisciplineProfileScreen;
@@ -37,7 +41,6 @@ use App\Orchid\Screens\Review\ReviewListScreen;
 use App\Orchid\Screens\Review\ReviewProfileScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
-use App\Orchid\Screens\Semester\SemesterListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -360,6 +363,44 @@ Route::screen('disciplines/{discipline}/edit', DisciplineEditScreen::class)
              ->parent('platform.disciplines')
              ->push(__("Изменить дисциплину: {$discipline->title}"),
                  route('platform.disciplines.edit', $discipline));
+     });
+
+
+// Platform > Courses
+Route::screen('courses', CourseListScreen::class)
+     ->name('platform.courses')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__("Список курсов"), \route('platform.courses'));
+     });
+
+// Platform > Courses > Create
+Route::screen('courses/create', CourseEditScreen::class)
+     ->name('platform.courses.create')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.courses')
+             ->push(__('Добавить новый курс'), route('platform.courses.create'));
+     });
+
+// Platform > Courses > Profile
+Route::screen('courses/{course}/profile', CourseProfileScreen::class)
+     ->name('platform.courses.profile')
+     ->breadcrumbs(function ( Trail $trail, Course $course ) {
+         return $trail
+             ->parent('platform.courses')
+             ->push(__("$course->title"), route('platform.courses.profile', $course));
+     });
+
+// Platform > Courses > Edit
+Route::screen('courses/{course}/edit', CourseEditScreen::class)
+     ->name('platform.courses.edit')
+     ->breadcrumbs(function ( Trail $trail, Course $course ) {
+         return $trail
+             ->parent('platform.courses')
+             ->push(__("Изменить курс: {$course->title}"),
+                 route('platform.courses.edit', $course));
      });
 
 // Example...

@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Discipline;
 
 use App\Models\Discipline;
+use App\Orchid\Layouts\Course\CourseListLayout;
 use App\Orchid\Layouts\EducationalModule\EducationalModuleListLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,7 @@ class DisciplineProfileScreen extends Screen
         return [
             'discipline'         => $discipline,
             'educationalModules' => $discipline->educationalModules,
+            'courses'            => $discipline->courses,
         ];
     }
 
@@ -72,7 +74,7 @@ class DisciplineProfileScreen extends Screen
                         Sight::make('title', __('Название')),
                         Sight::make("description", __('Описание')),
                     ]),
-                __("Курсы дисциплины")       => Layout::rows([]),
+                __("Курсы дисциплины")       => CourseListLayout::class,
                 __('Образовательные модули') => EducationalModuleListLayout::class,
             ]),
         ];

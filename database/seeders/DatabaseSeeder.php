@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Employee;
-use App\Models\Institute;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -24,6 +22,7 @@ class DatabaseSeeder extends Seeder
                 SemesterSeeder::class,
                 EmployeeSeeder::class,
                 PartnerSeeder::class,
+                RealizationSeeder::class,
             ]);
         });
     }

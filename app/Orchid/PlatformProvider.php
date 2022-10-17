@@ -69,6 +69,17 @@ class PlatformProvider extends OrchidServiceProvider
                         ->route('platform.disciplines.create'),
                 ]),
 
+            Menu::make(__('Курсы'))
+                ->icon('graduation')
+                ->list([
+                    Menu::make(__('Список всех курсов'))
+                        ->icon('list')
+                        ->route('platform.courses'),
+                    Menu::make(__('Добавить новый'))
+                        ->icon('plus')
+                        ->route('platform.courses.create'),
+                ]),
+
             /*Menu::make(__('Семестры'))
                 ->icon('number-list')
                 ->route('platform.semesters'),*/
