@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
                 EmployeeSeeder::class,
                 PartnerSeeder::class,
                 RealizationSeeder::class,
+                AdmissionCommitteeContactsSeeder::class,
             ]);
         });
     }

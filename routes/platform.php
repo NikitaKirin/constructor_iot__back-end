@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\AdmissionCommitteeContacts;
 use App\Models\Course;
 use App\Models\Discipline;
 use App\Models\EducationalModule;
@@ -9,6 +10,8 @@ use App\Models\Employee;
 use App\Models\Institute;
 use App\Models\Partner;
 use App\Models\Review;
+use App\Orchid\Screens\AdmissionCommitteeContacts\AdmissionCommitteeContactsEditScreen;
+use App\Orchid\Screens\AdmissionCommitteeContacts\AdmissionCommitteeContactsProfileScreen;
 use App\Orchid\Screens\Course\CourseEditScreen;
 use App\Orchid\Screens\Course\CourseListScreen;
 use App\Orchid\Screens\Course\CourseProfileScreen;
@@ -401,6 +404,28 @@ Route::screen('courses/{course}/edit', CourseEditScreen::class)
              ->parent('platform.courses')
              ->push(__("Изменить курс: {$course->title}"),
                  route('platform.courses.edit', $course));
+     });
+
+// Platform > AdmissionCommitteeContacts > Profile
+Route::screen('admissionCommitteeContacts/{admissionCommitteeContacts}/profile',
+    AdmissionCommitteeContactsProfileScreen::class)
+     ->name('platform.admissionCommitteeContacts.profile')
+     ->breadcrumbs(function ( Trail $trail, AdmissionCommitteeContacts $admissionCommitteeContacts ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__("Контакты отборочной комиссии"),
+                 route('platform.admissionCommitteeContacts.profile', $admissionCommitteeContacts));
+     });
+
+// Platform > AdmissionCommitteeContacts > Edit
+Route::screen('admissionCommitteeContacts/{admissionCommitteeContacts}/edit',
+    AdmissionCommitteeContactsEditScreen::class)
+     ->name('platform.admissionCommitteeContacts.edit')
+     ->breadcrumbs(function ( Trail $trail, AdmissionCommitteeContacts $admissionCommitteeContacts ) {
+         return $trail
+             ->parent('platform.admissionCommitteeContacts.profile', $admissionCommitteeContacts)
+             ->push(__("Изменить контакты отборочной комиссии"),
+                 route('platform.admissionCommitteeContacts.edit', $admissionCommitteeContacts));
      });
 
 // Example...

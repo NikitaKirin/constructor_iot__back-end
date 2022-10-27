@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid;
 
+use App\Models\AdmissionCommitteeContacts;
 use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
 use Orchid\Platform\OrchidServiceProvider;
@@ -26,6 +27,16 @@ class PlatformProvider extends OrchidServiceProvider
      */
     public function registerMainMenu(): array {
         return [
+
+            Menu::make(__('Главная страница'))
+                ->icon('computer')
+                ->list([
+                    Menu::make(__("Контакты"))
+                        ->route('platform.admissionCommitteeContacts.profile', [
+                            'admissionCommitteeContacts' =>
+                                AdmissionCommitteeContacts::first(),
+                        ]),
+                ]),
 
             Menu::make(__('Институты'))
                 ->icon('building')
