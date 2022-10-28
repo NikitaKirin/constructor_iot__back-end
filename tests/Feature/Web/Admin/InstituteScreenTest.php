@@ -3,9 +3,8 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Database\Seeders\AdmissionCommitteeContactsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Orchid\Support\Facades\Dashboard;
 use Orchid\Support\Testing\ScreenTesting;
 use Tests\TestCase;
@@ -14,6 +13,10 @@ class InstituteScreenTest extends TestCase
 {
     use ScreenTesting, RefreshDatabase;
 
+    protected function setUp(): void {
+        parent::setUp();
+        $this->seed(AdmissionCommitteeContactsSeeder::class);
+    }
 
     public function testGetInstituteListScreen(): void {
         $user = User::factory()->create([

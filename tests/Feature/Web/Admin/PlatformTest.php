@@ -4,7 +4,7 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Database\Seeders\AdmissionCommitteeContactsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchid\Support\Facades\Dashboard;
 use Orchid\Support\Testing\ScreenTesting;
@@ -13,6 +13,11 @@ use Tests\TestCase;
 class PlatformTest extends TestCase
 {
     use ScreenTesting, RefreshDatabase;
+
+    protected function setUp(): void {
+        parent::setUp();
+        $this->seed(AdmissionCommitteeContactsSeeder::class);
+    }
 
     /**
      * A basic feature test example.

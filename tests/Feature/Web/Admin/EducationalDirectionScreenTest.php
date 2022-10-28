@@ -3,15 +3,19 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Database\Seeders\AdmissionCommitteeContactsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Orchid\Support\Facades\Dashboard;
 use Tests\TestCase;
 
 class EducationalDirectionScreenTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void {
+        parent::setUp();
+        $this->seed(AdmissionCommitteeContactsSeeder::class);
+    }
 
     public function testGetEducationalDirectionListScreen(): void {
         $user = User::factory()->create([
