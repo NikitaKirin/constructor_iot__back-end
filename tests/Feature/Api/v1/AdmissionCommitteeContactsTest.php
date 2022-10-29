@@ -13,8 +13,8 @@ class AdmissionCommitteeContactsTest extends TestCase
 
     public function testAdmissionCommitteeContactsIndex() {
 
-        $admissionCommitteeContactsBlock = AdmissionCommitteeContactsBlock::factory(1)
-                                                                          ->create()->first();
+        $admissionCommitteeContactsBlock = AdmissionCommitteeContactsBlock::all()
+                                                                          ->first();
 
         $response = $this->get(route('admissionCommitteeContactsBlock.index'));
 
@@ -28,6 +28,7 @@ class AdmissionCommitteeContactsTest extends TestCase
                                     $admissionCommitteeContactsBlock->phone_number)
                                 ->where('email',
                                     $admissionCommitteeContactsBlock->email)
+                                ->where('institute', $admissionCommitteeContactsBlock->institute->abbreviation)
         ));
 
     }

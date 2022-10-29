@@ -4,7 +4,6 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Models\User;
-use Database\Seeders\AdmissionCommitteeContactsBlockSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchid\Support\Facades\Dashboard;
 use Orchid\Support\Testing\ScreenTesting;
@@ -14,18 +13,12 @@ class PlatformTest extends TestCase
 {
     use ScreenTesting, RefreshDatabase;
 
-    protected function setUp(): void {
-        parent::setUp();
-        $this->seed(AdmissionCommitteeContactsBlockSeeder::class);
-    }
-
     /**
      * A basic feature test example.
      *
      * @return void
      */
     public function testPlatformAccessStatusWithoutPermissions(): void {
-
         $user = User::factory()
                     ->create();
 
