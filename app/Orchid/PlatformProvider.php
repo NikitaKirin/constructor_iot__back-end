@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Orchid;
 
 use App\Models\AdmissionCommitteeContactsBlock;
+use App\Models\SocialNetworksBlock;
 use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
 use Orchid\Platform\OrchidServiceProvider;
@@ -32,9 +33,14 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('computer')
                 ->list([
                     Menu::make(__("Контакты"))
-                        ->route('platform.admissionCommitteeContactsBlock.profile', [
+                        ->route('platform.admissionCommitteeContactsBlocks.edit', [
                             'admissionCommitteeContactsBlock' =>
                                 AdmissionCommitteeContactsBlock::first(),
+                        ]),
+                    Menu::make(__("Соц. сети"))
+                        ->route('platform.socialNetworksBlocks.edit', [
+                            'socialNetworksBlock' =>
+                                SocialNetworksBlock::first(),
                         ]),
                 ]),
 
