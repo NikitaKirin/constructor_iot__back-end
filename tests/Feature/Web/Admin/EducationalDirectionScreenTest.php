@@ -3,7 +3,7 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Models\User;
-use Database\Seeders\AdmissionCommitteeContactsSeeder;
+use Database\Seeders\AdmissionCommitteeContactsBlockSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchid\Support\Facades\Dashboard;
 use Tests\TestCase;
@@ -14,7 +14,7 @@ class EducationalDirectionScreenTest extends TestCase
 
     protected function setUp(): void {
         parent::setUp();
-        $this->seed(AdmissionCommitteeContactsSeeder::class);
+        $this->seed(AdmissionCommitteeContactsBlockSeeder::class);
     }
 
     public function testGetEducationalDirectionListScreen(): void {

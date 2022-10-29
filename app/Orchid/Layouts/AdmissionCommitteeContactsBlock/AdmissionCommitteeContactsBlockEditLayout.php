@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Orchid\Layouts\AdmissionCommitteeContacts;
+namespace App\Orchid\Layouts\AdmissionCommitteeContactsBlock;
 
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Rows;
 
-class AdmissionCommitteeContactsEditLayout extends Rows
+class AdmissionCommitteeContactsBlockEditLayout extends Rows
 {
     /**
      * Used to create the title of a group of form elements.

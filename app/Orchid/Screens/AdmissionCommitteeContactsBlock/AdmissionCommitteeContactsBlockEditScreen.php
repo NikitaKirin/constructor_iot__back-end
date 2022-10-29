@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Orchid\Screens\AdmissionCommitteeContacts;
+namespace App\Orchid\Screens\AdmissionCommitteeContactsBlock;
 
-use App\Http\Requests\AdmissionCommitteeContacts\CreateAdmissionCommitteeContactsRequest;
-use App\Models\AdmissionCommitteeContacts;
-use App\Orchid\Layouts\AdmissionCommitteeContacts\AdmissionCommitteeContactsEditLayout;
+use App\Http\Requests\AdmissionCommitteeContactsBlock\CreateAdmissionCommitteeContactsBlockRequest;
+use App\Models\AdmissionCommitteeContactsBlock;
+use App\Orchid\Layouts\AdmissionCommitteeContactsBlock\AdmissionCommitteeContactsBlockEditLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -14,7 +14,7 @@ use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
-class AdmissionCommitteeContactsEditScreen extends Screen
+class AdmissionCommitteeContactsBlockEditScreen extends Screen
 {
 
     /**
@@ -22,9 +22,9 @@ class AdmissionCommitteeContactsEditScreen extends Screen
      *
      * @return array
      */
-    public function query( AdmissionCommitteeContacts $admissionCommitteeContacts ): iterable {
+    public function query( AdmissionCommitteeContactsBlock $admissionCommitteeContactsBlock ): iterable {
         return [
-            'admissionCommitteeContacts' => $admissionCommitteeContacts,
+            'admissionCommitteeContactsBlock' => $admissionCommitteeContactsBlock,
         ];
     }
 
@@ -53,7 +53,7 @@ class AdmissionCommitteeContactsEditScreen extends Screen
      */
     public function layout(): iterable {
         return [
-            Layout::block(AdmissionCommitteeContactsEditLayout::class)
+            Layout::block(AdmissionCommitteeContactsBlockEditLayout::class)
                   ->title(__('Основная информация'))
                   ->commands([
                       Button::make(__('Save'))
@@ -64,18 +64,18 @@ class AdmissionCommitteeContactsEditScreen extends Screen
         ];
     }
 
-    public function save( AdmissionCommitteeContacts $admissionCommitteeContacts, CreateAdmissionCommitteeContactsRequest $request ): RedirectResponse {
+    public function save( AdmissionCommitteeContactsBlock $admissionCommitteeContactsBlock, CreateAdmissionCommitteeContactsBlockRequest $request ): RedirectResponse {
 
-        $admissionCommitteeContacts->fill($request->validated())
-                                   ->user()
-                                   ->associate(Auth::user())
-                                   ->save();
+        $admissionCommitteeContactsBlock->fill($request->validated())
+                                        ->user()
+                                        ->associate(Auth::user())
+                                        ->save();
 
         Toast::success(Config::get('toasts.toasts.update.success'));
 
-        return redirect()->route('platform.admissionCommitteeContacts.profile', [
-            'admissionCommitteeContacts' =>
-                $admissionCommitteeContacts,
+        return redirect()->route('platform.admissionCommitteeContactsBlock.profile', [
+            'admissionCommitteeContactsBlock' =>
+                $admissionCommitteeContactsBlock,
         ]);
 
     }

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api\v1;
 
-use App\Models\AdmissionCommitteeContacts;
+use App\Models\AdmissionCommitteeContactsBlock;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
@@ -13,21 +13,21 @@ class AdmissionCommitteeContactsTest extends TestCase
 
     public function testAdmissionCommitteeContactsIndex() {
 
-        $admissionCommitteeContacts = AdmissionCommitteeContacts::factory(1)
-                                                                ->create()->first();
+        $admissionCommitteeContactsBlock = AdmissionCommitteeContactsBlock::factory(1)
+                                                                          ->create()->first();
 
-        $response = $this->get(route('admissionCommitteeContacts.index'));
+        $response = $this->get(route('admissionCommitteeContactsBlock.index'));
 
         $response->assertOk();
 
-        $response->assertJson(fn( AssertableJson $json ) => $json->has('admission_committee_contacts',
-            fn( $json ) => $json->where('id', $admissionCommitteeContacts->id)
+        $response->assertJson(fn( AssertableJson $json ) => $json->has('admission_committee_contacts_block',
+            fn( $json ) => $json->where('id', $admissionCommitteeContactsBlock->id)
                                 ->where('address',
-                                    $admissionCommitteeContacts->address)
+                                    $admissionCommitteeContactsBlock->address)
                                 ->where('phone_number',
-                                    $admissionCommitteeContacts->phone_number)
+                                    $admissionCommitteeContactsBlock->phone_number)
                                 ->where('email',
-                                    $admissionCommitteeContacts->email)
+                                    $admissionCommitteeContactsBlock->email)
         ));
 
     }

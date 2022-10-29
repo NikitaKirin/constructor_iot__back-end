@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\AdmissionCommitteeContacts;
+namespace App\Http\Requests\AdmissionCommitteeContactsBlock;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateAdmissionCommitteeContactsRequest extends FormRequest
+class CreateAdmissionCommitteeContactsBlockRequest extends FormRequest
 {
     public function rules(): array {
         return [

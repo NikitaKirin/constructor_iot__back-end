@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\AdmissionCommitteeContacts;
+use App\Models\AdmissionCommitteeContactsBlock;
 use Illuminate\Database\Seeder;
 
-class AdmissionCommitteeContactsSeeder extends Seeder
+class AdmissionCommitteeContactsBlockSeeder extends Seeder
 {
     public function run() {
-        AdmissionCommitteeContacts::create(
+        AdmissionCommitteeContactsBlock::create(
             [
                 'address'      => 'Мира, 19',
                 'phone_number' => '8-800-555-35-35',

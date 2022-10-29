@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Orchid\Screens\AdmissionCommitteeContacts;
+namespace App\Orchid\Screens\AdmissionCommitteeContactsBlock;
 
-use App\Models\AdmissionCommitteeContacts;
+use App\Models\AdmissionCommitteeContactsBlock;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Screen\Sight;
 use Orchid\Support\Facades\Layout;
 
-class AdmissionCommitteeContactsProfileScreen extends Screen
+class AdmissionCommitteeContactsBlockProfileScreen extends Screen
 {
-    public AdmissionCommitteeContacts $admissionCommitteeContacts;
+    public AdmissionCommitteeContactsBlock $admissionCommitteeContactsBlock;
 
     /**
      * Query data.
      *
      * @return array
      */
-    public function query( AdmissionCommitteeContacts $admissionCommitteeContacts ): iterable {
+    public function query( AdmissionCommitteeContactsBlock $admissionCommitteeContactsBlock ): iterable {
         return [
-            'admissionCommitteeContacts' => $admissionCommitteeContacts,
+            'admissionCommitteeContactsBlock' => $admissionCommitteeContactsBlock,
         ];
     }
 
@@ -41,7 +41,7 @@ class AdmissionCommitteeContactsProfileScreen extends Screen
         return [
             Link::make(__('Edit'))
                 ->icon('pencil')
-                ->route('platform.admissionCommitteeContacts.edit', $this->admissionCommitteeContacts),
+                ->route('platform.admissionCommitteeContactsBlock.edit', $this->admissionCommitteeContactsBlock),
         ];
     }
 
@@ -52,7 +52,7 @@ class AdmissionCommitteeContactsProfileScreen extends Screen
      */
     public function layout(): iterable {
         return [
-            Layout::legend('admissionCommitteeContacts',
+            Layout::legend('admissionCommitteeContactsBlock',
                 [
                     Sight::make('address', __("Адрес")),
 

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Resources\AdmissionCommitteeContacts;
+namespace App\Http\Resources\AdmissionCommitteeContactsBlock;
 
+use App\Models\AdmissionCommitteeContactsBlock;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\AdmissionCommitteeContacts */
-class AdmissionCommitteeContactsResource extends JsonResource
+/** @mixin AdmissionCommitteeContactsBlock */
+class AdmissionCommitteeContactsBlockResource extends JsonResource
 {
-    public static $wrap = 'admission_committee_contacts';
+    public static $wrap = 'admission_committee_contacts_block';
 
     /**
      * @param Request $request

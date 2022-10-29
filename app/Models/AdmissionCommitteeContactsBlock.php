@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Screen\AsSource;
 
-class AdmissionCommitteeContacts extends Model
+class AdmissionCommitteeContactsBlock extends Model
 {
     use AsSource, Userable, SoftDeletes, HasFactory;
 
-    protected $table = 'admission_committee_contacts';
+    protected $table = 'admission_committee_contacts_blocks';
 
     protected $fillable = [
         'address',

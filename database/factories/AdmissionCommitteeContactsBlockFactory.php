@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\AdmissionCommitteeContacts;
+use App\Models\AdmissionCommitteeContactsBlock;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class AdmissionCommitteeContactsFactory extends Factory
+class AdmissionCommitteeContactsBlockFactory extends Factory
 {
-    protected $model = AdmissionCommitteeContacts::class;
+    protected $model = AdmissionCommitteeContactsBlock::class;
 
     public function definition(): array {
         return [

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up() {
-        Schema::create('admission_committee_contacts', function ( Blueprint $table ) {
+        Schema::create('admission_committee_contacts_blocks', function ( Blueprint $table ) {
             $table->increments('id');
             $table->string('address');
             $table->string('phone_number');
@@ -21,6 +21,6 @@ return new class extends Migration {
     }
 
     public function down() {
-        Schema::dropIfExists('admission_committee_contacts');
+        Schema::dropIfExists('admission_committee_contacts_blocks');
     }
 };

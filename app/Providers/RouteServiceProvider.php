@@ -34,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
                      require base_path('routes/api.php');
                      require base_path('routes/api/v1/partners.php');
                      require base_path('routes/api/v1/reviews.php');
-                     require base_path('routes/api/v1/admissionCommitteeContacts.php');
+                     require base_path('routes/api/v1/admissionCommitteeContactsBlock.php');
                  }
                  );
 

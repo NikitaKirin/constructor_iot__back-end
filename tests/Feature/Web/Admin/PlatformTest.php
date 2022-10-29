@@ -4,7 +4,7 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Models\User;
-use Database\Seeders\AdmissionCommitteeContactsSeeder;
+use Database\Seeders\AdmissionCommitteeContactsBlockSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchid\Support\Facades\Dashboard;
 use Orchid\Support\Testing\ScreenTesting;
@@ -16,7 +16,7 @@ class PlatformTest extends TestCase
 
     protected function setUp(): void {
         parent::setUp();
-        $this->seed(AdmissionCommitteeContactsSeeder::class);
+        $this->seed(AdmissionCommitteeContactsBlockSeeder::class);
     }
 
     /**
