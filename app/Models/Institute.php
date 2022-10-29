@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
@@ -39,5 +40,20 @@ class Institute extends Model
      */
     public function educationalDirections(): HasMany {
         return $this->hasMany(EducationalDirection::class);
+    }
+
+    /**
+     * Relationship institute to social networks block
+     * @return HasOne
+     */
+    public function socialNetworksBlock(): HasOne {
+        return $this->hasOne(SocialNetworksBlock::class);
+    }
+
+    /**
+     * Relationship institute to admission
+     */
+    public function admissionComitteeContactsBlock(): HasOne {
+        return $this->hasOne(AdmissionCommitteeContactsBlock::class);
     }
 }

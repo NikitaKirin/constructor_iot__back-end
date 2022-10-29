@@ -14,10 +14,10 @@ class InstituteFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
-    {
+    public function definition() {
         return [
-            //
+            'title'        => fake()->title(),
+            'abbreviation' => fake()->title(),
         ];
     }
 }

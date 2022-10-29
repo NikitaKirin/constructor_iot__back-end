@@ -11,6 +11,9 @@ return new class extends Migration {
             $table->string('address');
             $table->string('phone_number');
             $table->string('email');
+            $table->foreignId('institute_id')
+                  ->constrained()
+                  ->restrictOnDelete();
             $table->foreignId('user_id')
                   ->nullable()
                   ->constrained('users')

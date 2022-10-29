@@ -21,6 +21,7 @@ class AdmissionCommitteeContactsBlockResource extends JsonResource
             'address'      => $this->address,
             'phone_number' => $this->phone_number,
             'email'        => $this->email,
+            'institute'    => $this->institute->abbreviation,
         ];
     }
 }

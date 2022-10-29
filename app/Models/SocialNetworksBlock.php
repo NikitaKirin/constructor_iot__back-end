@@ -3,26 +3,22 @@
 namespace App\Models;
 
 use App\Traits\Userable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Screen\AsSource;
 
-class AdmissionCommitteeContactsBlock extends Model
+class SocialNetworksBlock extends Model
 {
-    use AsSource, Userable, SoftDeletes, HasFactory;
-
-    protected $table = 'admission_committee_contacts_blocks';
+    use SoftDeletes, AsSource, Userable;
 
     protected $fillable = [
-        'address',
-        'email',
-        'phone_number',
+        'data',
     ];
 
     /**
-     * Relationship admission to institute
+     * Relationship institute to user
+     * @return BelongsTo
      */
     public function institute(): BelongsTo {
         return $this->belongsTo(Institute::class);
