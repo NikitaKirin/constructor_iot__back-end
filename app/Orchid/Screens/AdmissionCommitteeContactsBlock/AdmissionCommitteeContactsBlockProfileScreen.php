@@ -41,7 +41,7 @@ class AdmissionCommitteeContactsBlockProfileScreen extends Screen
         return [
             Link::make(__('Edit'))
                 ->icon('pencil')
-                ->route('platform.admissionCommitteeContactsBlock.edit', $this->admissionCommitteeContactsBlock),
+                ->route('platform.admissionCommitteeContactsBlocks.edit', $this->admissionCommitteeContactsBlock),
         ];
     }
 

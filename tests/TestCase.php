@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\AdmissionCommitteeContactsBlock;
+use App\Models\SocialNetworksBlock;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -14,5 +15,8 @@ abstract class TestCase extends BaseTestCase
         AdmissionCommitteeContactsBlock::factory()
                                        ->count(1)
                                        ->create();
+        SocialNetworksBlock::factory()
+                           ->count(1)
+                           ->create();
     }
 }

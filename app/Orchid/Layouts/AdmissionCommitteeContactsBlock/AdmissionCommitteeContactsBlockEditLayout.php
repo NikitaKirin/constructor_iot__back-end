@@ -27,20 +27,20 @@ class AdmissionCommitteeContactsBlockEditLayout extends Rows
                  ->title(__('Адрес'))
                  ->type('text')
                  ->required()
-                 ->value($this->query->get('admissionCommitteeContacts')?->address),
+                 ->value($this->query->get('admissionCommitteeContactsBlock')?->address),
 
             Input::make('phone_number')
                  ->title(__('Номер телефона'))
                  ->type('text')
                  ->mask('+7 (999) 999-99-99')
                  ->required()
-                 ->value($this->query->get('admissionCommitteeContacts')?->phone_number),
+                 ->value($this->query->get('admissionCommitteeContactsBlock')?->phone_number),
 
             Input::make('email')
                  ->title(__('Электронная почта'))
                  ->type('email')
                  ->required()
-                 ->value($this->query->get('admissionCommitteeContacts')?->email),
+                 ->value($this->query->get('admissionCommitteeContactsBlock')?->email),
         ];
     }
 }

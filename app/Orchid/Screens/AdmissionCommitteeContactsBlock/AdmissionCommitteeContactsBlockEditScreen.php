@@ -5,7 +5,6 @@ namespace App\Orchid\Screens\AdmissionCommitteeContactsBlock;
 use App\Http\Requests\AdmissionCommitteeContactsBlock\CreateAdmissionCommitteeContactsBlockRequest;
 use App\Models\AdmissionCommitteeContactsBlock;
 use App\Orchid\Layouts\AdmissionCommitteeContactsBlock\AdmissionCommitteeContactsBlockEditLayout;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
@@ -64,7 +63,7 @@ class AdmissionCommitteeContactsBlockEditScreen extends Screen
         ];
     }
 
-    public function save( AdmissionCommitteeContactsBlock $admissionCommitteeContactsBlock, CreateAdmissionCommitteeContactsBlockRequest $request ): RedirectResponse {
+    public function save( AdmissionCommitteeContactsBlock $admissionCommitteeContactsBlock, CreateAdmissionCommitteeContactsBlockRequest $request ): void {
 
         $admissionCommitteeContactsBlock->fill($request->validated())
                                         ->user()
@@ -72,11 +71,5 @@ class AdmissionCommitteeContactsBlockEditScreen extends Screen
                                         ->save();
 
         Toast::success(Config::get('toasts.toasts.update.success'));
-
-        return redirect()->route('platform.admissionCommitteeContactsBlock.profile', [
-            'admissionCommitteeContactsBlock' =>
-                $admissionCommitteeContactsBlock,
-        ]);
-
     }
 }

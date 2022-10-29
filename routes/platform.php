@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\Institute;
 use App\Models\Partner;
 use App\Models\Review;
+use App\Models\SocialNetworksBlock;
 use App\Orchid\Screens\AdmissionCommitteeContactsBlock\AdmissionCommitteeContactsBlockEditScreen;
 use App\Orchid\Screens\AdmissionCommitteeContactsBlock\AdmissionCommitteeContactsBlockProfileScreen;
 use App\Orchid\Screens\Course\CourseEditScreen;
@@ -44,6 +45,7 @@ use App\Orchid\Screens\Review\ReviewListScreen;
 use App\Orchid\Screens\Review\ReviewProfileScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\SocialNetworksBlock\SocialNetworksBlockEditScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -407,25 +409,36 @@ Route::screen('courses/{course}/edit', CourseEditScreen::class)
      });
 
 // Platform > AdmissionCommitteeContactsBlock > Profile
-Route::screen('admissionCommitteeContactsBlock/{admissionCommitteeContactsBlock}/profile',
+Route::screen('admissionCommitteeContactsBlocks/{admissionCommitteeContactsBlock}/profile',
     AdmissionCommitteeContactsBlockProfileScreen::class)
-     ->name('platform.admissionCommitteeContactsBlock.profile')
+     ->name('platform.admissionCommitteeContactsBlocks.profile')
      ->breadcrumbs(function ( Trail $trail, AdmissionCommitteeContactsBlock $admissionCommitteeContactsBlock ) {
          return $trail
              ->parent('platform.index')
              ->push(__("Контакты отборочной комиссии"),
-                 route('platform.admissionCommitteeContactsBlock.profile', $admissionCommitteeContactsBlock));
+                 route('platform.admissionCommitteeContactsBlocks.profile', $admissionCommitteeContactsBlock));
      });
 
 // Platform > AdmissionCommitteeContactsBlock > Edit
-Route::screen('admissionCommitteeContactsBlock/{admissionCommitteeContactsBlock}/edit',
+Route::screen('admissionCommitteeContactsBlocks/{admissionCommitteeContactsBlock}/edit',
     AdmissionCommitteeContactsBlockEditScreen::class)
-     ->name('platform.admissionCommitteeContactsBlock.edit')
+     ->name('platform.admissionCommitteeContactsBlocks.edit')
      ->breadcrumbs(function ( Trail $trail, AdmissionCommitteeContactsBlock $admissionCommitteeContactsBlock ) {
          return $trail
-             ->parent('platform.admissionCommitteeContactsBlock.profile', $admissionCommitteeContactsBlock)
+             ->parent('platform.admissionCommitteeContactsBlocks.profile', $admissionCommitteeContactsBlock)
              ->push(__("Изменить контакты отборочной комиссии"),
-                 route('platform.admissionCommitteeContactsBlock.edit', $admissionCommitteeContactsBlock));
+                 route('platform.admissionCommitteeContactsBlocks.edit', $admissionCommitteeContactsBlock));
+     });
+
+// Platform > SocialNetworksBlock > Edit
+Route::screen('socialNetworksBlocks/{socialNetworksBlock}/edit',
+    SocialNetworksBlockEditScreen::class)
+     ->name('platform.socialNetworksBlocks.edit')
+     ->breadcrumbs(function ( Trail $trail, SocialNetworksBlock $socialNetworksBlock ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__("Изменить контакты отборочной комиссии"),
+                 route('platform.socialNetworksBlocks.edit', $socialNetworksBlock));
      });
 
 // Example...

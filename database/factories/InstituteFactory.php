@@ -16,8 +16,8 @@ class InstituteFactory extends Factory
      */
     public function definition() {
         return [
-            'title'        => fake()->title(),
-            'abbreviation' => fake()->title(),
+            'title'        => fake()->unique()->title(),
+            'abbreviation' => fake()->unique()->title(),
         ];
     }
 }
