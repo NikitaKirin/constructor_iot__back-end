@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
      * @param \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
-    protected function schedule( Schedule $schedule ) {
-        // $schedule->command('telescope:prune --hours=48')->daily();
+    protected function schedule( Schedule $schedule ): void {
+        $schedule->command('telescope:prune --hours=48')->daily();
     }
 
     /**
