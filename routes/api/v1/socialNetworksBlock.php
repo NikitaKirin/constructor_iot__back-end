@@ -7,7 +7,7 @@ Route::as('socialNetworksBlocks.')->group(function () {
     /*Route::get('socialNetworkBlock{institute?}', [SocialNetworksBlockController::class, 'showDefinite'])
          ->name('show-definite');*/
 
-    Route::get('socialNetworksBlocks', [SocialNetworksBlockController::class, 'index'])
+    Route::get('socialNetworksBlock', [SocialNetworksBlockController::class, 'index'])
          ->name('index');
 
 });
