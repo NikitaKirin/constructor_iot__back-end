@@ -17,13 +17,13 @@ class ReviewResource extends JsonResource
      */
     public function toArray( $request ) {
         return [
-            'id'                     => $this->id,
-            'author'                 => $this->author,
-            'text'                   => $this->text,
-            'additional_information' => $this->additional_information,
-            'photo'                  => $this->photo?->url() ?? Config::get('constants.avatar.url'),
-            'created_at'             => $this->created_at,
-            'updated_at'             => $this->updated_at,
+            'id'                    => $this->id,
+            'author'                => $this->author,
+            'text'                  => $this->text,
+            'educational_direction' => $this->educational_direction,
+            'course'                => $this->course,
+            'year_of_issue'         => $this->year_of_issue,
+            'photo'                 => $this->photo?->url() ?? Config::get('constants.avatar.url'),
         ];
     }
 }
