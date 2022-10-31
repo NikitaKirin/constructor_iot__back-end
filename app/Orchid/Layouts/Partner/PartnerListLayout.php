@@ -38,7 +38,7 @@ class PartnerListLayout extends Table
 
             TD::make('logo_id', __('Логотип'))
               ->render(function ( Partner $partner ) {
-                  $link = $partner->logo?->url() ?? Config::get('constants.avatars.employee.url');
+                  $link = $partner->logo?->url() ?? asset(Config::get('constants.avatars.employee.url'));
                   return "<img src='$link' width='100' alt='Логотип компании: $partner->title'>";
               }),
 

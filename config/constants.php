@@ -8,11 +8,11 @@ return [
         ],
 
         'employee' => [
-            'url' => asset('storage/img/icons/people/employee-icon.png'),
+            'url' => 'storage/img/icons/people/employee-icon.png',
         ],
 
         'student' => [
-            'url' => asset('storage/img/icons/people/student-icon.png'),
+            'url' => 'storage/img/icons/people/student-icon.png',
         ],
     ],
 ];

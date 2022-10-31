@@ -38,7 +38,7 @@ class ReviewListLayout extends Table
 
             TD::make('photo_id', __('Фото'))
               ->render(function ( Review $review ) {
-                  $link = $review->photo?->url() ?? Config::get('constants.avatars.student.url');
+                  $link = $review->photo?->url() ?? asset(Config::get('constants.avatars.student.url'));
                   return "<img src='$link' width='100' alt='Фото: $review->author'>";
               }),
 

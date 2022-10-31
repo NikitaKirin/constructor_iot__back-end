@@ -69,7 +69,7 @@ class PartnerProfileScreen extends Screen
                     Layout::legend("partner", [
                         Sight::make('logo_id', __('Логотип'))
                              ->render(function () {
-                                 $link = $this->partner?->logo?->url() ?? Config::get('constants.avatars.employee.url');
+                                 $link = $this->partner?->logo?->url() ?? asset(Config::get('constants.avatars.employee.url'));
                                  return "<img src='$link' width='100' alt='Логотип компании: {$this->partner->title}'";
                              }),
                         Sight::make('title', __("Название компании")),

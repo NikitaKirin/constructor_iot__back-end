@@ -39,7 +39,7 @@ class EmployeeListLayout extends Table
             TD::make('photo', __('Фотография'))
               ->render(function ( Employee $employee ) {
                   $link = $employee->photo()->first()
-                                   ?->url() ?? Config::get('constants.avatars.employee.url');
+                                   ?->url() ?? asset(Config::get('constants.avatars.employee.url'));
                   return "<img width='100' src='$link'";
               }),
 
