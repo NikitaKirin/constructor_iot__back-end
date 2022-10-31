@@ -9,7 +9,6 @@ use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
-use Termwind\Components\Li;
 
 class EmployeeListLayout extends Table
 {
@@ -40,8 +39,8 @@ class EmployeeListLayout extends Table
             TD::make('photo', __('Фотография'))
               ->render(function ( Employee $employee ) {
                   $link = $employee->photo()->first()
-                                   ?->url() ?? Config::get('constants.avatar.url');
-                  return "<img width=20 height=20 src='{$link}'";
+                                   ?->url() ?? Config::get('constants.avatars.employee.url');
+                  return "<img width='100' src='$link'";
               }),
 
             TD::make('full_name', __('ФИО'))

@@ -68,7 +68,7 @@ class ReviewProfileScreen extends Screen
                 [
                     Sight::make('photo_id', __('Фото'))
                          ->render(function () {
-                             $link = $this->review->photo?->url ?? Config::get('constants.avatar.url');
+                             $link = $this->review->photo?->url ?? Config::get('constants.avatars.student.url');
                              return "<img src='$link' alt='Фото: {$this->review->author}' width='100'>";
                          }),
 

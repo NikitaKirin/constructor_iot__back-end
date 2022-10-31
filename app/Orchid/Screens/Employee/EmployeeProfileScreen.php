@@ -65,8 +65,8 @@ class EmployeeProfileScreen extends Screen
             Layout::legend('employee', [
                 Sight::make('photo_id', __('Фото'))
                      ->render(function () {
-                         $link = $this->employee?->photo?->url() ?? Config::get('constants.avatar.url');
-                         return "<img src=$link width='300' alt='Фото сотрудника'>";
+                         $link = $this->employee?->photo?->url() ?? Config::get('constants.avatars.employee.url');
+                         return "<img src=$link width='100' alt='Фото сотрудника'>";
                      }),
                 Sight::make('full_name', __('ФИО')),
                 Sight::make('email', __('Email')),

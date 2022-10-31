@@ -38,8 +38,8 @@ class PartnerListLayout extends Table
 
             TD::make('logo_id', __('Логотип'))
               ->render(function ( Partner $partner ) {
-                  $link = $partner->logo?->url() ?? Config::get('constants.avatar.url');
-                  return "<img src='$link' width='100' height='100' alt='Логотип компании: $partner->title'>";
+                  $link = $partner->logo?->url() ?? Config::get('constants.avatars.employee.url');
+                  return "<img src='$link' width='100' alt='Логотип компании: $partner->title'>";
               }),
 
             TD::make('title', __('Название компании'))
@@ -60,8 +60,8 @@ class PartnerListLayout extends Table
               }),
 
             TD::make(__('Actions'))
-                ->width(100)
-                ->align(TD::ALIGN_CENTER)
+              ->width(100)
+              ->align(TD::ALIGN_CENTER)
               ->render(function ( Partner $partner ) {
                   return DropDown::make()
                                  ->icon('options-vertical')

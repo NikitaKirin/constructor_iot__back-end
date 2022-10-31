@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Config;
 class PartnerResource extends JsonResource
 {
     public static $wrap = 'partner';
+
     /**
      * @param Request $request
      * @return array
@@ -19,7 +20,7 @@ class PartnerResource extends JsonResource
             'id'          => $this->id,
             'title'       => $this->title,
             'description' => $this->description,
-            'logo'        => $this->logo?->url() ?? Config::get('constants.avatar.url'),
+            'logo'        => $this->logo?->url() ?? Config::get('constants.avatars.employee.url'),
             'created_at'  => $this->created_at,
             'updated_at'  => $this->updated_at,
         ];

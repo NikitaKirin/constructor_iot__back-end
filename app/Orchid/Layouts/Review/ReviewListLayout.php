@@ -38,14 +38,14 @@ class ReviewListLayout extends Table
 
             TD::make('photo_id', __('Фото'))
               ->render(function ( Review $review ) {
-                  $link = $review->photo?->url() ?? Config::get('constants.avatar.url');
+                  $link = $review->photo?->url() ?? Config::get('constants.avatars.student.url');
                   return "<img src='$link' width='100' alt='Фото: $review->author'>";
               }),
 
             TD::make('author', __('Автор')),
 
             TD::make('text', __('Текст'))
-            ->width(200),
+              ->width(200),
 
             TD::make('educational_direction',
                 __("Направление")),

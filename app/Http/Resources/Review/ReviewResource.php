@@ -23,7 +23,7 @@ class ReviewResource extends JsonResource
             'educational_direction' => $this->educational_direction,
             'course'                => $this->course,
             'year_of_issue'         => $this->year_of_issue,
-            'photo'                 => $this->photo?->url() ?? Config::get('constants.avatar.url'),
+            'photo'                 => $this->photo?->url() ?? Config::get('constants.avatars.student.url'),
         ];
     }
 }
