@@ -83,7 +83,7 @@ return [
     |
     */
 
-    'auth'  => true,
+    'auth' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -128,8 +128,8 @@ return [
     */
 
     'template' => [
-        'header' => '',
-        'footer' => '',
+        'header' => 'brand.header',
+        'footer' => 'brand.footer',
     ],
 
     /*
@@ -206,7 +206,7 @@ return [
     */
 
     'turbo' => [
-        'cache' => false
+        'cache' => false,
     ],
 
     /*
