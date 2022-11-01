@@ -14,11 +14,28 @@ class SocialNetworksBlockResource extends JsonResource
      * @param Request $request
      * @return array
      */
-    public function toArray( $request ) {
+    public function toArray( $request ): array {
         return [
             'id'        => $this->id,
-            'data'      => $this->data,
+            'data'      => $this->formatArray($this->data),
             'institute' => $this->institute->abbreviation,
+        ];
+    }
+
+
+    private function formatArray( array $array ): array {
+        return [
+            [
+                'name' => 'telegram',
+                'url'  => $array['telegram']['url'],
+                'icon' => $array['telegram']['icon'],
+            ],
+
+            [
+                'name' => 'vk',
+                'url'  => $array['vk']['url'],
+                'icon' => $array['vk']['icon'],
+            ],
         ];
     }
 }
