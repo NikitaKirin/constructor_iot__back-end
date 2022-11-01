@@ -12,11 +12,11 @@ return new class extends Migration {
                   ->default(json_encode([
                       "telegram" => [
                           "url"  => "https://web.telegram.org",
-                          'icon' => asset('storage/img/icons/social_networks/telegram-icon.png'),
+                          'icon' => asset('storage/img/icons/social_networks/telegram-icon.svg'),
                       ],
                       "vk"       => [
                           "url"  => "https://vk.com",
-                          'icon' => asset('storage/img/icons/social_networks/vk-icon.png'),
+                          'icon' => asset('storage/img/icons/social_networks/vk-icon.svg'),
                       ],
                   ]));
             $table->foreignId('institute_id')
