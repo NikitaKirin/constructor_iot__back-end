@@ -26,15 +26,15 @@ class SocialNetworksBlockResource extends JsonResource
     private function formatArray( array $array ): array {
         return [
             [
-                'name' => 'telegram',
-                'url'  => $array['telegram']['url'],
-                'icon' => $array['telegram']['icon'],
+                'name' => 'Telegram',
+                'url'  => $array['Telegram']['url'],
+                'icon' => $array['Telegram']['icon'],
             ],
 
             [
-                'name' => 'vk',
-                'url'  => $array['vk']['url'],
-                'icon' => $array['vk']['icon'],
+                'name' => 'ВКонтакте',
+                'url'  => $array['ВКонтакте']['url'],
+                'icon' => $array['ВКонтакте']['icon'],
             ],
         ];
     }
