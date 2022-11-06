@@ -4,7 +4,6 @@ namespace App\Orchid\Screens\EducationalDirection;
 
 use App\Http\Requests\EducationalDirection\CreateEducationalDirectionRequest;
 use App\Models\EducationalDirection;
-use App\Models\Institute;
 use App\Orchid\Layouts\EducationalDirection\EducationalDirectionEditLayout;
 use App\Orchid\Layouts\EducationalDirection\EducationalDirectionListLayout;
 use Illuminate\Http\RedirectResponse;
@@ -78,10 +77,19 @@ class EducationalDirectionListScreen extends Screen
                              ->institute()->associate($request->get('institute'))
                              ->save();
 
+        if ( is_null($request->get('passing_scores')) ) {
+            $educationalDirection->passing_scores = [
+                [
+                    'year'          => null,
+                    'passing_score' => null,
+                ],
+            ];
+        }
+
         $educationalDirection->user()->associate(Auth::user())
                              ->save();
 
-        Toast::info(__('Программа подготовки успешно сохранена'));
+        Toast::success(config('toasts.toasts.update.success'));
 
         return redirect()->route('platform.educationalDirections');
     }
@@ -89,6 +97,6 @@ class EducationalDirectionListScreen extends Screen
     public function remove( Request $request ) {
         EducationalDirection::findOrFail($request->get('id'))->forceDelete();
 
-        Toast::info(__('Направление подготовки успешно удалено'));
+        Toast::success(config('toasts.toasts.delete.success'));
     }
 }

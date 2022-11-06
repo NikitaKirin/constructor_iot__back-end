@@ -4,7 +4,9 @@ namespace App\Orchid\Layouts\EducationalDirection;
 
 use App\Models\Institute;
 use Orchid\Screen\Field;
+use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Matrix;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Rows;
 
@@ -40,11 +42,40 @@ class EducationalDirectionEditLayout extends Rows
                  ->placeholder(__('Шифр'))
                  ->value($this->query->get('educationalDirection.cipher')),
 
+            Matrix::make('passing_scores')
+                  ->title(__('Проходные баллы прошлых лет'))
+                  ->columns([
+                      'Год'            => 'year',
+                      'Проходной балл' => 'passing_score',
+                  ])
+                  ->fields([
+                      'year'          => DateTimer::make()
+                                                  ->allowInput()
+                                                  ->format('Y'),
+                      'passing_score' => Input::make()
+                                              ->type('number')
+                                              ->min(0),
+                  ])
+                  ->value($this->query->get('educationalDirection.passing_scores'))
+                  ->maxRows(1),
+
+            Input::make('training_period')
+                 ->type('text')
+                 ->title('Срок обучения')
+                 ->value($this->query->get('educationalDirection.training_period'))
+                 ->required(),
+
+            Input::make('budget_places')
+                 ->type('number')
+                 ->title('Количество бюджетных мест')
+                 ->value($this->query->get('educationalDirection.budget_places'))
+                 ->required(),
+
             Select::make(__('institute'))
                   ->title(__('Институт'))
                   ->required()
                   ->fromModel(Institute::class, 'abbreviation')
-                  ->value($this->query->get('educationalDirections.institute.abbreviation')),
+                  ->value($this->query->get('educationalDirection.institute.abbreviation')),
         ];
     }
 }

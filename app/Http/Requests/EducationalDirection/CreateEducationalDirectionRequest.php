@@ -19,19 +19,28 @@ class CreateEducationalDirectionRequest extends FormRequest
     public function rules() {
         $educationalDirectionId = $this->query->get('educationalDirection');
         return [
-            'title'  => [
+            'title'          => [
                 'required',
                 'string',
                 Rule::unique('educational_directions')->where(fn( $query ) => $query->where
                 ('id', '<>', $educationalDirectionId)),
             ],
-            'cipher' => [
+            'cipher'         => [
                 'required',
                 'string',
                 Rule::unique('educational_directions')->where(fn( $query ) => $query->where
                 ('id', '<>', $educationalDirectionId)),
                 'max: 15',
             ],
+            'passing_scores' => [
+                'nullable',
+                'array',
+            ],
+
+            'training_period' => ['required', 'string'],
+
+            'budget_places' => ['required', 'integer', 'min:0'],
+
         ];
     }
 

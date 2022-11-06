@@ -19,6 +19,13 @@ class EducationalDirection extends Model
     protected $fillable = [
         'title',
         'cipher',
+        'passing_scores',
+        'training_period',
+        'budget_places',
+    ];
+
+    protected $casts = [
+        'passing_scores' => 'array',
     ];
 
     /**
@@ -33,7 +40,7 @@ class EducationalDirection extends Model
      * Relationship - educational direction to educational modules
      * @return BelongsToMany
      */
-    public function educationalModules(  ): BelongsToMany {
+    public function educationalModules(): BelongsToMany {
         return $this->belongsToMany(EducationalModule::class);
     }
 
@@ -41,7 +48,7 @@ class EducationalDirection extends Model
      * Relationship - educational direction to institute
      * @return BelongsTo
      */
-    public function institute(  ): BelongsTo {
+    public function institute(): BelongsTo {
         return $this->belongsTo(Institute::class);
     }
 }
