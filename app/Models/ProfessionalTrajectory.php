@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Orchid\Screen\AsSource;
 
 class ProfessionalTrajectory extends Model
 {
-    use HasFactory, SoftDeletes, Userable;
+    use HasFactory, SoftDeletes, Userable, AsSource;
 
     protected $fillable = [
         'title',

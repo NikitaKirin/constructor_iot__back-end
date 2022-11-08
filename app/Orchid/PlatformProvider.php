@@ -64,6 +64,15 @@ class PlatformProvider extends OrchidServiceProvider
                         ->route('platform.educationalDirections'),
                 ]),
 
+            Menu::make(__('Профессиональные траектории'))
+                ->list([
+                    Menu::make(__("Список профессиональных траекторий"))
+                        ->route('platform.professionalTrajectories'),
+                    Menu::make(__('Добавить новую'))
+                        ->icon('plus')
+                        ->route('platform.professionalTrajectories.create'),
+                ]),
+
             Menu::make(__('Образовательны модули'))
                 ->icon('graduation')
                 ->list([

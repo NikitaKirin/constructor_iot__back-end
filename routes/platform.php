@@ -9,6 +9,7 @@ use App\Models\EducationalModule;
 use App\Models\Employee;
 use App\Models\Institute;
 use App\Models\Partner;
+use App\Models\ProfessionalTrajectory;
 use App\Models\Review;
 use App\Models\SocialNetworksBlock;
 use App\Orchid\Screens\AdmissionCommitteeContactsBlock\AdmissionCommitteeContactsBlockEditScreen;
@@ -40,6 +41,8 @@ use App\Orchid\Screens\Partner\PartnerEditScreen;
 use App\Orchid\Screens\Partner\PartnerListScreen;
 use App\Orchid\Screens\Partner\PartnerProfileScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\ProfessionalTrajectory\ProfessionalTrajectoryEditScreen;
+use App\Orchid\Screens\ProfessionalTrajectory\ProfessionalTrajectoryListScreen;
 use App\Orchid\Screens\Review\ReviewEditScreen;
 use App\Orchid\Screens\Review\ReviewListScreen;
 use App\Orchid\Screens\Review\ReviewProfileScreen;
@@ -439,6 +442,35 @@ Route::screen('socialNetworksBlocks/{socialNetworksBlock}/edit',
              ->parent('platform.index')
              ->push(__("Изменить контакты отборочной комиссии"),
                  route('platform.socialNetworksBlocks.edit', $socialNetworksBlock));
+     });
+
+// Platform > ProfessionalTrajectories
+Route::screen('professionalTrajectories', ProfessionalTrajectoryListScreen::class)
+     ->name('platform.professionalTrajectories')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.index')
+             ->push(__("Список профессиональных траекторий"), \route('platform.professionalTrajectories'));
+     });
+
+// Platform > ProfessionalTrajectories > Create
+Route::screen('professionalTrajectories/create', ProfessionalTrajectoryEditScreen::class)
+     ->name('platform.professionalTrajectories.create')
+     ->breadcrumbs(function ( Trail $trail ) {
+         return $trail
+             ->parent('platform.professionalTrajectories')
+             ->push(__('Добавить новую траекторию'), route('platform.professionalTrajectories.create'));
+     });
+
+// Platform > ProfessionalTrajectories > Edit
+Route::screen('professionalTrajectories/{professionalTrajectory}/edit',
+    ProfessionalTrajectoryEditScreen::class)
+     ->name('platform.professionalTrajectories.edit')
+     ->breadcrumbs(function ( Trail $trail, ProfessionalTrajectory $professionalTrajectory ) {
+         return $trail
+             ->parent('platform.professionalTrajectories')
+             ->push(__("Изменить профессиональный трек"),
+                 route('platform.professionalTrajectories.edit', $professionalTrajectory));
      });
 
 // Example...

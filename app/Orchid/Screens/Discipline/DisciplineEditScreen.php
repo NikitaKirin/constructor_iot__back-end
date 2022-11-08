@@ -6,6 +6,7 @@ use App\Http\Requests\Discipline\CreateDisciplineRequest;
 use App\Models\Course;
 use App\Models\Discipline;
 use App\Models\EducationalModule;
+use App\Models\ProfessionalTrajectory;
 use App\Orchid\Layouts\Discipline\DisciplineEditLayout;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
@@ -30,7 +31,7 @@ class DisciplineEditScreen extends Screen
      * @return array
      */
     public function query( Discipline $discipline ): iterable {
-        $discipline->load(['educationalModules', 'courses']);
+        $discipline->load(['educationalModules', 'courses', 'professionalTrajectories']);
         return [
             'discipline' => $discipline,
         ];
@@ -120,6 +121,27 @@ class DisciplineEditScreen extends Screen
                           ->route('platform.courses.create')
                           ->target('_blank'),
                   ]),
+
+            Layout::block([
+                Layout::rows([
+                    Relation::make('professionalTrajectories.')
+                            ->fromModel(ProfessionalTrajectory::class, 'title')
+                            ->multiple()
+                            ->value($this->discipline->professionalTrajectories)
+                            ->title(__('Список профессиональных траекторий')),
+                ]),
+            ])
+                  ->title(__('Профессиональные траектории'))
+                  ->description(__('Выберите траектории, которые принадлежат данной дисциплине, из предложенного списка'))
+                  ->commands([
+                      Button::make(__('Save'))
+                            ->type(Color::SUCCESS())
+                            ->method('save'),
+                      Link::make(__('Создать новую траекторию'))
+                          ->icon('plus')
+                          ->route('platform.professionalTrajectories.create')
+                          ->target('_blank'),
+                  ]),
         ];
     }
 
@@ -131,6 +153,9 @@ class DisciplineEditScreen extends Screen
 
         $discipline->educationalModules()
                    ->sync($request->input('educationalModules', []));
+
+        $discipline->professionalTrajectories()
+                   ->sync($request->input('professionalTrajectories', []));
 
         if ( $courses_ids = $request->input('courses') ) {
             collect($courses_ids)->each(function ( $course_id ) use ( $discipline ) {
