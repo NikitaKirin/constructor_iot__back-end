@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
                 RealizationSeeder::class,
                 AdmissionCommitteeContactsBlockSeeder::class,
                 SocialNetworksBlockSeeder::class,
+                ProfessionalTrajectorySeeder::class,
             ]);
         });
     }
