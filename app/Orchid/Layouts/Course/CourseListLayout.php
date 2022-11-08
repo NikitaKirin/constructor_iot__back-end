@@ -44,7 +44,7 @@ class CourseListLayout extends Table
 
             TD::make('discipline_id', __("Дисциплина"))
               ->render(function ( Course $course ) {
-                  return $course->discipline->title;
+                  return $course->discipline?->title ?? __('Не определено');
               }),
 
             TD::make('realization_id', __('Вид реализации'))

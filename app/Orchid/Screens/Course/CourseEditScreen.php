@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
@@ -75,6 +77,43 @@ class CourseEditScreen extends Screen
                             ->type(Color::SUCCESS())
                             ->method('save'),
                   ]),
+
+            Layout::block([
+                Layout::rows([
+                    Relation::make('discipline_id')
+                            ->title(__('Дисциплина'))
+                            ->fromModel(Discipline::class, 'title')
+                            ->value($this->course->discipline),
+
+                    Link::make(__('Создать новую'))
+                        ->icon('plus')
+                        ->route("platform.disciplines.create")
+                        ->target('__blank'),
+                ]),
+            ])
+                  ->description(__('Добавьте дисциплину, к которой относится данный курс. Наличие дисциплины необходимо исключительно для абитуриентов.'))
+                  ->commands(Button::make(__('Save'))
+                                   ->type(Color::SUCCESS())
+                                   ->method('save')),
+
+            Layout::block([
+                Layout::rows([
+                    Relation::make('partner_id')
+                            ->title(__('Партнер'))
+                            ->fromModel(Partner::class, 'title')
+                            ->value($this->course->partner),
+
+                    Link::make(__('Создать нового'))
+                        ->icon('plus')
+                        ->route("platform.partners.create")
+                        ->target('__blank'),
+                ]),
+            ])
+                  ->description(__('Добавьте партнера, который является создателем курса.'))
+                  ->commands(Button::make(__('Save'))
+                                   ->type(Color::SUCCESS())
+                                   ->method('save'))
+            ,
         ];
     }
 
@@ -83,8 +122,10 @@ class CourseEditScreen extends Screen
         $course->fill($request->validated())
                ->user()->associate(Auth::user());
 
-        $course->discipline()
-               ->associate(Discipline::findOrFail($request->input('discipline_id')));
+        if ( $discipline_id = $request->input('discipline_id') ) {
+            $course->discipline()
+                   ->associate(Discipline::findOrFail($discipline_id));
+        }
 
         if ( $partnerId = $request->input('partner_id') ) {
             $course->partner()->associate(Partner::findOrFail($partnerId));
@@ -97,7 +138,7 @@ class CourseEditScreen extends Screen
         Toast::success(__(Config::get('toasts.toasts.update.success')))
              ->autoHide();
 
-        return redirect()->route('platform.courses');
+        //return redirect()->route('platform.courses.edit');
     }
 
     public function destroy( Request $request ) {

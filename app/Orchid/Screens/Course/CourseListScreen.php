@@ -19,7 +19,7 @@ class CourseListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'courses' => Course::all(),
+            'courses' => Course::paginate(15),
         ];
     }
 

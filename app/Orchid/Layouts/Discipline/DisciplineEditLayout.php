@@ -34,7 +34,7 @@ class DisciplineEditLayout extends Rows
                  ->toolbar(["text", "color", "header", "list", "format"])
                  ->title(__('Описание'))
                  ->required()
-                 ->value($this->query->get('discipline.description')),
+                 ->value($this->query->get('discipline.description') ?? __('Описания нет')),
 
         ];
     }

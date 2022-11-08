@@ -9,6 +9,6 @@ use App\Models\Review;
 class ReviewController extends Controller
 {
     public function index() {
-        return new ReviewResourceCollection(Review::paginate(5));
+        return new ReviewResourceCollection(Review::paginate(2));
     }
 }

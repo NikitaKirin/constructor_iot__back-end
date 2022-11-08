@@ -20,9 +20,7 @@ class PartnerResource extends JsonResource
             'id'          => $this->id,
             'title'       => $this->title,
             'description' => $this->description,
-            'logo'        => $this->logo?->url() ?? Config::get('constants.avatars.employee.url'),
-            'created_at'  => $this->created_at,
-            'updated_at'  => $this->updated_at,
+            'logo'        => $this->logo?->url() ?? asset(Config::get('constants.avatars.employee.url')),
         ];
     }
 }

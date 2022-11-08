@@ -6,7 +6,6 @@ use App\Models\Discipline;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -64,7 +63,7 @@ class DisciplineListLayout extends Table
                                          ->route('platform.disciplines.edit', $discipline),
                                      Button::make(__('Delete'))
                                            ->icon('trash')
-                                           ->method('remove', ['id' => $discipline->id]),
+                                           ->method('destroy', ['id' => $discipline->id]),
                                  ]);
               }),
         ];

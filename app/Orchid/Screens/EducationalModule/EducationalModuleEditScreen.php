@@ -80,10 +80,16 @@ class EducationalModuleEditScreen extends Screen
         $educationalModule->semesters()
                           ->sync($request->get('semesters', []));
 
+        $educationalModule->educationalDirections()
+                          ->sync($request->get('educationalDirections', []));
+
+        $educationalModule->disciplines()
+                          ->sync($request->get('disciplines', []));
+
         Toast::success(__('Образовательный модуль успешно обновлен'))
              ->autoHide();
 
-        return redirect()->route('platform.educationalModules');
+        //return redirect()->route('platform.educationalModules');
     }
 
     public function remove( Request $request ) {

@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Screen;
@@ -96,8 +95,8 @@ class DisciplineEditScreen extends Screen
                             ->method('save'),
                       Link::make(__('Создать новый модуль'))
                           ->icon('plus')
-                          ->route('platform.educationalModules.create')
-                          ->target('__blank'),
+                          ->target('_blank')
+                          ->route('platform.educationalModules.create'),
                   ]),
 
 
@@ -118,13 +117,13 @@ class DisciplineEditScreen extends Screen
                             ->method('save'),
                       Link::make(__('Создать новый курс'))
                           ->icon('plus')
-                          ->route('platform.educationalModules.create')
-                          ->target('__blank'),
+                          ->route('platform.courses.create')
+                          ->target('_blank'),
                   ]),
         ];
     }
 
-    public function save( Discipline $discipline, CreateDisciplineRequest $request ): void {
+    public function save( Discipline $discipline, CreateDisciplineRequest $request ) {
 
         $discipline->fill($request->validated())
                    ->user()->associate(Auth::user())
@@ -133,10 +132,19 @@ class DisciplineEditScreen extends Screen
         $discipline->educationalModules()
                    ->sync($request->input('educationalModules', []));
 
+        if ( $courses_ids = $request->input('courses') ) {
+            collect($courses_ids)->each(function ( $course_id ) use ( $discipline ) {
+                Course::findOrFail($course_id)
+                      ->discipline()
+                      ->associate($discipline)
+                      ->save();
+            });
+        }
+
         Toast::success(__(Config::get('toasts.toasts.update.success')))
              ->autoHide();
 
-        //return redirect()->route('platform.disciplines');
+        return redirect()->route('platform.disciplines.edit', $discipline);
     }
 
     public function remove( Request $request ): RedirectResponse {

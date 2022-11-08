@@ -2,8 +2,6 @@
 
 namespace App\Orchid\Layouts\Course;
 
-use App\Models\Discipline;
-use App\Models\Partner;
 use App\Models\Realization;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
@@ -38,19 +36,19 @@ class CourseEditLayout extends Rows
                  ->toolbar(["text", "color", "header", "list", "format"])
                  ->title(__('Описание'))
                  ->required()
-                 ->value($this->query->get('course.description')),
+                 ->value($this->query->get('course.description') ?? __('Описания нет')),
 
             Input::make('limit')
                  ->title(__('Лимит мест'))
-                 ->type('integer')
+                 ->type('number')
                  ->required()
                  ->value($this->query->get('course.limit')),
 
-            Relation::make('discipline_id')
+            /*Relation::make('discipline_id')
                     ->title(__('Дисциплина'))
                     ->required()
                     ->fromModel(Discipline::class, 'title')
-                    ->value($this->query->get('course')->discipline),
+                    ->value($this->query->get('course')->discipline),*/
 
             Relation::make('realization_id')
                     ->title(__('Способ реализации'))
@@ -58,10 +56,10 @@ class CourseEditLayout extends Rows
                     ->fromModel(Realization::class, 'title')
                     ->value($this->query->get('course')->realization),
 
-            Relation::make('partner_id')
+            /*Relation::make('partner_id')
                     ->title(__('Партнер'))
                     ->fromModel(Partner::class, 'title')
-                    ->value($this->query->get('course')->partner),
+                    ->value($this->query->get('course')->partner),*/
         ];
     }
 }

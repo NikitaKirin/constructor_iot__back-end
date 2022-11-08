@@ -2,6 +2,8 @@
 
 namespace App\Orchid\Layouts\EducationalModule;
 
+use App\Models\Discipline;
+use App\Models\EducationalDirection;
 use App\Models\Semester;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
@@ -41,8 +43,19 @@ class EducationalModuleEditLayout extends Rows
                     ->fromModel(Semester::class, 'text_representation')
                     ->multiple()
                     ->title(__('Семестры'))
-                    ->required()
                     ->value($this->query->get('educationalModule')->semesters),
+
+            Relation::make('educationalDirections.')
+                    ->fromModel(EducationalDirection::class, 'title')
+                    ->multiple()
+                    ->title(__('Направления'))
+                    ->value($this->query->get('educationalModule')->educationalDirections),
+
+            Relation::make('disciplines.')
+                    ->fromModel(Discipline::class, 'title')
+                    ->multiple()
+                    ->title(__('Дисциплины'))
+                    ->value($this->query->get('educationalModule')->disciplines),
 
         ];
     }
