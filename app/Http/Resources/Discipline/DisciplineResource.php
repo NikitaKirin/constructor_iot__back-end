@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Discipline;
 
 use App\Http\Resources\Course\CourseResource;
+use App\Http\Resources\ProfessionalTrajectory\ProfessionalTrajectoryResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,13 +18,15 @@ class DisciplineResource extends JsonResource
      */
     public function toArray( $request ) {
         return [
-            'id'          => $this->id,
-            'title'       => $this->title,
-            'description' => $this->description,
+            'id'                        => $this->id,
+            'title'                     => $this->title,
+            'description'               => $this->description,
             /*'courses_count'                   => $this->courses_count,
             'educational_modules_count'       => $this->educational_modules_count,
             'professional_trajectories_count' => $this->professional_trajectories_count,*/
-            'courses'     => CourseResource::collection($this->courses()->orderBy('title')->get()),
+            'courses'                   => CourseResource::collection($this->courses()->orderBy('title')->get()),
+            'professional_trajectories' => ProfessionalTrajectoryResource::collection($this->professionalTrajectories
+            ()->orderBy('title')->get()),
 
             /*'educationalModules' => EducationalModuleResourceCollection::collection($this->whenLoaded('educationalModules')),*/
         ];
