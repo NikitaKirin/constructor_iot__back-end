@@ -8,6 +8,7 @@ use App\Models\Semester;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Relation;
+use Orchid\Screen\Fields\Switcher;
 use Orchid\Screen\Layouts\Rows;
 
 class EducationalModuleEditLayout extends Rows
@@ -33,11 +34,19 @@ class EducationalModuleEditLayout extends Rows
                  ->required()
                  ->value($this->query->get('educationalModule.title')),
 
+            Switcher::make('is_spec')
+                    ->popover(__('Спецмодуль - модуль, который имеет более одной дисциплины. В этот перечень не входит блок с обязательными курсами.'))
+                    ->sendTrueOrFalse()
+                    ->title('Спецмодуль')
+                    ->value($this->query->get('educationalModule.is_spec'))
+                    ->placeholder('Является спецмодулем'),
+
             Input::make('choice_limit')
                  ->type('number')
-                 ->title(__('Лимит выбора'))
-                 ->required()
+                 ->title(__('Лимит выбора - только для спецмодулей'))
+                 ->placeholder(__('0 для обычных модулей'))
                  ->value($this->query->get('educationalModule.choice_limit')),
+
 
             Relation::make('semesters.')
                     ->fromModel(Semester::class, 'text_representation')

@@ -10,6 +10,7 @@ class CreateEducationalModuleRequest extends FormRequest
         return [
             'title'        => ['required', 'string'],
             'choice_limit' => ['required', 'integer'],
+            'is_spec'      => ['required', 'boolean'],
         ];
     }
 

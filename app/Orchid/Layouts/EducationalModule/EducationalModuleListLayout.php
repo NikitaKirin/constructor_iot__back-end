@@ -39,6 +39,11 @@ class EducationalModuleListLayout extends Table
 
             TD::make('choice_limit', __('Лимит по выбору')),
 
+            TD::make('is_spec', __('Спецмодуль'))
+              ->render(function ( EducationalModule $educationalModule ) {
+                  return $educationalModule->is_spec ? __('Да') : ('Нет');
+              }),
+
             TD::make('user_id', __('Создано/изменено последним'))
               ->render(function ( EducationalModule $educationalModule ) {
                   return $educationalModule->user->name;

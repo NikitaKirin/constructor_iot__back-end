@@ -18,13 +18,13 @@ class EducationalModuleController extends Controller
      * @return EducationalModuleResourceCollection
      */
     public function index( Request $request, EducationalDirection $educationalDirection ) {
-        $semester = $request->input('semester');
+        $semesterId = $request->input('semesterId');
         $educationalModules = EducationalModule::with(['disciplines'])->whereHas('educationalDirections',
             function ( Builder $query ) use ( $educationalDirection ) {
                 return $query->where('title', 'ilike', $educationalDirection->title);
-            })->when($semester, function ( Builder $query ) use ( $semester ) {
-            return $query->whereHas('semesters', function ( Builder $query ) use ( $semester ) {
-                return $query->where('id', 'ilike', $semester);
+            })->when($semesterId, function ( Builder $query ) use ( $semesterId ) {
+            return $query->whereHas('semesters', function ( Builder $query ) use ( $semesterId ) {
+                return $query->where('id', 'ilike', $semesterId);
             });
         })->get();
 

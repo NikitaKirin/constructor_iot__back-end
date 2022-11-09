@@ -331,8 +331,8 @@ Route::screen('educational-modules/{educationalModule}/edit', EducationalModuleE
      ->name('platform.educationalModules.edit')
      ->breadcrumbs(function ( Trail $trail, EducationalModule $educationalModule ) {
          return $trail
-             ->parent('platform.reviews')
-             ->push(__("Изменить образовательную программу: {$educationalModule->title}"),
+             ->parent('platform.educationalModules')
+             ->push(__("Изменить образовательный модуль: {$educationalModule->title}"),
                  route('platform.educationalModules.edit', $educationalModule));
      });
 
