@@ -49,6 +49,7 @@ use App\Orchid\Screens\Review\ReviewProfileScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\SocialNetworksBlock\SocialNetworksBlockEditScreen;
+use App\Orchid\Screens\TelescopeViewScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -472,6 +473,9 @@ Route::screen('professionalTrajectories/{professionalTrajectory}/edit',
              ->push(__("Изменить профессиональный трек"),
                  route('platform.professionalTrajectories.edit', $professionalTrajectory));
      });
+
+Route::screen('/telescope', TelescopeViewScreen::class)
+     ->name('telescope.index');
 
 // Example...
 Route::screen('example', ExampleScreen::class)

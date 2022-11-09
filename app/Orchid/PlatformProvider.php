@@ -10,7 +10,6 @@ use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
 use Orchid\Platform\OrchidServiceProvider;
 use Orchid\Screen\Actions\Menu;
-use Orchid\Support\Color;
 
 class PlatformProvider extends OrchidServiceProvider
 {
@@ -144,10 +143,16 @@ class PlatformProvider extends OrchidServiceProvider
                         ->icon('plus')
                         ->route('platform.reviews.create'),
                 ])
-                ->icon('like'),
+                ->icon('like')
+                ->divider(),
+
+            Menu::make(__('Панель разработчика'))
+                ->route('telescope.index')
+                ->icon('monitor')
+                ->title(__('Разработчикам')),
 
 
-            Menu::make('Example screen')
+            /*Menu::make('Example screen')
                 ->icon('monitor')
                 ->route('platform.example')
                 ->title('Navigation')
@@ -200,7 +205,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->target('_blank')
                 ->badge(function () {
                     return Dashboard::version();
-                }, Color::DARK()),
+                }, Color::DARK()),*/
 
             Menu::make(__('Users'))
                 ->icon('user')
@@ -212,6 +217,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('lock')
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles'),
+
         ];
     }
 
