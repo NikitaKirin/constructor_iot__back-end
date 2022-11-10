@@ -5,7 +5,7 @@ namespace App\Orchid\Screens\ProfessionalTrajectory;
 use App\Http\Requests\ProfessionalTrajectory\CreateProfessionalTrajectoryRequest;
 use App\Models\Discipline;
 use App\Models\ProfessionalTrajectory;
-use App\Orchid\Layouts\ProfessionalTrajectory\ProfessinonalTrajectoryEditLayout;
+use App\Orchid\Layouts\ProfessionalTrajectory\ProfessionalTrajectoryEditLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Button;
@@ -66,7 +66,7 @@ class ProfessionalTrajectoryEditScreen extends Screen
     public function layout(): iterable {
         return [
 
-            Layout::block(ProfessinonalTrajectoryEditLayout::class)
+            Layout::block(ProfessionalTrajectoryEditLayout::class)
                   ->title(__('Основная информация'))
                   ->description(__('Заполните основную информацию о траектории')),
 
@@ -97,12 +97,17 @@ class ProfessionalTrajectoryEditScreen extends Screen
     }
 
     public function save( ProfessionalTrajectory $professionalTrajectory, CreateProfessionalTrajectoryRequest $request ) {
+
         $professionalTrajectory->fill($request->validated())
                                ->user()->associate(Auth::user())
                                ->save();
 
         $professionalTrajectory->disciplines()
                                ->sync($request->input('disciplines', []));
+
+        $professionalTrajectory->attachment()->sync(
+            $request->input('icons', [])
+        );
 
         Toast::success(config('toasts.toasts.update.success'));
     }

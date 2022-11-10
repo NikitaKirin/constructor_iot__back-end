@@ -4,14 +4,15 @@ namespace App\Providers;
 
 use App\Models\Employee;
 use App\Models\Partner;
+use App\Models\ProfessionalTrajectory;
 use App\Models\Review;
 use App\Observers\EmployeeObserver;
 use App\Observers\PartnerObserver;
+use App\Observers\ProfessionalTrajectoryObserver;
 use App\Observers\ReviewObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,10 @@ class EventServiceProvider extends ServiceProvider
 
         Review::class => [
             ReviewObserver::class,
+        ],
+
+        ProfessionalTrajectory::class => [
+            ProfessionalTrajectoryObserver::class,
         ],
     ];
 

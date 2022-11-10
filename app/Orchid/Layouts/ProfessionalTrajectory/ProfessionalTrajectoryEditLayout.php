@@ -5,9 +5,10 @@ namespace App\Orchid\Layouts\ProfessionalTrajectory;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
+use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Layouts\Rows;
 
-class ProfessinonalTrajectoryEditLayout extends Rows
+class ProfessionalTrajectoryEditLayout extends Rows
 {
     /**
      * Used to create the title of a group of form elements.
@@ -23,6 +24,10 @@ class ProfessinonalTrajectoryEditLayout extends Rows
      */
     protected function fields(): iterable {
         return [
+
+            Input::make('id')
+                 ->value($this->query->get("professionalTrajectory.id") ?? null)
+                 ->hidden(),
 
             Input::make('title')
                  ->type('text')
@@ -41,6 +46,14 @@ class ProfessinonalTrajectoryEditLayout extends Rows
                  ->title(__("Цвет"))
                  ->required()
                  ->value($this->query->get('professionalTrajectory.color')),
+
+            Upload::make('icons')
+                  ->groups('icons')
+                  ->maxFiles(10)
+                  ->acceptedFiles('.png,.svg')
+                  ->title(__('Иконки'))
+                  ->popover(__("Иконки отображаются в конструкторе траекторий."))
+                  ->value($this->query->get('professionalTrajectory')?->attachment->where('group', 'icons')),
         ];
     }
 }
