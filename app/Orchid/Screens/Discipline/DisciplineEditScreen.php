@@ -126,6 +126,7 @@ class DisciplineEditScreen extends Screen
                 Layout::rows([
                     Relation::make('professionalTrajectories.')
                             ->fromModel(ProfessionalTrajectory::class, 'title')
+                        //->chunk(30)
                             ->multiple()
                             ->value($this->discipline->professionalTrajectories)
                             ->title(__('Список профессиональных траекторий')),

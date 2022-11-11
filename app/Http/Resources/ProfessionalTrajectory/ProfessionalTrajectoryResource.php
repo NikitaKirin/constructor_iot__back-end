@@ -20,6 +20,7 @@ class ProfessionalTrajectoryResource extends JsonResource
             'id'          => $this->id,
             'title'       => $this->title,
             'description' => $this->description,
+            'slug'        => $this->slug,
             'color'       => $this->color,
             'icons'       => $this->when($this->attachment()->exists(), function () {
                 return $this->getIconsUrls();

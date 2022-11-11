@@ -19,6 +19,7 @@ class ProfessionalTrajectory extends Model
         'title',
         'description',
         'color',
+        'slug',
     ];
 
     /**
