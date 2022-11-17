@@ -32,7 +32,8 @@ class Discipline extends Model
      * @return BelongsToMany
      */
     public function professionalTrajectories(): belongsToMany {
-        return $this->belongsToMany(ProfessionalTrajectory::class, 'discipline_professional_trajectory');
+        return $this->belongsToMany(ProfessionalTrajectory::class, 'discipline_professional_trajectory')
+                    ->withPivot('discipline_level_id');
     }
 
     /**
