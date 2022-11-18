@@ -239,6 +239,12 @@ class DisciplineEditScreen extends Screen
             $discipline->professionalTrajectories()->sync([]);
         }
 
+        $sums = ProfessionalTrajectory::countSumDisciplineLevelsPoints();
+
+        $sums->each(function ( $item, $key ) {
+            ProfessionalTrajectory::find($key)->update(['sum_discipline_levels_points' => $item]);
+        });
+
         Toast::success(__(Config::get('toasts.toasts.update.success')))
              ->autoHide();
 
