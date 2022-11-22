@@ -6,4 +6,7 @@ Route::as('professionalTrajectories.')->group(function () {
 
     Route::get('professionalTrajectories', [ProfessionalTrajectoryController::class, 'index'])
          ->name('index');
+
+    Route::get('professionalTrajectories/{professionalTrajectory}', [ProfessionalTrajectoryController::class, 'show'])
+         ->name('show');
 });
