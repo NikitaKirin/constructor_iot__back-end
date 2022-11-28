@@ -29,11 +29,10 @@ class EducationalModuleController extends Controller
         })->get();
 
         return new EducationalModuleResourceCollection($educationalModules);*/
-        $data = Semester::with('educationalModules')
-                        ->whereHas('educationalModules', function ( Builder $query ) use ( $educationalDirection ) {
-                            return $query->whereHas('educationalDirections',
-                                fn( Builder $query ) => $query->where('id', $educationalDirection->id));
-                        });
+        $data = Semester::whereHas('educationalModules', function ( Builder $query ) use ( $educationalDirection ) {
+            return $query->whereHas('educationalDirections',
+                fn( Builder $query ) => $query->where('id', $educationalDirection->id));
+        })->with(['educationalModules.disciplines.professionalTrajectories']);
         if ( $request->input('paginate') ) {
             return new SemesterResourceCollection($data->paginate(1));
         }

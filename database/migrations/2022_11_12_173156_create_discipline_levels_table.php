@@ -9,7 +9,7 @@ return new class extends Migration {
         Schema::create('discipline_levels', function ( Blueprint $table ) {
             $table->increments('id');
             $table->string('title');
-            $table->integer('digital_value');
+            $table->integer('digital_value')->unique();
             $table->timestamps();
             $table->softDeletes();
         });

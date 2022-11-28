@@ -137,7 +137,8 @@ class DisciplineEditScreen extends Screen
                               'professional_trajectory' => Select::make()
                                                                  ->fromModel(ProfessionalTrajectory::class, 'title'),
                               'discipline_level'        => Select::make('discipline_level')
-                                                                 ->fromModel(DisciplineLevel::class, 'title'),
+                                                                 ->fromModel(DisciplineLevel::class, 'title',
+                                                                     'digital_value'),
                           ])
                         //->canSee($this->discipline->professionalTrajectories()->exists())
                           ->value($this->getJsonForCourseLevelsField()),
@@ -202,6 +203,11 @@ class DisciplineEditScreen extends Screen
 
     public function save( Discipline $discipline, CreateDisciplineRequest $request ) {
 
+        $trajectories = collect($request->input('trajectories_levels', []))
+            ->unique('professional_trajectory')
+            ->keyBy('professional_trajectory')
+            ->map(fn( $item ) => ['discipline_level_digital_value' => $item['discipline_level']]);
+
         $discipline->fill($request->validated())
                    ->user()->associate(Auth::user())
                    ->save();
@@ -210,33 +216,11 @@ class DisciplineEditScreen extends Screen
                    ->sync($request->input('educationalModules', []));
 
         $discipline->professionalTrajectories()
-                   ->sync($request->input('professionalTrajectories', []));
+                   ->sync($trajectories);
 
         if ( $courses_ids = $request->input('courses') ) {
-            collect($courses_ids)->each(function ( $course_id ) use ( $discipline ) {
-                Course::findOrFail($course_id)
-                      ->discipline()
-                      ->associate($discipline)
-                      ->save();
-            });
-        }
-
-        if ( $trajectories_levels = $request->input('trajectories_levels') ) {
-            collect($trajectories_levels)->each(function ( $trajectory_level ) use ( $discipline ) {
-                if ( $discipline->professionalTrajectories()
-                                ->where('id', '=', $trajectory_level['professional_trajectory'])->exists() ) {
-                    return;
-                }
-                $discipline->professionalTrajectories()
-                           ->attach($trajectory_level['professional_trajectory'], [
-                               'discipline_level_id' =>
-                                   $trajectory_level['discipline_level'],
-                           ]);
-            });
-            $discipline->save();
-        }
-        else {
-            $discipline->professionalTrajectories()->sync([]);
+            $courses = Course::findMany($courses_ids);
+            $discipline->courses()->saveMany($courses);
         }
 
         $sums = ProfessionalTrajectory::countSumDisciplineLevelsPoints();
@@ -266,14 +250,14 @@ class DisciplineEditScreen extends Screen
      */
     private function getJsonForCourseLevelsField(): array {
 
-        //$courseLevels = DisciplineLevel::all(['id', 'title']);
+        $disciplineLevels = DisciplineLevel::all()->groupBy('digital_value');
 
         return collect($this->discipline->professionalTrajectories)
-            ->map(function ( ProfessionalTrajectory $professionalTrajectory ) {
+            ->map(function ( ProfessionalTrajectory $professionalTrajectory ) use ( $disciplineLevels ) {
                 return [
                     'professional_trajectory' => $professionalTrajectory,
-                    'discipline_level'        => DisciplineLevel::find
-                    ($professionalTrajectory->pivot->discipline_level_id),
+                    'discipline_level'        => $disciplineLevels->get($professionalTrajectory->pivot->discipline_level_digital_value)
+                                                                  ->first(),
                 ];
 
             })->toArray();

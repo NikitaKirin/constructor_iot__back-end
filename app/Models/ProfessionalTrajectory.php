@@ -31,7 +31,7 @@ class ProfessionalTrajectory extends Model
      */
     public function disciplines(): BelongsToMany {
         return $this->belongsToMany(Discipline::class, 'discipline_professional_trajectory')
-                    ->withPivot('discipline_level_id');
+                    ->withPivot('discipline_level_digital_value');
     }
 
     public function icons() {
@@ -40,27 +40,64 @@ class ProfessionalTrajectory extends Model
 
     public static function countSumDisciplineLevelsPoints( ?ProfessionalTrajectory $professionalTrajectory = null ): int|Collection {
         // Получаем коллекцию данных по структуре: id => количество баллов
-        $disciplineLevels = DisciplineLevel::all(['id', 'digital_value'])
+        /*$disciplineLevels = DisciplineLevel::all(['id', 'digital_value'])
                                            ->groupBy('id')
                                            ->map(fn( $item ) => $item->value('digital_value'))
-                                           ->collect();
+                                           ->collect();*/
 
         // Получаем сумму баллов определенной траектории
         if ( $professionalTrajectory ) {
             $rows = DB::table('discipline_professional_trajectory')->where('professional_trajectory_id',
                 $professionalTrajectory->id)->get();
-            return collect($rows)->map(function ( $row ) use ( $disciplineLevels ) {
-                return $disciplineLevels->get($row->discipline_level_id);
+            return collect($rows)->map(function ( $row ) {
+                return $row->discipline_level_digital_value;
             })->sum();
         }
 
         return DB::table('discipline_professional_trajectory')
                  ->get()
                  ->groupBy('professional_trajectory_id')
-                 ->map(function ( Collection $professionalTrajectoryCollection ) use ( $disciplineLevels ) {
-                     return collect($professionalTrajectoryCollection->map(fn( $professionalTrajectoryCollectionItem ) => $disciplineLevels->get
-                     ($professionalTrajectoryCollectionItem->discipline_level_id)))->sum();
+                 ->map(function ( Collection $professionalTrajectoryCollection ) {
+                     return collect($professionalTrajectoryCollection->map(fn( $professionalTrajectoryCollectionItem
+                     ) => $professionalTrajectoryCollectionItem->discipline_level_digital_value))->sum();
                  });
     }
+
+    /*public static function countSumDisciplineLevelsPoints() {
+        // Получаем коллекцию данных по структуре: id => количество баллов
+        $disciplineLevels = DisciplineLevel::all(['id', 'digital_value'])
+                                           ->groupBy('id')
+                                           ->map(fn( $item ) => $item->value('digital_value'))
+                                           ->collect();
+        /*$result = ProfessionalTrajectory::all(['id'])
+                                        ->groupBy('id')
+                                        ->map(fn( $item ) => 0)
+                                        ->toArray();*/
+    /*$educationalModules = EducationalModule::whereHas('disciplines',
+        fn( Builder $query ) => $query->whereHas('professionalTrajectories'))
+                                           ->get();
+    $result = collect($educationalModules)
+        ->map(function ( EducationalModule $educationalModule ) {
+            return [
+                $educationalModule->title,
+                $educationalModule->is_spec,
+                $educationalModule->disciplines()
+                                  ->whereHas('professionalTrajectories')
+                                  ->get()
+                                  ->map(function ( Discipline $discipline ) {
+                                      return [
+                                          $discipline->title => $discipline->professionalTrajectories
+                                              ->map(function ( ProfessionalTrajectory $professionalTrajectory ) {
+                                                  return [
+                                                      $professionalTrajectory->title => $professionalTrajectory->discipline_level_id,
+                                                  ];
+                                              })->collapse(),
+                                      ];
+                                  }),
+            ];
+        });
+
+    return $result;*/
+    /* }*/
 
 }

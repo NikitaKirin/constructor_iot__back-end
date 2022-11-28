@@ -26,7 +26,8 @@ class EducationalModuleResource extends JsonResource
             //            'disciplines_count'            => $this->disciplines_count,
             //            'educational_directions_count' => $this->educational_directions_count,
             //'semesters_count'              => $this->semesters_count,
-            'disciplines'  => $this->whenLoaded('disciplines', fn() => $this->getDisciplines($request)),
+            //            'disciplines'  => $this->whenLoaded('disciplines', fn() => $this->getDisciplines($request)),
+            'disciplines'  => DisciplineResource::collection($this->whenLoaded('disciplines'))
 
 
             /*'educationalDirections' => EducationalDirectionResourceCollection::collection($this->whenLoaded('educationalDirections')),*/
@@ -46,6 +47,6 @@ class EducationalModuleResource extends JsonResource
                     return $query->where('id', '=', $professionalTrajectoryId);
                 })->orderBy('title')->get());
         }
-        return DisciplineResource::collection($this->disciplines()->orderBy('title')->get());
+        return DisciplineResource::collection($this->disciplines);
     }
 }

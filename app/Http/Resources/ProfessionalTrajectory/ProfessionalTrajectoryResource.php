@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\ProfessionalTrajectory;
 
-use App\Models\DisciplineLevel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
@@ -17,6 +16,10 @@ class ProfessionalTrajectoryResource extends JsonResource
      * @return array
      */
     public function toArray( $request ) {
+        //        $disciplineLevels = DisciplineLevel::all(['id', 'digital_value'])
+        //                                           ->groupBy('id')
+        //                                           ->map(fn( $item ) => $item->value('digital_value'))
+        //                                           ->collect();
         return [
             'id'                           => $this->id,
             'title'                        => $this->title,
@@ -24,11 +27,12 @@ class ProfessionalTrajectoryResource extends JsonResource
             'slug'                         => $this->slug,
             'color'                        => $this->color,
             'sum_discipline_levels_points' => $this->sum_discipline_levels_points,
-            'icons'                        => $this->when($this->attachment()->exists(), function () {
+            /*'icons'                        => $this->when($this->attachment()->exists(), function () {
                 return $this->getIconsUrls();
-            }),
+            }),*/
+            'icons'                        => $this->getIconsUrls(),
             'discipline_evaluation'        => $this->whenPivotLoaded('discipline_professional_trajectory', function () {
-                return DisciplineLevel::find($this->pivot->discipline_level_id)->digital_value;
+                return $this->pivot->discipline_level_digital_value;
             })
             //'disciplines' => DisciplineResourceCollection::collection($this->whenLoaded('disciplines')),
         ];

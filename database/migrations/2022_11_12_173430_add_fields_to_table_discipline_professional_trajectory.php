@@ -13,9 +13,10 @@ return new class extends Migration {
                 \Illuminate\Support\Facades\Artisan::call('db:seed',
                     ['--class' => DisciplineLevelSeeder::class]);
             }
-            $table->foreignId('discipline_level_id')
+            $table->foreignId('discipline_level_digital_value')
                   ->default(DisciplineLevel::first()->id)
-                  ->constrained('discipline_levels')
+                  ->constrained('discipline_levels', 'digital_value')
+                  ->cascadeOnUpdate()
                   ->restrictOnDelete();
         });
     }

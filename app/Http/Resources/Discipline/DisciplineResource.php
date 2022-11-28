@@ -24,15 +24,10 @@ class DisciplineResource extends JsonResource
             /*'courses_count'                   => $this->courses_count,
             'educational_modules_count'       => $this->educational_modules_count,
             'professional_trajectories_count' => $this->professional_trajectories_count,*/
-            'courses'                   => $this->whenLoaded('courses', CourseResource::collection($this->courses()
-                                                                                                        ->orderBy('title')
-                                                                                                        ->get())),
+            'courses'                   => CourseResource::collection($this->whenLoaded('courses')),
             /*'professional_trajectories' => ProfessionalTrajectoryResource::collection($this->professionalTrajectories
             ()->orderBy('title')->get()),*/
-            'professional_trajectories' => $this->when($this->professionalTrajectories()->exists(), function () {
-                return ProfessionalTrajectoryResource::collection($this->professionalTrajectories);
-            })
-
+            'professional_trajectories' => ProfessionalTrajectoryResource::collection($this->whenLoaded('professionalTrajectories')),
             /*'educationalModules' => EducationalModuleResourceCollection::collection($this->whenLoaded('educationalModules')),*/
         ];
     }

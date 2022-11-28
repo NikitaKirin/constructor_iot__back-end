@@ -21,7 +21,7 @@ class SemesterResource extends JsonResource
             'text_representation'      => $this->text_representation,
             'numerical_representation' => $this->numerical_representation,
             'educationalModules'       => $this->whenLoaded('educationalModules', function () {
-                return EducationalModuleResource::collection($this->educationalModules->load('disciplines'));
+                return EducationalModuleResource::collection($this->educationalModules);
             }),
         ];
     }
