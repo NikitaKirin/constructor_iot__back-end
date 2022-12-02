@@ -24,6 +24,18 @@ class EducationalDirection extends Model
         'budget_places',
     ];
 
+    protected $allowedSorts = [
+        'title',
+        'cipher',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $allowedFilters = [
+        'title',
+        'cipher',
+    ];
+
     protected $casts = [
         'passing_scores' => 'array',
     ];

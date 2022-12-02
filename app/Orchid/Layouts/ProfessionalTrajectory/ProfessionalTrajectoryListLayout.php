@@ -35,9 +35,12 @@ class ProfessionalTrajectoryListLayout extends Table
                   return ++$loop->index;
               }),
 
-            TD::make('title', __('Название трека')),
+            TD::make('title', __('Название трека'))
+              ->sort()
+              ->filter(Input::make()),
 
-            TD::make('description', __('Описание')),
+            TD::make('description', __('Описание'))
+              ->defaultHidden(),
 
             TD::make('color', __('Цвет'))
               ->render(function ( ProfessionalTrajectory $professionalTrajectory ) {
@@ -55,6 +58,7 @@ class ProfessionalTrajectoryListLayout extends Table
               }),
 
             TD::make('updated_at', __('Дата и время последнего изменения'))
+              ->sort()
               ->render(function ( ProfessionalTrajectory $professionalTrajectory ) {
                   return $professionalTrajectory->updated_at;
               }),

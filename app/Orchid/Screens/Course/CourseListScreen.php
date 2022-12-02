@@ -19,7 +19,9 @@ class CourseListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'courses' => Course::paginate(15),
+            'courses' => Course::filters()
+                               ->defaultSort('id')
+                               ->paginate(10),
         ];
     }
 

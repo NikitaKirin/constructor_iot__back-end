@@ -7,13 +7,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
 class EducationalModule extends Model
 {
-    use HasFactory, SoftDeletes, Userable, AsSource;
+    use HasFactory, SoftDeletes, Userable, AsSource, Filterable;
 
     protected $fillable = [
+        'title',
+        'choice_limit',
+        'is_spec',
+    ];
+
+    protected $allowedSorts = [
+        'title',
+        'choice_limit',
+        'is_spec',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $allowedFilters = [
         'title',
         'choice_limit',
         'is_spec',

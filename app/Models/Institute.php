@@ -20,10 +20,17 @@ class Institute extends Model
         'abbreviation',
     ];
 
-    protected array $allowedSorts = [
+
+    protected $allowedSorts = [
         'title',
         'abbreviation',
+        'created_at',
         'updated_at',
+    ];
+
+    protected $allowedFilters = [
+        'title',
+        'abbreviation',
     ];
 
     /**

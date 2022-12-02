@@ -7,15 +7,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
 class Course extends Model
 {
-    use HasFactory, SoftDeletes, Userable, AsSource;
+    use HasFactory, SoftDeletes, Userable, AsSource, Filterable;
 
     protected $fillable = [
         'title',
         'description',
+        'limit',
+    ];
+
+    protected $allowedSorts = [
+        'title',
+        'limit',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $allowedFilters = [
+        'title',
         'limit',
     ];
 

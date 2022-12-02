@@ -8,15 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
 class Discipline extends Model
 {
-    use HasFactory, SoftDeletes, AsSource, Userable;
+    use HasFactory, SoftDeletes, AsSource, Userable, Filterable;
 
     protected $fillable = [
         'title',
         'description',
+    ];
+
+    protected $allowedSorts = [
+        'title',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $allowedFilters = [
+        'title',
     ];
 
     /**

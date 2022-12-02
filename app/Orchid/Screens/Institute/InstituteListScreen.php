@@ -8,10 +8,7 @@ use App\Orchid\Layouts\Institute\InstituteEditLayout;
 use App\Orchid\Layouts\Institute\InstituteListLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
-use Orchid\Screen\Fields\Group;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
@@ -25,7 +22,10 @@ class InstituteListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'institutes' => Institute::with('user')->paginate(5),
+            'institutes' => Institute::with('user')
+                                     ->filters()
+                                     ->defaultSort('id')
+                                     ->paginate(10),
         ];
     }
 

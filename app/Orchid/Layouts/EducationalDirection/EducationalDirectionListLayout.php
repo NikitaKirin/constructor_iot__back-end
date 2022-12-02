@@ -3,10 +3,10 @@
 namespace App\Orchid\Layouts\EducationalDirection;
 
 use App\Models\EducationalDirection;
-use App\Models\Institute;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -36,7 +36,7 @@ class EducationalDirectionListLayout extends Table
               }),
 
             TD::make('title', __('Название'))
-              ->filter()
+              ->filter(Input::make())
               ->sort()
               ->render(function ( EducationalDirection $educationalDirection ) {
                   return ModalToggle::make($educationalDirection->title)
@@ -48,7 +48,7 @@ class EducationalDirectionListLayout extends Table
 
             TD::make('cipher', __('Шифр'))
               ->sort()
-              ->filter()
+              ->filter(Input::make())
               ->render(function ( EducationalDirection $educationalDirection ) {
                   return ModalToggle::make($educationalDirection->cipher)
                                     ->modal('asyncEditEducationalDirectionModal')

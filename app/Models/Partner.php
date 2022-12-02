@@ -21,6 +21,16 @@ class Partner extends Model
         'description',
     ];
 
+    protected $allowedSorts = [
+        'title',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $allowedFilters = [
+        'title',
+    ];
+
     /**
      * Relation - partner to user
      * @return BelongsTo

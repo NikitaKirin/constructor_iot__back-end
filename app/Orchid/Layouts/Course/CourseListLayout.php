@@ -6,6 +6,7 @@ use App\Models\Course;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 use Orchid\Support\Color;
@@ -35,12 +36,17 @@ class CourseListLayout extends Table
                   return ++$loop->index;
               }),
 
-            TD::make('title', __('Название')),
+            TD::make('title', __('Название'))
+              ->sort()
+              ->filter(Input::make())
+              ->width(250),
 
-            TD::make('description', __('Описание'))
-              ->width(200),
+            /*TD::make('description', __('Описание'))
+              ->width(200),*/
 
-            TD::make('limit', __('Лимиты выбора')),
+            TD::make('limit', __('Лимиты выбора'))
+              ->sort()
+              ->filter(Input::make()->type('number')),
 
             TD::make('discipline_id', __("Дисциплина"))
               ->render(function ( Course $course ) {
@@ -50,12 +56,14 @@ class CourseListLayout extends Table
             TD::make('realization_id', __('Вид реализации'))
               ->render(function ( Course $course ) {
                   return $course->realization->title;
-              }),
+              })
+              ->defaultHidden(),
 
             TD::make('partner_id', __('Партнер'))
               ->render(function ( Course $course ) {
                   return $course->partner->title;
-              }),
+              })
+              ->defaultHidden(),
 
             TD::make('user_id', __('Сохранено/изменено последним'))
               ->render(function ( Course $course ) {
@@ -63,6 +71,7 @@ class CourseListLayout extends Table
               }),
 
             TD::make('updated_at', __('Дата и время последнего изменения'))
+              ->sort()
               ->render(function ( Course $course ) {
                   return $course->updated_at;
               }),

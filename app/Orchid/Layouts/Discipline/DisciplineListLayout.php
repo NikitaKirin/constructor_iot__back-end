@@ -6,6 +6,7 @@ use App\Models\Discipline;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -21,6 +22,7 @@ class DisciplineListLayout extends Table
      */
     protected $target = 'disciplines';
 
+
     /**
      * Get the table cells to be displayed.
      *
@@ -34,10 +36,12 @@ class DisciplineListLayout extends Table
                   return ++$loop->index;
               }),
 
-            TD::make('title', __('Название')),
+            TD::make('title', __('Название'))
+              ->sort()
+              ->filter(Input::make()),
 
-            TD::make('description', __('Описание'))
-              ->width(200),
+            /*TD::make('description', __('Описание'))
+              ->width(200),*/
 
             TD::make('user_id', __("Создано/изменено последним"))
               ->render(function ( Discipline $discipline ) {
@@ -45,6 +49,7 @@ class DisciplineListLayout extends Table
               }),
 
             TD::make('updated_at', __('Дата и время последнего изменения'))
+              ->sort()
               ->render(function ( Discipline $discipline ) {
                   return $discipline->updated_at;
               }),

@@ -19,7 +19,9 @@ class EducationalModuleListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'educationalModules' => EducationalModule::paginate(10),
+            'educationalModules' => EducationalModule::filters()
+                                                     ->defaultSort('id')
+                                                     ->paginate(10),
         ];
     }
 

@@ -19,7 +19,9 @@ class DisciplineListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'disciplines' => Discipline::paginate(15),
+            'disciplines' => Discipline::filters()
+                                       ->defaultSort('id')
+                                       ->paginate(10),
         ];
     }
 

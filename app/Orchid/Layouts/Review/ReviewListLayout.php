@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 use Orchid\Support\Color;
@@ -42,15 +43,21 @@ class ReviewListLayout extends Table
                   return "<img src='$link' width='100' alt='Фото: $review->author'>";
               }),
 
-            TD::make('author', __('Автор')),
+            TD::make('author', __('Автор'))
+              ->sort()
+              ->filter(Input::make()),
 
             TD::make('text', __('Текст'))
-              ->width(200),
+              ->width(200)
+              ->defaultHidden(),
 
             TD::make('educational_direction',
-                __("Направление")),
+                __("Направление"))
+              ->sort(),
 
             TD::make('hidden', __('Скрыто'))
+              ->sort()
+              ->filter(TD::FILTER_SELECT, [true => 'Да', false => 'Нет'])
               ->render(function ( Review $review ) {
                   return $review->hidden ? __("Да") : __('Нет');
               }),
@@ -61,6 +68,7 @@ class ReviewListLayout extends Table
               }),
 
             TD::make('updated_at', __('Дата и время последнего изменения'))
+              ->sort()
               ->render(function ( Review $review ) {
                   return $review->updated_at;
               }),

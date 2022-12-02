@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 use Orchid\Support\Color;
@@ -43,11 +44,13 @@ class PartnerListLayout extends Table
               }),
 
             TD::make('title', __('Название компании'))
-              ->render(function ( Partner $partner ) {
-                  return Link::make(__("$partner->title"))
-                             ->icon('open')
-                             ->route('platform.partners.profile', $partner);
-              }),
+              ->sort()
+              ->filter(Input::make())
+            /*->render(function ( Partner $partner ) {
+                return Link::make(__("$partner->title"))
+                           ->icon('open')
+                           ->route('platform.partners.profile', $partner);
+            })*/,
 
             TD::make("user_id", __('Создано/изменено последним'))
               ->render(function ( Partner $partner ) {
@@ -55,6 +58,7 @@ class PartnerListLayout extends Table
               }),
 
             TD::make('updated_at', __('Дата и время последнего изменения'))
+              ->sort()
               ->render(function ( Partner $partner ) {
                   return $partner->updated_at;
               }),

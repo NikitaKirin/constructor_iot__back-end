@@ -23,7 +23,10 @@ class EducationalDirectionListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'educationalDirections' => EducationalDirection::with(['institute', 'user'])->paginate(10),
+            'educationalDirections' => EducationalDirection::with(['institute', 'user'])
+                                                           ->filters()
+                                                           ->defaultSort('id')
+                                                           ->paginate(10),
         ];
     }
 

@@ -11,11 +11,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Orchid\Attachment\Attachable;
 use Orchid\Attachment\Models\Attachment;
+use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
 class ProfessionalTrajectory extends Model
 {
-    use HasFactory, SoftDeletes, Userable, AsSource, Attachable;
+    use HasFactory, SoftDeletes, Userable, AsSource, Attachable, Filterable;
 
     protected $fillable = [
         'title',
@@ -23,6 +24,17 @@ class ProfessionalTrajectory extends Model
         'color',
         'slug',
         'sum_discipline_levels_points',
+    ];
+
+    protected $allowedSorts = [
+        'title',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $allowedFilters = [
+        'title',
+        'slug',
     ];
 
     /**

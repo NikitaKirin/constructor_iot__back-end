@@ -13,7 +13,7 @@ use Orchid\Screen\AsSource;
 
 class Review extends Model
 {
-    use HasFactory, AsSource, Filterable, Attachable;
+    use HasFactory, AsSource, Filterable, Attachable, Filterable;
 
     protected $fillable = [
         'author',
@@ -23,6 +23,20 @@ class Review extends Model
         'course',
         'hidden',
         'photo_id',
+    ];
+
+    protected $allowedSorts = [
+        'author',
+        'educational_direction',
+        'hidden',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $allowedFilters = [
+        'author',
+        'educational_direction',
+        'hidden',
     ];
 
     /**

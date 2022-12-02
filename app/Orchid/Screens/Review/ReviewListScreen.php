@@ -18,7 +18,9 @@ class ReviewListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'reviews' => Review::paginate(10),
+            'reviews' => Review::filters()
+                               ->defaultSort('id')
+                               ->paginate(10),
         ];
     }
 

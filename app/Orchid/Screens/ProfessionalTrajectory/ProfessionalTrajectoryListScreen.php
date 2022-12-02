@@ -18,7 +18,9 @@ class ProfessionalTrajectoryListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'professionalTrajectories' => ProfessionalTrajectory::paginate(10),
+            'professionalTrajectories' => ProfessionalTrajectory::filters()
+                                                                ->defaultSort('id')
+                                                                ->paginate(10),
         ];
     }
 

@@ -18,7 +18,9 @@ class PartnerListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            "partners" => Partner::paginate(15),
+            "partners" => Partner::filters()
+                                 ->defaultSort('id')
+                                 ->paginate(10),
         ];
     }
 

@@ -6,6 +6,7 @@ use App\Models\EducationalModule;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 use Orchid\Support\Color;
@@ -35,21 +36,33 @@ class EducationalModuleListLayout extends Table
                   return ++$loop->index;
               }),
 
-            TD::make('title', __("Название")),
+            TD::make('title', __("Название"))
+              ->sort()
+              ->filter(Input::make()),
 
-            TD::make('choice_limit', __('Лимит по выбору')),
+            TD::make('choice_limit', __('Лимит по выбору'))
+              ->sort()
+              ->filter(Input::make()->type('number'))
+                //->width('100px')
+              ->alignCenter(),
 
             TD::make('is_spec', __('Спецмодуль'))
+              ->sort()
+              ->filter(TD::FILTER_SELECT, [true => 'Да', false => 'Нет'])
+              ->alignCenter()
               ->render(function ( EducationalModule $educationalModule ) {
                   return $educationalModule->is_spec ? __('Да') : ('Нет');
               }),
 
             TD::make('user_id', __('Создано/изменено последним'))
+              ->alignCenter()
               ->render(function ( EducationalModule $educationalModule ) {
                   return $educationalModule->user->name;
               }),
 
             TD::make('updated_at', __('Дата и время последнего изменения'))
+              ->sort()
+              ->alignCenter()
               ->render(function ( EducationalModule $educationalModule ) {
                   return $educationalModule->updated_at;
               }),
