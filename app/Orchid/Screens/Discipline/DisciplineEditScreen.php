@@ -134,7 +134,7 @@ class DisciplineEditScreen extends Screen
                               'Оценка курса для траектории' => 'discipline_level',
                           ])
                           ->fields([
-                              'professional_trajectory' => Select::make()
+                              'professional_trajectory' => Select::make('professional_trajectory')
                                                                  ->fromModel(ProfessionalTrajectory::class, 'title'),
                               'discipline_level'        => Select::make('discipline_level')
                                                                  ->fromModel(DisciplineLevel::class, 'title',
@@ -203,6 +203,8 @@ class DisciplineEditScreen extends Screen
 
     public function save( Discipline $discipline, CreateDisciplineRequest $request ) {
 
+        //dd($request->input('trajectories_levels'));
+
         $trajectories = collect($request->input('trajectories_levels', []))
             ->unique('professional_trajectory')
             ->keyBy('professional_trajectory')
@@ -250,14 +252,13 @@ class DisciplineEditScreen extends Screen
      */
     private function getJsonForCourseLevelsField(): array {
 
-        $disciplineLevels = DisciplineLevel::all()->groupBy('digital_value');
+        $disciplineLevels = DisciplineLevel::all()->groupBy('digital_value')->get(1)->first();
 
         return collect($this->discipline->professionalTrajectories)
-            ->map(function ( ProfessionalTrajectory $professionalTrajectory ) use ( $disciplineLevels ) {
+            ->map(function ( ProfessionalTrajectory $professionalTrajectory ) {
                 return [
-                    'professional_trajectory' => $professionalTrajectory,
-                    'discipline_level'        => $disciplineLevels->get($professionalTrajectory->pivot->discipline_level_digital_value)
-                                                                  ->first(),
+                    'professional_trajectory' => $professionalTrajectory->id,
+                    'discipline_level'        => $professionalTrajectory->pivot->discipline_level_digital_value,
                 ];
 
             })->toArray();
