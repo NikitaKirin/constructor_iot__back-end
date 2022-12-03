@@ -10,11 +10,11 @@ return new class extends Migration {
             $table->increments('id');
             $table->jsonb('data')
                   ->default(json_encode([
-                      "Telegram"  => [
+                      "telegram" => [
                           "url"  => "https://web.telegram.org",
                           'icon' => asset('storage/img/icons/social_networks/telegram-icon.svg'),
                       ],
-                      "ВКонтакте" => [
+                      "vk"       => [
                           "url"  => "https://vk.com",
                           'icon' => asset('storage/img/icons/social_networks/vk-icon.svg'),
                       ],

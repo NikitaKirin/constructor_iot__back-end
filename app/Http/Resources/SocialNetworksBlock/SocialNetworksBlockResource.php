@@ -27,14 +27,14 @@ class SocialNetworksBlockResource extends JsonResource
         return [
             [
                 'name' => 'Telegram',
-                'url'  => $array['Telegram']['url'],
-                'icon' => $array['Telegram']['icon'],
+                'url'  => $array['telegram']['url'],
+                'icon' => $array['telegram']['icon'],
             ],
 
             [
                 'name' => 'ВКонтакте',
-                'url'  => $array['ВКонтакте']['url'],
-                'icon' => $array['ВКонтакте']['icon'],
+                'url'  => $array['vk']['url'],
+                'icon' => $array['vk']['icon'],
             ],
         ];
     }

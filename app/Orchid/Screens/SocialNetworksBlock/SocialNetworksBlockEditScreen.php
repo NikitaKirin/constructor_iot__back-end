@@ -64,6 +64,7 @@ class SocialNetworksBlockEditScreen extends Screen
 
     public function save( UpdateSocialNetworksBlockRequest $request ) {
         $socialNetworksBlock = SocialNetworksBlock::findOrFail($request->input('id'));
+        //dd($socialNetworksBlock);
         $socialNetworksBlock->update([
             'data->telegram->url' => $request->input('telegram'),
             'data->vk->url'       => $request->input('vk'),
