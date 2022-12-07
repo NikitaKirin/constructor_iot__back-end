@@ -36,7 +36,12 @@ class EducationalModuleListLayout extends Table
               }),
 
             TD::make('title', __("Название"))
-              ->sort(),
+              ->sort()
+              ->render(function ( EducationalModule $educationalModule ) {
+                  return Link::make($educationalModule->title)
+                             ->icon('eye')
+                             ->route('platform.educationalModules.profile', $educationalModule);
+              }),
 
             TD::make('choice_limit', __('Лимит по выбору дисциплин'))
               ->popover(__('Сколько дисциплин выбирают студенты в данном модуле'))
@@ -72,7 +77,7 @@ class EducationalModuleListLayout extends Table
                                  ->icon('options-vertical')
                                  ->list([
                                      Link::make(__('Открыть'))
-                                         ->icon('open')
+                                         ->icon('eye')
                                          ->route('platform.educationalModules.profile', $educationalModule),
                                      Link::make(__('Edit'))
                                          ->icon('pencil')

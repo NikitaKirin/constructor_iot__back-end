@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\EducationalModule;
 
 use App\Models\EducationalModule;
+use App\Orchid\Layouts\Discipline\DisciplineListLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -24,8 +25,11 @@ class EducationalModuleProfileScreen extends Screen
      * @return array
      */
     public function query( EducationalModule $educationalModule ): iterable {
+        $educationalModule->load(['educationalDirections', 'disciplines']);
         return [
-            'educationalModule' => $educationalModule,
+            'educationalModule'     => $educationalModule,
+            'educationalDirections' => $educationalModule->educationalDirections,
+            'disciplines'           => $educationalModule->disciplines,
         ];
     }
 
@@ -68,13 +72,20 @@ class EducationalModuleProfileScreen extends Screen
                     Layout::legend("educationalModule", [
                         Sight::make('title', __('Название')),
                         Sight::make("choice_limit", __('Лимит выбора')),
+                        Sight::make('is_spec', __('Спец-модуль'))
+                             ->render(function ( EducationalModule $educationalModule ) {
+                                 return $educationalModule->is_spec ? 'Да' : 'Нет';
+                             }),
                     ]),
-                __("Курсы модуля")        => Layout::rows([]),
+                /*__('Направления')         =>
+                    EducationalDirectionListLayout::class,*/
+
+                __("Дисциплины модуля") => DisciplineListLayout::class,
             ]),
         ];
     }
 
-    public function destroy( Request $request): RedirectResponse {
+    public function destroy( Request $request ): RedirectResponse {
         EducationalModule::findOrFail($request->input('id'))->forceDelete();
 
         Toast::success(__(Config::get('toasts.toasts.delete.success')));

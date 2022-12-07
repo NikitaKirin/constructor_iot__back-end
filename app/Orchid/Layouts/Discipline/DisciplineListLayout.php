@@ -3,6 +3,7 @@
 namespace App\Orchid\Layouts\Discipline;
 
 use App\Models\Discipline;
+use Illuminate\Support\Facades\Route;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
@@ -66,7 +67,8 @@ class DisciplineListLayout extends Table
                                          ->route('platform.disciplines.edit', $discipline),
                                      Button::make(__('Delete'))
                                            ->icon('trash')
-                                           ->method('destroy', ['id' => $discipline->id]),
+                                           ->method('destroy', ['id' => $discipline->id])
+                                           ->canSee(Route::is('platform.disciplines*')),
                                  ]);
               }),
         ];
