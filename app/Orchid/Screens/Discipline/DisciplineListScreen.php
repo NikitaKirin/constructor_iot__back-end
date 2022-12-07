@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Discipline;
 
 use App\Models\Discipline;
+use App\Orchid\Layouts\Discipline\DisciplineFilters;
 use App\Orchid\Layouts\Discipline\DisciplineListLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -19,7 +20,7 @@ class DisciplineListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'disciplines' => Discipline::filters()
+            'disciplines' => Discipline::filters(DisciplineFilters::class)
                                        ->defaultSort('id')
                                        ->paginate(10),
         ];
@@ -54,6 +55,7 @@ class DisciplineListScreen extends Screen
      */
     public function layout(): iterable {
         return [
+            DisciplineFilters::class,
             DisciplineListLayout::class,
         ];
     }

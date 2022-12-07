@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Course;
 
 use App\Models\Course;
+use App\Orchid\Layouts\Course\CourseFilters;
 use App\Orchid\Layouts\Course\CourseListLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -19,7 +20,7 @@ class CourseListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'courses' => Course::filters()
+            'courses' => Course::filters(CourseFilters::class)
                                ->defaultSort('id')
                                ->paginate(10),
         ];
@@ -54,6 +55,7 @@ class CourseListScreen extends Screen
      */
     public function layout(): iterable {
         return [
+            CourseFilters::class,
             CourseListLayout::class,
         ];
     }

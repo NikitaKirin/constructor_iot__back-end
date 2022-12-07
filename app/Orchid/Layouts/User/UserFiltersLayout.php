@@ -11,8 +11,7 @@ class UserFiltersLayout extends Selection
     /**
      * @return string[]|Filter[]
      */
-    public function filters(): array
-    {
+    public function filters(): array {
         return [
             RoleFilter::class,
         ];

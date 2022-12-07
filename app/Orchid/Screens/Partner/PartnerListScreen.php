@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Partner;
 
 use App\Models\Partner;
+use App\Orchid\Layouts\Parnter\PartnerFilters;
 use App\Orchid\Layouts\Partner\PartnerListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
@@ -18,7 +19,7 @@ class PartnerListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            "partners" => Partner::filters()
+            "partners" => Partner::filters(PartnerFilters::class)
                                  ->defaultSort('id')
                                  ->paginate(10),
         ];
@@ -53,6 +54,7 @@ class PartnerListScreen extends Screen
      */
     public function layout(): iterable {
         return [
+            PartnerFilters::class,
             PartnerListLayout::class,
         ];
     }

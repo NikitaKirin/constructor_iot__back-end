@@ -6,7 +6,6 @@ use App\Models\Course;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 use Orchid\Support\Color;
@@ -38,15 +37,13 @@ class CourseListLayout extends Table
 
             TD::make('title', __('Название'))
               ->sort()
-              ->filter(Input::make())
               ->width(250),
 
             /*TD::make('description', __('Описание'))
               ->width(200),*/
 
-            TD::make('limit', __('Лимиты выбора'))
-              ->sort()
-              ->filter(Input::make()->type('number')),
+            TD::make('limit', __('Лимит мест'))
+              ->sort(),
 
             TD::make('discipline_id', __("Дисциплина"))
               ->render(function ( Course $course ) {

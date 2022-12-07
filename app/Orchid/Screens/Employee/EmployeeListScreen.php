@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Employee;
 
 use App\Models\Employee;
+use App\Orchid\Layouts\Employee\EmployeeFilters;
 use App\Orchid\Layouts\Employee\EmployeeListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
@@ -18,7 +19,7 @@ class EmployeeListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'employees' => Employee::filters()->paginate(10),
+            'employees' => Employee::filters(EmployeeFilters::class)->paginate(10),
         ];
     }
 
@@ -51,6 +52,7 @@ class EmployeeListScreen extends Screen
      */
     public function layout(): iterable {
         return [
+            EmployeeFilters::class,
             EmployeeListLayout::class,
         ];
     }

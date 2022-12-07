@@ -6,7 +6,6 @@ use App\Models\Discipline;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -37,8 +36,7 @@ class DisciplineListLayout extends Table
               }),
 
             TD::make('title', __('Название'))
-              ->sort()
-              ->filter(Input::make()),
+              ->sort(),
 
             /*TD::make('description', __('Описание'))
               ->width(200),*/

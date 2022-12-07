@@ -45,7 +45,6 @@ class EmployeeListLayout extends Table
 
             TD::make('full_name', __('ФИО'))
               ->sort()
-              ->filter()
               ->cantHide()
               ->render(function ( Employee $employee ) {
                   return Link::make("$employee->full_name")

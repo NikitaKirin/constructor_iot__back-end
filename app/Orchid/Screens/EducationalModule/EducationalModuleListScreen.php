@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\EducationalModule;
 
 use App\Models\EducationalModule;
+use App\Orchid\Layouts\EducationalModule\EducationalModuleFilters;
 use App\Orchid\Layouts\EducationalModule\EducationalModuleListLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -19,7 +20,7 @@ class EducationalModuleListScreen extends Screen
      */
     public function query(): iterable {
         return [
-            'educationalModules' => EducationalModule::filters()
+            'educationalModules' => EducationalModule::filters(EducationalModuleFilters::class)
                                                      ->defaultSort('id')
                                                      ->paginate(10),
         ];
@@ -54,6 +55,7 @@ class EducationalModuleListScreen extends Screen
      */
     public function layout(): iterable {
         return [
+            EducationalModuleFilters::class,
             EducationalModuleListLayout::class,
         ];
     }
