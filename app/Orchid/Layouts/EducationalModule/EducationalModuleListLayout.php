@@ -3,6 +3,7 @@
 namespace App\Orchid\Layouts\EducationalModule;
 
 use App\Models\EducationalModule;
+use Illuminate\Support\Facades\Route;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
@@ -85,7 +86,8 @@ class EducationalModuleListLayout extends Table
                                      Button::make(__('Delete'))
                                            ->icon('trash')
                                            ->type(Color::DANGER())
-                                           ->method('destroy', ['id' => $educationalModule->id]),
+                                           ->method('destroy', ['id' => $educationalModule->id])
+                                           ->canSee(Route::is('platform.educationalModules*')),
                                  ]);
               }),
         ];

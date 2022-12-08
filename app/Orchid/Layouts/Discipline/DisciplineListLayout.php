@@ -37,7 +37,12 @@ class DisciplineListLayout extends Table
               }),
 
             TD::make('title', __('Название'))
-              ->sort(),
+              ->sort()
+              ->render(function ( Discipline $discipline ) {
+                  return Link::make($discipline->title)
+                             ->icon('eye')
+                             ->route('platform.disciplines.profile', $discipline);
+              }),
 
             /*TD::make('description', __('Описание'))
               ->width(200),*/

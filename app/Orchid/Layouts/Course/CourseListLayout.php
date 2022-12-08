@@ -3,6 +3,7 @@
 namespace App\Orchid\Layouts\Course;
 
 use App\Models\Course;
+use Illuminate\Support\Facades\Route;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
@@ -91,7 +92,8 @@ class CourseListLayout extends Table
                                      Button::make(__('Delete'))
                                            ->type(Color::DANGER())
                                            ->icon('trash')
-                                           ->method('destroy', ['id' => $course->id]),
+                                           ->method('destroy', ['id' => $course->id])
+                                           ->canSee(Route::is('platform.courses*')),
                                  ]);
               }),
         ];

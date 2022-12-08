@@ -5,6 +5,7 @@ namespace App\Orchid\Screens\Discipline;
 use App\Models\Discipline;
 use App\Orchid\Layouts\Course\CourseListLayout;
 use App\Orchid\Layouts\EducationalModule\EducationalModuleListLayout;
+use App\Orchid\Layouts\ProfessionalTrajectory\ProfessionalTrajectoryListLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -26,11 +27,12 @@ class DisciplineProfileScreen extends Screen
      * @return array
      */
     public function query( Discipline $discipline ): iterable {
-        $discipline->load(['educationalModules']);
+        $discipline->load(['educationalModules', 'professionalTrajectories']);
         return [
-            'discipline'         => $discipline,
-            'educationalModules' => $discipline->educationalModules,
-            'courses'            => $discipline->courses,
+            'discipline'               => $discipline,
+            'educationalModules'       => $discipline->educationalModules,
+            'courses'                  => $discipline->courses,
+            'professionalTrajectories' => $discipline->professionalTrajectories,
         ];
     }
 
@@ -69,14 +71,19 @@ class DisciplineProfileScreen extends Screen
     public function layout(): iterable {
         return [
             Layout::tabs([
-                __('Основная информация')    =>
+                __('Основная информация')         =>
                     Layout::legend("discipline", [
                         Sight::make('title', __('Название')),
-                        Sight::make("description", __('Описание')),
+                        Sight::make("description", __('Описание'))
+                             ->render(function ( Discipline $discipline ) {
+                                 return $discipline->description;
+                             }),
                     ]),
-                __("Курсы дисциплины")       => CourseListLayout::class,
-                __('Образовательные модули') => EducationalModuleListLayout::class,
-            ]),
+                __("Курсы дисциплины")            => CourseListLayout::class,
+                __("Профессиональные траектории") => ProfessionalTrajectoryListLayout::class,
+                __('Образовательные модули')      => EducationalModuleListLayout::class,
+            ])
+                  ->activeTab(__('Основная информация')),
         ];
     }
 

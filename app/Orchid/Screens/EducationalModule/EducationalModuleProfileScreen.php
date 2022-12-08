@@ -81,7 +81,8 @@ class EducationalModuleProfileScreen extends Screen
                     EducationalDirectionListLayout::class,*/
 
                 __("Дисциплины модуля") => DisciplineListLayout::class,
-            ]),
+            ])
+                  ->activeTab(__('Основная информация')),
         ];
     }
 

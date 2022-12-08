@@ -9,6 +9,8 @@ use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
+use Orchid\Support\Color;
+use Route;
 
 class ProfessionalTrajectoryListLayout extends Table
 {
@@ -77,7 +79,9 @@ class ProfessionalTrajectoryListLayout extends Table
                                          ->route('platform.professionalTrajectories.edit', $professionalTrajectory),
                                      Button::make(__('Delete'))
                                            ->icon('trash')
-                                           ->method('destroy', ['id' => $professionalTrajectory->id]),
+                                           ->type(Color::DANGER())
+                                           ->method('destroy', ['id' => $professionalTrajectory->id])
+                                           ->canSee(Route::is('platform.professionalTrajectories*')),
                                  ]);
               }),
 
