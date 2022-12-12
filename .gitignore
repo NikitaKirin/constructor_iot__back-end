@@ -16,3 +16,5 @@ yarn-error.log
 /.vscode
 .env.testing
 !/.env.testing
+/public/vendor
+composer.lock
