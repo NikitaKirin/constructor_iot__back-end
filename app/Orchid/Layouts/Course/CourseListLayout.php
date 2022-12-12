@@ -38,7 +38,12 @@ class CourseListLayout extends Table
 
             TD::make('title', __('Название'))
               ->sort()
-              ->width(250),
+              ->width(250)
+            ->render(function (Course $course) {
+                return Link::make($course->title)
+                    ->icon('eye')
+                    ->route('platform.courses.profile', $course);
+            }),
 
             /*TD::make('description', __('Описание'))
               ->width(200),*/

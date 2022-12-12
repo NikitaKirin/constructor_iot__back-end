@@ -3,9 +3,11 @@
 namespace App\Orchid\Screens\Course;
 
 use App\Models\Course;
+use App\Models\Discipline;
 use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Screen;
 use Orchid\Screen\Sight;
 use Orchid\Support\Color;
@@ -45,10 +47,10 @@ class CourseProfileScreen extends Screen
                 ->icon("pencil")
                 ->route("platform.courses.edit", $this->course),
             Button::make(__("Delete"))
-                  ->icon('trash')
-                  ->type(Color::DANGER())
-                  ->confirm(__(Config::get('toasts.confirm.forceDelete')))
-                  ->method('destroy', ['id' => $this->course->id]),
+                ->icon('trash')
+                ->type(Color::DANGER())
+                ->confirm(__(Config::get('toasts.confirm.forceDelete')))
+                ->method('destroy', ['id' => $this->course->id]),
         ];
     }
 
@@ -64,14 +66,31 @@ class CourseProfileScreen extends Screen
                     \Orchid\Support\Facades\Layout::legend('course', [
                         Sight::make('title', __("Название")),
                         Sight::make('description', __('Описание'))
-                             ->render(fn() => $this->course->description),
+                            ->render(function (Course $course){
+                                return $course->description;
+                            }),
                         Sight::make('limit', __('Лимит мест')),
                         Sight::make('discipline_id', __("Дисциплина"))
-                             ->render(fn() => $this->course->discipline->title),
+                            ->render(function (Course $course){
+                                $discipline = $course->discipline;
+                                if ($discipline->title === __("Нет")) {
+                                    return $discipline->title;
+                                }
+                                return Link::make($discipline->title)
+                                    ->icon('eye')
+                                    ->route('platform.disciplines.profile', $discipline);
+                            }),
                         Sight::make('partner_id', __('Партнер'))
-                             ->render(fn() => $this->course->partner->title),
-                        Sight::make('realization_id', __('Вид реализации'))
-                             ->render(fn() => $this->course->realization->title),
+                            ->render(function (Course $course){
+                                $partner = $course->partner;
+                                if ($partner->title === __("Нет")) {
+                                    return $partner->title;
+                                }
+                                return Link::make($partner->title)
+                                    ->icon('eye')
+                                    ->route('platform.partners.profile', $partner);
+                            }),
+                        Sight::make('realization_id', __('Вид реализации')),
                     ]),
                 ],
             ]),

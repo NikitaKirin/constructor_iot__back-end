@@ -45,7 +45,8 @@ class Course extends Model
      * @return BelongsTo
      */
     public function discipline(): BelongsTo {
-        return $this->belongsTo(Discipline::class);
+        return $this->belongsTo(Discipline::class)
+            ->withDefault(['title' => __('Нет')]);
     }
 
     /**
