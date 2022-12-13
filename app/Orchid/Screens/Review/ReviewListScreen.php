@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Review;
 
 use App\Models\Review;
+use App\Orchid\Layouts\Review\ReviewFilters;
 use App\Orchid\Layouts\Review\ReviewListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
@@ -16,11 +17,12 @@ class ReviewListScreen extends Screen
      *
      * @return array
      */
-    public function query(): iterable {
+    public function query(): iterable
+    {
         return [
-            'reviews' => Review::filters()
-                               ->defaultSort('id')
-                               ->paginate(10),
+            'reviews' => Review::filters(ReviewFilters::class)
+                ->defaultSort('id')
+                ->paginate(10),
         ];
     }
 
@@ -29,7 +31,8 @@ class ReviewListScreen extends Screen
      *
      * @return string|null
      */
-    public function name(): ?string {
+    public function name(): ?string
+    {
         return __('Список отзывов');
     }
 
@@ -38,7 +41,8 @@ class ReviewListScreen extends Screen
      *
      * @return \Orchid\Screen\Action[]
      */
-    public function commandBar(): iterable {
+    public function commandBar(): iterable
+    {
         return [
             Link::make(__('Add'))
                 ->icon('plus')
@@ -51,17 +55,20 @@ class ReviewListScreen extends Screen
      *
      * @return \Orchid\Screen\Layout[]|string[]
      */
-    public function layout(): iterable {
+    public function layout(): iterable
+    {
         return [
+            ReviewFilters::class,
             ReviewListLayout::class,
         ];
     }
 
-    public function destroy( Request $request ) {
+    public function destroy(Request $request)
+    {
         Review::findOrFail($request->input('id'))->forceDelete();
 
         Toast::success(__('Отзыв успешно удален'))
-             ->autoHide();
+            ->autoHide();
 
         return redirect()->back();
     }
