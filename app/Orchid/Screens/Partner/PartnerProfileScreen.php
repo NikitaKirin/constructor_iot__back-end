@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Partner;
 
 use App\Models\Partner;
+use App\Orchid\Layouts\Course\CourseListLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -24,9 +25,12 @@ class PartnerProfileScreen extends Screen
      *
      * @return array
      */
-    public function query( Partner $partner ): iterable {
+    public function query(Partner $partner): iterable
+    {
+        $partner->load('courses');
         return [
             "partner" => $partner,
+            "courses" => $partner->courses,
         ];
     }
 
@@ -35,7 +39,8 @@ class PartnerProfileScreen extends Screen
      *
      * @return string|null
      */
-    public function name(): ?string {
+    public function name(): ?string
+    {
         return "{$this->partner->title}";
     }
 
@@ -44,16 +49,17 @@ class PartnerProfileScreen extends Screen
      *
      * @return \Orchid\Screen\Action[]
      */
-    public function commandBar(): iterable {
+    public function commandBar(): iterable
+    {
         return [
             Link::make(__('Edit'))
                 ->icon("pencil")
                 ->route("platform.partners.edit", $this->partner),
             Button::make(__("Delete"))
-                  ->icon('trash')
-                  ->type(Color::DANGER())
-                  ->confirm(__("Вы уверены, что хотите удалить партнера? Данное действие нельзя будет отменить."))
-                  ->method('destroy', ['id' => $this->partner->id]),
+                ->icon('trash')
+                ->type(Color::DANGER())
+                ->confirm(__("Вы уверены, что хотите удалить партнера? Данное действие нельзя будет отменить."))
+                ->method('destroy', ['id' => $this->partner->id]),
         ];
     }
 
@@ -62,29 +68,33 @@ class PartnerProfileScreen extends Screen
      *
      * @return \Orchid\Screen\Layout[]|string[]
      */
-    public function layout(): iterable {
+    public function layout(): iterable
+    {
         return [
             Layout::tabs([
                 __('Основная информация') =>
                     Layout::legend("partner", [
                         Sight::make('logo_id', __('Логотип'))
-                             ->render(function () {
-                                 $link = $this->partner?->logo?->url() ?? asset(Config::get('constants.avatars.employee.url'));
-                                 return "<img src='$link' width='100' alt='Логотип компании: {$this->partner->title}'";
-                             }),
+                            ->render(function () {
+                                $link = $this->partner?->logo?->url() ?? asset(
+                                    Config::get('constants.avatars.employee.url')
+                                );
+                                return "<img src='$link' width='100' alt='Логотип компании: {$this->partner->title}'";
+                            }),
                         Sight::make('title', __("Название компании")),
                         Sight::make("description", __('Описание'))
-                             ->render(function () {
-                                 return $this->partner->description;
-                             }),
+                            ->render(function () {
+                                return $this->partner->description;
+                            }),
                     ]),
-                __("Курсы партнёра")      => Layout::rows([]),
+                __("Курсы партнёра") => CourseListLayout::class,
             ]),
 
         ];
     }
 
-    public function destroy( Request $request ): RedirectResponse {
+    public function destroy(Request $request): RedirectResponse
+    {
         Partner::findOrFail($request->get('id'))->forceDelete();
 
         Toast::success(__('Партнер успешно удален'));
