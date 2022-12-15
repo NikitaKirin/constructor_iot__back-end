@@ -11,18 +11,17 @@ class SocialNetworksBlockTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testSocialNetworksBlockIndex() {
-
+    public function testSocialNetworksBlockIndex()
+    {
         SocialNetworksBlock::factory()
-                           ->count(1)
-                           ->create();
+            ->count(1)
+            ->create();
 
         $response = $this->get(route('socialNetworksBlocks.index'));
-
         $response->assertOk();
 
-        $response->assertJson(fn( AssertableJson $json ) => $json->has('social_networks_block')
-                                                                 ->etc()
+        $response->assertJson(fn(AssertableJson $json) => $json->has('social_networks_block')
+            ->etc()
         );
     }
 }

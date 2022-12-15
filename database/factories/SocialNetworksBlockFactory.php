@@ -12,13 +12,13 @@ class SocialNetworksBlockFactory extends Factory
 {
     protected $model = SocialNetworksBlock::class;
 
-    public function definition(): array {
+    public function definition(): array
+    {
         return [
-            'data'         => $this->faker->words(),
-            'created_at'   => Carbon::now(),
-            'updated_at'   => Carbon::now(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
             'institute_id' => Institute::factory(),
-            'user_id'      => User::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }
