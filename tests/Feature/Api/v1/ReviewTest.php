@@ -39,7 +39,7 @@ class ReviewTest extends TestCase
                     )
                     ->where(
                         'year_of_issue',
-                        (int)$testReview->year_of_issue
+                        (string)$testReview->year_of_issue
                     )
                     ->where(
                         'course',
