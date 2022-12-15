@@ -19,6 +19,8 @@ class ReviewTest extends TestCase
 
         $response->assertOk();
 
+        //$response->dd();
+
         $response->assertJson(fn(AssertableJson $json) => $json->has('meta')
             ->has('links', 4)
             ->has('reviews', 2)
@@ -39,11 +41,11 @@ class ReviewTest extends TestCase
                     )
                     ->where(
                         'year_of_issue',
-                        (string)$testReview->year_of_issue
+                        $testReview->year_of_issue
                     )
                     ->where(
                         'course',
-                        (string)$testReview->course
+                        $testReview->course
                     )
                     ->etc()
             )

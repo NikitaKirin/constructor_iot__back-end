@@ -25,6 +25,11 @@ class Review extends Model
         'photo_id',
     ];
 
+    protected $casts = [
+        'year_of_issue' => 'integer',
+        'course' => 'string',
+    ];
+
     protected $allowedSorts = [
         'author',
         'educational_direction',
@@ -43,7 +48,8 @@ class Review extends Model
      * Relationship - review to user
      * @return BelongsTo
      */
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -51,8 +57,9 @@ class Review extends Model
      * Relationship - review to attachment (orchid)
      * @return HasOne
      */
-    public function photo(): HasOne {
+    public function photo(): HasOne
+    {
         return $this->hasOne(Attachment::class, 'id', 'photo_id')
-                    ->withDefault();
+            ->withDefault();
     }
 }
