@@ -1,6 +1,6 @@
 @push('head')
     <link
-        href="{{asset('storage/img/brand/favicon-irit.ico')}}"
+        href="{{asset('vendor/orchid/favicon-irit.ico')}}"
         id="favicon"
         rel="icon"
     >
