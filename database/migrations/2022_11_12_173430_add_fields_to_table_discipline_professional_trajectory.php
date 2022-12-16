@@ -23,7 +23,7 @@ return new class extends Migration {
 
     public function down() {
         Schema::table('discipline_professional_trajectory', function ( Blueprint $table ) {
-            $table->dropColumn('discipline_level_id');
+            $table->dropColumn('discipline_level_digital_value');
         });
     }
 };
