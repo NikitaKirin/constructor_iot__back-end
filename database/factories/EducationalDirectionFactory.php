@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Institute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,16 @@ class EducationalDirectionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => fake()->unique()->name,
+            'cipher' => fake()->unique()->name,
+            'passing_scores' => json_encode([
+                [
+                    'year' => null,
+                    'passing_score' => null,
+                ]
+            ]),
+            'institute_id' => Institute::factory(),
+            'training_period' => '4 года',
         ];
     }
 }
