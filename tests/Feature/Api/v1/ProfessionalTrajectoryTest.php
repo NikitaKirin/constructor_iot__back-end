@@ -53,4 +53,57 @@ class ProfessionalTrajectoryTest extends TestCase
                     ->etc()
             ));
     }
+
+    public function testProfessionalTrajectoryExistingShowWithoutDisciplinesCount()
+    {
+        $professionalTrajectories = ProfessionalTrajectory::factory(5)
+            ->create();
+        $professionalTrajectory = $professionalTrajectories->first();
+        $response = $this->get(route('professionalTrajectories.show', $professionalTrajectory))
+            ->assertOk()
+            ->assertJson(
+                fn(AssertableJson $json) => $json->has('professional_trajectory', fn(AssertableJson $json) => $json
+                    ->where('id', $professionalTrajectory->id)
+                    ->where('title', $professionalTrajectory->title)
+                    ->where('description', $professionalTrajectory->description)
+                    ->where('slug', $professionalTrajectory->slug)
+                    ->where('color', $professionalTrajectory->color)
+                    ->where('icons', [])
+                    ->where('sum_discipline_levels_points', $professionalTrajectory->sum_discipline_levels_points)
+                    ->where('vacancies_count', 100)
+                )
+            );
+    }
+
+    public function testProfessionalTrajectoryExistingShowWithDisciplinesCount()
+    {
+        $professionalTrajectories = ProfessionalTrajectory::factory(5)
+            ->create();
+        $professionalTrajectory = $professionalTrajectories->first()->loadCount('disciplines');
+        $response = $this->get(
+            route('professionalTrajectories.show', [$professionalTrajectory, '?disciplinesCount=true'])
+        )
+            ->assertOk()
+            ->assertJson(
+                fn(AssertableJson $json) => $json->has('professional_trajectory', fn(AssertableJson $json) => $json
+                    ->where('id', $professionalTrajectory->id)
+                    ->where('title', $professionalTrajectory->title)
+                    ->where('description', $professionalTrajectory->description)
+                    ->where('slug', $professionalTrajectory->slug)
+                    ->where('color', $professionalTrajectory->color)
+                    ->where('icons', [])
+                    ->where('sum_discipline_levels_points', $professionalTrajectory->sum_discipline_levels_points)
+                    ->where('vacancies_count', 100)
+                    ->where('disciplines_count', $professionalTrajectory->disciplines_count)
+                )
+            );
+    }
+
+    public function testProfessionalTrajectoryNonExistingShow()
+    {
+        $id = ProfessionalTrajectory::all()->last()?->id + 100;
+
+        $response = $this->get(route('professionalTrajectories.show', $id))
+            ->assertStatus(404);
+    }
 }

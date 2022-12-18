@@ -14,7 +14,7 @@ class ProfessionalTrajectoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word(),
+            'title' => $this->faker->unique()->word(),
             'description' => $this->faker->text(),
             'color' => $this->faker->unique()->hexColor(),
             'created_at' => Carbon::now(),
