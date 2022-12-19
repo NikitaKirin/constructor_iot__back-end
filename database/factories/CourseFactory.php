@@ -2,6 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Discipline;
+use App\Models\Partner;
+use App\Models\Realization;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +21,13 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->unique()->name,
+            'description' => $this->faker->realText,
+            'limit' => $this->faker->numberBetween(0, 100),
+            'discipline_id' => Discipline::factory(),
+            'partner_id' => Partner::factory(),
+            'user_id' => User::factory(),
+            'realization_id' => Realization::factory(),
         ];
     }
 }
