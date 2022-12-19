@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class RealizationFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->unique()->name,
+            'user_id' => User::factory(),
         ];
     }
 }
