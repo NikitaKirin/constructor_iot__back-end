@@ -19,6 +19,9 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
@@ -34,7 +37,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
-          #DB_CONNECTION: pgsql
+          DB_CONNECTION: localhost
           DB_PORT: 5432
           DB_DATABASE: postgres
           DB_USERNAME: postgres
