@@ -44,3 +44,19 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
         run: vendor/bin/phpunit
+
+  deploy-production:
+    name: Deploy project to Production Server
+    runs-on: ubuntu-latest
+    needs: [app-tests]
+    if: github.ref == 'refs/heads/production'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: "cd /home/c65638/constructor-iot-backend.na4u.ru/constructor_iot__back-end && ./.scripts/deploy.sh"
