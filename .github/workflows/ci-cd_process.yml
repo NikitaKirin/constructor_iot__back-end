@@ -1,20 +1,31 @@
-name: Laravel
+name: CI-CD Process
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "testing", "production" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "testing", "production" ]
 
 jobs:
-  laravel-tests:
+  app-tests:
 
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
-          php-version: '8.0'
+          php-version: '8.1'
       - uses: actions/checkout@v3
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -25,11 +36,11 @@ jobs:
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
       - name: Create Database
-        run: |
-          mkdir -p database
-          touch database/database.sqlite
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
+          DB_CONNECTION: pgsql
+          DB_PORT: 5432
+          DB_DATABASE: postgres
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
         run: vendor/bin/phpunit
