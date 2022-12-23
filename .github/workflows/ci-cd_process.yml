@@ -34,7 +34,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
-          DB_CONNECTION: pgsql
+          #DB_CONNECTION: pgsql
           DB_PORT: 5432
           DB_DATABASE: postgres
           DB_USERNAME: postgres
