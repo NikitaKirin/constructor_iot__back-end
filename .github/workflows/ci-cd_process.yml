@@ -38,7 +38,7 @@ jobs:
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DB_CONNECTION: pgsql
-          DB_HOST: pgsql
+          DB_HOST: localhost
           DB_PORT: 5432
           DB_DATABASE: postgres
           DB_USERNAME: postgres
