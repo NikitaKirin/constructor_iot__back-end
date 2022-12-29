@@ -14,7 +14,7 @@ git pull origin production
 ~/constructor-iot-backend.na4u.ru/bin/composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Run migration
-php artisan migrate
+php artisan migrate --force
 
 # Clear the old cache
 php artisan clear-compiled
