@@ -59,4 +59,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: "cd /home/c65638/constructor-iot-backend.na4u.ru/constructor_iot__back-end && ./.scripts/deploy.sh"
+          script: "cd /home/c65638/constructor-iot-backend.na4u.ru/laravel/constructor_iot__back-end && ./.scripts/deploy.sh"
