@@ -30,6 +30,7 @@ class EducationalDirectionTest extends TestCase
                     ],
                     'training_period',
                     'budget_places',
+                    'page_link',
                 ],
             ],
         ]);
@@ -50,6 +51,7 @@ class EducationalDirectionTest extends TestCase
                     ->where('passing_scores', $educationalDirection->passing_scores)
                     ->where('training_period', $educationalDirection->training_period)
                     ->where('budget_places', $educationalDirection->budget_places)
+                    ->where('page_link', $educationalDirection->page_link)
             )
             ->etc());
     }

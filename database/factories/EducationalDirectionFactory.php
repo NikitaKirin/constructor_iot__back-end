@@ -24,10 +24,11 @@ class EducationalDirectionFactory extends Factory
                 [
                     'year' => null,
                     'passing_score' => null,
-                ]
+                ],
             ]),
             'institute_id' => Institute::factory(),
             'training_period' => '4 года',
+            'page_link' => fake()->url,
         ];
     }
 }

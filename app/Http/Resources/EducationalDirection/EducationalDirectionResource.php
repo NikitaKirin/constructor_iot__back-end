@@ -11,17 +11,19 @@ class EducationalDirectionResource extends JsonResource
     public static $wrap = 'educational_direction';
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return array
      */
-    public function toArray( $request ) {
+    public function toArray($request)
+    {
         return [
-            'id'              => $this->id,
-            'title'           => $this->title,
-            'cipher'          => $this->cipher,
-            'passing_scores'  => $this->passing_scores,
+            'id' => $this->id,
+            'title' => $this->title,
+            'cipher' => $this->cipher,
+            'passing_scores' => $this->passing_scores,
             'training_period' => $this->training_period,
-            'budget_places'   => $this->budget_places,
+            'budget_places' => $this->budget_places,
+            'page_link' => $this->page_link,
         ];
     }
 }
