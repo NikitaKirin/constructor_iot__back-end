@@ -24,29 +24,31 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
         $this->configureRateLimiting();
 
         $this->routes(function () {
             Route::middleware('api')
-                 ->prefix('api/v1')
-                 ->group(function () {
-                     require base_path('routes/api.php');
-                     require base_path('routes/api/v1/partners.php');
-                     require base_path('routes/api/v1/reviews.php');
-                     require base_path('routes/api/v1/admissionCommitteeContactsBlock.php');
-                     require base_path('routes/api/v1/socialNetworksBlock.php');
-                     require base_path('routes/api/v1/educationalModule.php');
-                     require base_path('routes/api/v1/educationalDirection.php');
-                     require base_path('routes/api/v1/professionalTrajectory.php');
-                     require base_path('routes/api/v1/semester.php');
-                     require base_path('routes/api/v1/discipline.php');
-                     require base_path('routes/api/v1/position.php');
-                 }
-                 );
+                ->prefix('api/v1')
+                ->group(function () {
+                    require base_path('routes/api.php');
+                    require base_path('routes/api/v1/partners.php');
+                    require base_path('routes/api/v1/reviews.php');
+                    require base_path('routes/api/v1/admissionCommitteeContactsBlock.php');
+                    require base_path('routes/api/v1/socialNetworksBlock.php');
+                    require base_path('routes/api/v1/educationalModule.php');
+                    require base_path('routes/api/v1/educationalDirection.php');
+                    require base_path('routes/api/v1/professionalTrajectory.php');
+                    require base_path('routes/api/v1/semester.php');
+                    require base_path('routes/api/v1/discipline.php');
+                    require base_path('routes/api/v1/position.php');
+                    require base_path('routes/api/v1/employee.php');
+                }
+                );
 
             Route::middleware('web')
-                 ->group(base_path('routes/web.php'));
+                ->group(base_path('routes/web.php'));
         });
     }
 
@@ -55,8 +57,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function configureRateLimiting() {
-        RateLimiter::for('api', function ( Request $request ) {
+    protected function configureRateLimiting()
+    {
+        RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
     }

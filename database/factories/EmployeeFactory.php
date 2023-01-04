@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,14 +15,16 @@ class EmployeeFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition() {
+    public function definition()
+    {
         return [
-            'full_name'              => fake()->name(),
-            'email'                  => fake()->email(),
-            'phone_number'           => fake()->phoneNumber(),
-            'address'                => fake()->address(),
-            'audience'               => "Р" . '-' . fake()->numberBetween(1, 400),
+            'full_name' => fake()->name(),
+            'email' => fake()->email(),
+            'phone_number' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'audience' => "Р".'-'.fake()->numberBetween(1, 400),
             'additional_information' => fake()->realText(100),
+            'position_id' => Position::all()->random(1)->first()->id,
         ];
     }
 }
