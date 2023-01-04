@@ -6,6 +6,8 @@ use App\Http\Resources\Position\PositionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use function PHPUnit\Framework\assertJson;
+
 /** @mixin \App\Models\Employee */
 class EmployeeResource extends JsonResource
 {
@@ -25,7 +27,7 @@ class EmployeeResource extends JsonResource
             'address' => $this->address,
             'audience' => $this->audience,
             'additional_information' => $this->additional_information,
-            'photo' => $this->photo->url(),
+            'photo' => $this->photo->url() ?? asset('img/avatar.png'),
             'position' => new PositionResource($this->whenLoaded('position')),
         ];
     }
