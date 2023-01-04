@@ -45,7 +45,7 @@ class EmployeeTest extends TestCase
         $this->seed([PositionsSeeder::class]);
 
         $employee = Employee::factory(10)
-            ->create()->orderBy('full_name')->first();
+            ->create()->sortBy('full_name')->first();
 
         $response = $this->get(route('employees.index'));
 
@@ -58,7 +58,7 @@ class EmployeeTest extends TestCase
                     ->where('address', $employee->address)
                     ->where('audience', $employee->audience)
                     ->where('additional_information', $employee->additional_information)
-                    ->where('photo', $employee->photo->url())
+                    ->where('photo', $employee->photo->url() ?? asset(config('constants.avatars.employee.url')))
                     ->has('position', fn(AssertableJson $json) => $json->where('id', $employee->position->id)
                         ->where('title', $employee->position->title))));
     }
