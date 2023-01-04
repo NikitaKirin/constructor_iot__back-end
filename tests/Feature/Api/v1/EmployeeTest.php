@@ -35,6 +35,7 @@ class EmployeeTest extends TestCase
                         'additional_information',
                         'photo',
                         'position',
+                        'vk_profile',
                     ],
                 ],
             ]);
@@ -58,6 +59,7 @@ class EmployeeTest extends TestCase
                     ->where('address', $employee->address)
                     ->where('audience', $employee->audience)
                     ->where('additional_information', $employee->additional_information)
+                    ->where('vk_profile', $employee->vk_profile)
                     ->where('photo', $employee->photo->url() ?? asset(config('constants.avatars.employee.url')))
                     ->has('position', fn(AssertableJson $json) => $json->where('id', $employee->position->id)
                         ->where('title', $employee->position->title))));

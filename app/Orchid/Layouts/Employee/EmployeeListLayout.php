@@ -27,30 +27,31 @@ class EmployeeListLayout extends Table
      *
      * @return TD[]
      */
-    protected function columns(): iterable {
+    protected function columns(): iterable
+    {
         return [
 
             TD::make('#')
-              ->cantHide()
-              ->render(function ( Employee $employee, object $loop ) {
-                  return ++$loop->index;
-              }),
+                ->cantHide()
+                ->render(function (Employee $employee, object $loop) {
+                    return ++$loop->index;
+                }),
 
             TD::make('photo', __('Фотография'))
-              ->render(function ( Employee $employee ) {
-                  $link = $employee->photo()->first()
-                                   ?->url() ?? asset(Config::get('constants.avatars.employee.url'));
-                  return "<img width='100' src='$link'";
-              }),
+                ->render(function (Employee $employee) {
+                    $link = $employee->photo()->first()
+                        ?->url() ?? asset(Config::get('constants.avatars.employee.url'));
+                    return "<img width='100' src='$link'";
+                }),
 
             TD::make('full_name', __('ФИО'))
-              ->sort()
-              ->cantHide()
-              ->render(function ( Employee $employee ) {
-                  return Link::make("$employee->full_name")
-                             ->icon('user')
-                             ->route('platform.employees.profile', $employee);
-              }),
+                ->sort()
+                ->cantHide()
+                ->render(function (Employee $employee) {
+                    return Link::make("$employee->full_name")
+                        ->icon('user')
+                        ->route('platform.employees.profile', $employee);
+                }),
 
             /*            TD::make('email', __('E-mail'))
                           ->filter(),
@@ -65,41 +66,42 @@ class EmployeeListLayout extends Table
                         TD::make('additional_information', __('Дополнительная информация')),*/
 
             TD::make('position_id', __('Должность'))
-              ->render(function ( Employee $employee ) {
-                  return $employee->position->title;
-              }),
+                ->render(function (Employee $employee) {
+                    return $employee->position->title;
+                }),
 
             TD::make('user_id', __('Создано/изменено последним'))
-              ->render(function ( Employee $employee ) {
-                  return $employee->user->name ?? 'Не определено';
-              }),
+                ->render(function (Employee $employee) {
+                    return $employee->user->name ?? 'Не определено';
+                }),
 
             TD::make('updated_at', __('Дата и время последнего изменения'))
-              ->render(function ( Employee $employee ) {
-                  return $employee->updated_at;
-              }),
+                ->sort()
+                ->render(function (Employee $employee) {
+                    return $employee->updated_at;
+                }),
 
             TD::make('actions', __('Действия'))
-              ->align(TD::ALIGN_CENTER)
-              ->width('100px')
-              ->render(function ( Employee $employee ) {
-                  return DropDown::make()
-                                 ->icon('options-vertical')
-                                 ->list([
+                ->align(TD::ALIGN_CENTER)
+                ->width('100px')
+                ->render(function (Employee $employee) {
+                    return DropDown::make()
+                        ->icon('options-vertical')
+                        ->list([
 
-                                     Link::make(__("Открыть"))
-                                         ->icon('user')
-                                         ->route('platform.employees.profile', $employee),
+                            Link::make(__("Открыть"))
+                                ->icon('user')
+                                ->route('platform.employees.profile', $employee),
 
-                                     Link::make(__('Edit'))
-                                         ->icon('pencil')
-                                         ->route('platform.employees.edit', $employee),
+                            Link::make(__('Edit'))
+                                ->icon('pencil')
+                                ->route('platform.employees.edit', $employee),
 
-                                     Button::make(__('Delete'))
-                                           ->icon('trash')
-                                           ->method('remove', ['id' => $employee->id]),
-                                 ]);
-              }),
+                            Button::make(__('Delete'))
+                                ->icon('trash')
+                                ->method('remove', ['id' => $employee->id]),
+                        ]);
+                }),
         ];
     }
 }

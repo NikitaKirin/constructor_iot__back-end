@@ -27,6 +27,7 @@ class EmployeeResource extends JsonResource
             'address' => $this->address,
             'audience' => $this->audience,
             'additional_information' => $this->additional_information,
+            'vk_profile' => $this->vk_profile,
             'photo' => $this->photo->url() ?? asset('img/avatar.png'),
             'position' => new PositionResource($this->whenLoaded('position')),
         ];

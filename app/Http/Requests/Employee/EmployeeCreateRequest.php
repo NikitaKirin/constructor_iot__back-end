@@ -11,7 +11,8 @@ class EmployeeCreateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() {
+    public function authorize()
+    {
         return true;
     }
 
@@ -20,25 +21,28 @@ class EmployeeCreateRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            'full_name'              => ['required', 'string'],
-            'email'                  => ['email', 'nullable'],
-            'phone_number'           => ['string', 'nullable'],
-            'address'                => ['string', 'nullable'],
-            'audience'               => ['string', 'nullable'],
+            'full_name' => ['required', 'string'],
+            'email' => ['email', 'nullable'],
+            'phone_number' => ['string', 'nullable'],
+            'address' => ['string', 'nullable'],
+            'audience' => ['string', 'nullable'],
             'additional_information' => ['string', 'nullable'],
-            'position_id'            => ['required', 'exists:positions,id'],
+            'position_id' => ['required', 'exists:positions,id'],
+            'vk_profile' => ['nullable', 'url'],
         ];
     }
 
-    public function messages() {
+    public function messages()
+    {
         return [
             'required' => 'Обязательное поле',
-            'string'   => 'Введены недопустимые символы',
-            'email'    => 'Введены недопустимые символы',
-            'max'      => 'Превышено максимальное количество символов: :max',
-            'exists'   => 'Указан несуществующий тип сотрудника',
+            'string' => 'Введены недопустимые символы',
+            'email' => 'Введены недопустимые символы',
+            'max' => 'Превышено максимальное количество символов: :max',
+            'exists' => 'Указан несуществующий тип сотрудника',
         ];
     }
 }

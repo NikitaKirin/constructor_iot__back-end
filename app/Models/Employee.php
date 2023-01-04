@@ -26,6 +26,7 @@ class Employee extends Model
         'additional_information',
         'position_id',
         'photo_id',
+        'vk_profile',
     ];
 
     protected $allowedSorts = [
@@ -38,7 +39,8 @@ class Employee extends Model
      * Relationship - employee to user
      * @return BelongsTo
      */
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -46,11 +48,13 @@ class Employee extends Model
      * Relationship - employee to position
      * @return BelongsTo
      */
-    public function position(): BelongsTo {
+    public function position(): BelongsTo
+    {
         return $this->belongsTo(Position::class);
     }
 
-    public function photo(): HasOne {
+    public function photo(): HasOne
+    {
         return $this->hasOne(Attachment::class, 'id', 'photo_id')->withDefault();
     }
 }

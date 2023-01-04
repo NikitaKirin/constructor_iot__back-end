@@ -27,52 +27,58 @@ class EmployeeEditLayout extends Rows
      *
      * @return Field[]
      */
-    protected function fields(): iterable {
+    protected function fields(): iterable
+    {
         return [
             Input::make('full_name')
-                 ->title(__('ФИО сотрудника'))
-                 ->type('text')
-                 ->value($this->query->get('employee.full_name'))
-                 ->required(),
+                ->title(__('ФИО сотрудника'))
+                ->type('text')
+                ->value($this->query->get('employee.full_name'))
+                ->required(),
 
             Input::make('email')
-                 ->title(__('Адрес электронной почты'))
-                 ->type('email')
-                 ->value($this->query->get('employee.email')),
+                ->title(__('Адрес электронной почты'))
+                ->type('email')
+                ->value($this->query->get('employee.email')),
 
             Input::make('phone_number')
-                 ->title(__('Номер телефона'))
-                 ->type('text')
-                 ->mask('+7 (999) 999-99-99')
-                 ->value($this->query->get('employee.phone_number')),
+                ->title(__('Номер телефона'))
+                ->type('text')
+                ->mask('+7 (999) 999-99-99')
+                ->value($this->query->get('employee.phone_number')),
 
             Input::make('address')
-                 ->title(__('Адрес'))
-                 ->type('text')
-                 ->value($this->query->get('employee.address')),
+                ->title(__('Адрес'))
+                ->type('text')
+                ->value($this->query->get('employee.address')),
 
             Input::make('audience')
-                 ->title(__('Аудитория'))
-                 ->type('text')
-                 ->value($this->query->get('employee.audience')),
+                ->title(__('Аудитория'))
+                ->type('text')
+                ->value($this->query->get('employee.audience')),
 
             Input::make('additional_information')
-                 ->title('Дополнительная информация')
-                 ->type('text')
-                 ->value($this->query->get('employee.additional_information')),
+                ->title('Дополнительная информация')
+                ->type('text')
+                ->value($this->query->get('employee.additional_information')),
+
+            Input::make('vk_profile')
+                ->title(__('Профиль ВКонтакте'))
+                ->type('text')
+                ->value($this->query->get('employee.vk_profile')),
 
             Relation::make('position_id')
-                    ->title('Должность')
-                    ->fromModel(Position::class, 'title')
-                    ->required()
-                    ->value($this->query->get('employee.position.id')),
+                ->title('Должность')
+                ->fromModel(Position::class, 'title')
+                ->required()
+                ->value($this->query->get('employee.position.id')),
 
             Cropper::make('photo_id')
-                   ->width(1000)
-                   ->height(1000)
-                   ->targetId()
-                   ->title(__('Фото сотрудника'))
-                   ->value($this->query->get('employee')?->photo_id),
+                ->width(1000)
+                ->height(1000)
+                ->targetId()
+                ->title(__('Фото сотрудника'))
+                ->value($this->query->get('employee')?->photo_id),
         ];
     }
 }
