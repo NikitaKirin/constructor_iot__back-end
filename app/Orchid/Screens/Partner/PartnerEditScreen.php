@@ -76,7 +76,7 @@ class PartnerEditScreen extends Screen
 
         if ( $request->input('logo_id') ) {
             $partner->attachment()
-                    ->syncWithoutDetaching($request->input('logo_id', []));
+                    ->sync($request->input('logo_id', []));
             $partner->logo_id = $partner->attachment()->first()?->id;
             $partner->save();
         }
