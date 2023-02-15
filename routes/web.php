@@ -1,5 +1,9 @@
 <?php
 
+use App\Lib\Integrations\HeadHunterIntegrator\CalculateSalary;
+use App\Lib\Integrations\HeadHunterIntegrator\HeadHunter;
+use App\Lib\Integrations\HeadHunterIntegrator\HeadHunterApiClient;
+use App\Lib\Integrations\HeadHunterIntegrator\HeadHunterRepository;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $client = new HeadHunterApiClient(HeadHunter::Domain->value);
+    $hhRepos = new HeadHunterRepository($client);
+    dd(CalculateSalary::getMinimalSalary($hhRepos->getVacanciesSalaries()));
 });
