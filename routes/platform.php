@@ -9,9 +9,11 @@ use App\Models\EducationalModule;
 use App\Models\Employee;
 use App\Models\Institute;
 use App\Models\Partner;
+use App\Models\Profession;
 use App\Models\ProfessionalTrajectory;
 use App\Models\Review;
 use App\Models\SocialNetworksBlock;
+use App\Orchid\Layouts\Profession\ProfessionListLayout;
 use App\Orchid\Screens\AdmissionCommitteeContactsBlock\AdmissionCommitteeContactsBlockEditScreen;
 use App\Orchid\Screens\AdmissionCommitteeContactsBlock\AdmissionCommitteeContactsBlockProfileScreen;
 use App\Orchid\Screens\Course\CourseEditScreen;
@@ -41,6 +43,9 @@ use App\Orchid\Screens\Partner\PartnerEditScreen;
 use App\Orchid\Screens\Partner\PartnerListScreen;
 use App\Orchid\Screens\Partner\PartnerProfileScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\Profession\ProfessionEditScreen;
+use App\Orchid\Screens\Profession\ProfessionListScreen;
+use App\Orchid\Screens\Profession\ProfessionProfileScreen;
 use App\Orchid\Screens\ProfessionalTrajectory\ProfessionalTrajectoryEditScreen;
 use App\Orchid\Screens\ProfessionalTrajectory\ProfessionalTrajectoryListScreen;
 use App\Orchid\Screens\Review\ReviewEditScreen;
@@ -473,6 +478,44 @@ Route::screen('professionalTrajectories/{professionalTrajectory}/edit',
              ->push(__("Изменить профессиональный трек"),
                  route('platform.professionalTrajectories.edit', $professionalTrajectory));
      });
+
+// Platform > Professions
+Route::screen('professions', ProfessionListScreen::class)
+    ->name('platform.professions')
+    ->breadcrumbs(function ( Trail $trail ) {
+        return $trail
+            ->parent('platform.index')
+            ->push(__("Список профессий"), \route('platform.professions'));
+    });
+
+// Platform > Professions > Create
+Route::screen('professions/create', ProfessionEditScreen::class)
+    ->name('platform.professions.create')
+    ->breadcrumbs(function ( Trail $trail ) {
+        return $trail
+            ->parent('platform.professions')
+            ->push(__('Добавить новую профессию'), route('platform.professions.create'));
+    });
+
+// Platform > Professions > Edit
+Route::screen('professions/{profession}/edit',
+    ProfessionEditScreen::class)
+    ->name('platform.professions.edit')
+    ->breadcrumbs(function ( Trail $trail, Profession $profession ) {
+        return $trail
+            ->parent('platform.professions')
+            ->push(__("Изменить профессиональный трек"),
+                route('platform.professions.edit', $profession));
+    });
+
+// Platform > Professions > Profile
+Route::screen('professions/{profession}/profile', ProfessionProfileScreen::class)
+    ->name('platform.professions.profile')
+    ->breadcrumbs(function ( Trail $trail, Profession $profession ) {
+        return $trail
+            ->parent('platform.professions')
+            ->push(__("{$profession->title}"), route('platform.institutes.profile', $profession));
+    });
 
 Route::screen('/telescope', TelescopeViewScreen::class)
      ->name('telescope.index');

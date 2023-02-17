@@ -12,6 +12,10 @@ return new class extends Migration {
             $table->integer('maximal_salary')->nullable();
             $table->integer('minimal_salary')->nullable();
             $table->integer('median_salary')->nullable();
+            $table->foreignId('photo_id')
+                ->nullable()
+                ->constrained('attachments', 'id')
+                ->nullOnDelete();
         });
     }
 
@@ -23,6 +27,7 @@ return new class extends Migration {
                 'maximal_salary',
                 'minimal_salary',
                 'median_salary',
+                'photo_id',
             ]);
         });
     }

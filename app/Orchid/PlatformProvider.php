@@ -74,6 +74,17 @@ class PlatformProvider extends OrchidServiceProvider
                         ->route('platform.professionalTrajectories.create'),
                 ]),
 
+            Menu::make(__('Профессии'))
+                ->icon('paypal')
+                ->list([
+                    Menu::make(__("Список профессий"))
+                        ->icon('list')
+                        ->route('platform.professions'),
+                    Menu::make(__('Добавить новую'))
+                        ->icon('plus')
+                        ->route('platform.professions.create'),
+                ]),
+
             Menu::make(__('Образовательны модули'))
                 ->icon('graduation')
                 ->list([
