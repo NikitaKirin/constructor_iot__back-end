@@ -6,22 +6,28 @@ use App\Lib\Integrations\IntegrationManager;
 
 class HeadHunterIntegrationManager extends IntegrationManager
 {
+    private HeadHunterApiClient $headHunterApiClient;
+    private HeadHunterRepository $headHunterRepository;
 
     protected function getApiClient(): HeadHunterApiClient {
-        return new HeadHunterApiClient(HeadHunter::Domain->value);
+        if (!isset($this->headHunterApiClient)) {
+            $this->headHunterApiClient = new HeadHunterApiClient(HeadHunter::Domain->value);
+        }
+        return $this->headHunterApiClient;
     }
 
     protected function getProviderRepository(): HeadHunterRepository {
-        return new HeadHunterRepository($this->getApiClient());
+        if (!isset($this->headHunterRepository)) {
+            $this->headHunterRepository = new HeadHunterRepository($this->getApiClient());
+        }
+        return $this->headHunterRepository;
     }
 
-    private function getProfessionsTitle(){
+    private function getProfessionsTitle() {
 
     }
 
     public function updateVacanciesCount() {
-        $headHunterClient = $this->getApiClient();
-        $headHunterRepository = $this->getProviderRepository();
     }
 
     public function updateVacanciesSalaries() {
