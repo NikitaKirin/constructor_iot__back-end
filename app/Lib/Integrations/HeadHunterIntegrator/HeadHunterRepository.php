@@ -6,24 +6,32 @@ namespace App\Lib\Integrations\HeadHunterIntegrator;
 use App\Lib\Integrations\ProviderApiClient;
 use App\Lib\Integrations\ProviderRepository;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class HeadHunterRepository extends ProviderRepository
 {
+
+    private string $professionTitle;
+
+    private array $vacancies = [];
+
+
     public function __construct(private HeadHunterApiClient|ProviderApiClient $apiClient) {
     }
 
-    /**
-     * @return Collection
-     */
     public function getVacancies(): Collection {
         $area = $this->getArea("Россия", "Свердловская область");
-        $vacancies = $this->apiClient->loadVacancies([
-            'text' => 'Frontend-разработчик',
-            'area' => $area->get('id'),
-            'only_with_salary' => true,
-            'page' => 0,
-        ]);
-        return collect($vacancies);
+        if (empty($this->vacancies)){
+            $this->vacancies = $this->apiClient->loadVacancies([
+                'text' => $this->professionTitle,
+                //'area' => $area->get('id'),
+                'only_with_salary' => true,
+                'page' => 0,
+                'per_page' => 100,
+                'employment' => 'full',
+            ]);
+        }
+        return collect($this->vacancies);
     }
 
     /**
@@ -33,6 +41,9 @@ class HeadHunterRepository extends ProviderRepository
         $vacancies = $this->getVacancies();
         return $vacancies->map(function ($vacancy) {
             $salaryData = collect($vacancy)->get('salary');
+            if ($salaryData['currency'] !== 'RUR'){
+                return null; //todo convert currency
+            }
             if (is_null($salaryData['to'])) {
                 return $salaryData['from'];
             } elseif (is_null($salaryData['from'])) {
@@ -57,5 +68,10 @@ class HeadHunterRepository extends ProviderRepository
 
         return collect(collect($areas)->filter(fn($area) => $area['name'] === $areaName)
             ->first());
+    }
+
+    public function setProfessionTitle(string $professionTitle) {
+        $this->vacancies = [];
+        $this->professionTitle = $professionTitle;
     }
 }

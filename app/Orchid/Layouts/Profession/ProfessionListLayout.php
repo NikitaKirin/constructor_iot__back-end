@@ -51,8 +51,10 @@ class ProfessionListLayout extends Table
 
             TD::make('vacancies_count', __('Количество вакансий на hh.ru')),
 
+            TD::make('maximal_salary', __('Максимальная зарплата на hh.ru')),
+
             TD::make('minimal_salary', __('Минимальная зарплата на hh.ru')),
-            TD::make('minimal_salary', __('Максимальная зарплата на hh.ru')),
+
             TD::make('median_salary', __('Медианная зарплата на hh.ru')),
 
             TD::make('user_id', __('Сохранено/изменено последним'))

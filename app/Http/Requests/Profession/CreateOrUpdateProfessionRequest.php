@@ -10,6 +10,7 @@ class CreateOrUpdateProfessionRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
+            'headHunter_title' => ['required', 'string']
         ];
     }
 
