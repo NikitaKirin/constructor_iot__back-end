@@ -16,6 +16,9 @@ git pull origin production
 # Run migration
 php artisan migrate --force
 
+# Run build Orchid assets
+php artisan orchid:publish
+
 # Clear the old cache
 php artisan clear-compiled
 # Recreate cache
