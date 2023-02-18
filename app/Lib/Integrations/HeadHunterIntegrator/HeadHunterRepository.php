@@ -45,12 +45,16 @@ class HeadHunterRepository extends ProviderRepository
                 return null; //todo convert currency
             }
             if (is_null($salaryData['to'])) {
-                return $salaryData['from'];
+                $result = $salaryData['from'];
             } elseif (is_null($salaryData['from'])) {
-                return $salaryData['to'];
+                $result = $salaryData['to'];
             } else {
-                return (int)(($salaryData['from'] + $salaryData['to']) / 2);
+                $result = (int)(($salaryData['from'] + $salaryData['to']) / 2);
             }
+            if ($result < 15000) {
+                return null;
+            }
+            return $result;
         });
     }
 
