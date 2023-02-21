@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\ProfessionalTrajectory;
 
+use App\Http\Resources\Profession\ProfessionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
@@ -31,7 +32,7 @@ class ProfessionalTrajectoryResource extends JsonResource
             }),
             'disciplines_count' => $this->whenCounted('disciplines'),
             'vacancies_count' => 100,
-            //'disciplines' => DisciplineResourceCollection::collection($this->whenLoaded('disciplines')),
+            'professions' => ProfessionResource::collection($this->whenLoaded('professions')),
         ];
     }
 

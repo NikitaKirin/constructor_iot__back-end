@@ -11,13 +11,17 @@ use Illuminate\Http\Request;
 
 class ProfessionalTrajectoryController extends Controller
 {
-    public function index()
-    {
+    public function index(Request $request) {
+        $withProfessions = $request->input('withProfessions', false);
+        if ($withProfessions) {
+            return new ProfessionalTrajectoryResourceCollection(ProfessionalTrajectory::with(['professions'])
+                ->orderBy('id')
+                ->get());
+        }
         return new ProfessionalTrajectoryResourceCollection(ProfessionalTrajectory::orderBy('id')->get());
     }
 
-    public function show(ProfessionalTrajectory $professionalTrajectory, Request $request)
-    {
+    public function show(ProfessionalTrajectory $professionalTrajectory, Request $request) {
         if ($request->input('disciplinesCount', false)) {
             return new ProfessionalTrajectoryResource($professionalTrajectory->loadCount('disciplines'));
         }
