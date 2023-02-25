@@ -39,7 +39,7 @@ class ProfessionListLayout extends Table
             TD::make('photo_id', __('Фото'))
                 ->render(function (Profession $profession) {
                     $link = $profession->photo?->url() ?? asset(Config::get('constants.avatars.student.url'));
-                    return "<img src='$link' width='100' alt='Фото: $profession->title'>";
+                    return "<img src='$link' width='50' alt='Фото: $profession->title'>";
                 }),
 
             TD::make('title', __('Название'))
@@ -49,7 +49,9 @@ class ProfessionListLayout extends Table
                         ->route('platform.professions.profile', $profession);
                 }),
 
-            TD::make('vacancies_count', __('Количество вакансий на hh.ru')),
+            TD::make('vacancies_count', __('Количество вакансий на hh.ru по РФ')),
+
+            TD::make('area_vacancies_count', __('Количество вакансий на hh.ru по Области')),
 
             TD::make('maximal_salary', __('Максимальная зарплата на hh.ru')),
 

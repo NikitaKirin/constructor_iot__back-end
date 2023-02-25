@@ -15,7 +15,7 @@ class HeadHunterApiClient extends ProviderApiClient
     public function loadVacancies(array $queryParameters = []): array {
         $result = [];
         $defaultHeaders = $this->getDefaultHeaders();
-        $response = Http::withHeaders($defaultHeaders)->get($this->domain . 'vacancies', $queryParameters)->json();
+        $response = Http::retry(3, 5000)->withHeaders($defaultHeaders)->get($this->domain . 'vacancies', $queryParameters)->json();
         $result = array_merge($result, $response['items']);
         for ($i = 0; $i < $response['pages']; $i++) {
             if ($i === 19) {

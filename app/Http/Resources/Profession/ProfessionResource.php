@@ -24,6 +24,7 @@ class ProfessionResource extends JsonResource
             'title'                           => $this->title,
             'description'                     => $this->description,
             'vacancies_count'                 => $this->vacancies_count,
+            'area_vacancies_count'            => $this->area_vacancies_count,
             'maximal_salary'                  => $this->maximal_salary,
             'minimal_salary'                  => $this->minimal_salary,
             'median_salary'                   => $this->median_salary,

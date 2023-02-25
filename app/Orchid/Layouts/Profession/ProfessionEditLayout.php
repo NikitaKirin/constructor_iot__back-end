@@ -52,9 +52,15 @@ class ProfessionEditLayout extends Rows
                 ->required(),
 
             Input::make('vacancies_count')
-                ->title(__('Количество вакансий по данным HeadHunter'))
+                ->title(__('Количество вакансий по данным HeadHunter по РФ'))
                 ->type('number')
                 ->value($this->query->get('profession.vacancies_count'))
+                ->disabled(),
+
+            Input::make('vacancies_count')
+                ->title(__('Количество вакансий по данным HeadHunter по Области'))
+                ->type('number')
+                ->value($this->query->get('profession.area_vacancies_count'))
                 ->disabled(),
 
             Input::make('maximal_salary')

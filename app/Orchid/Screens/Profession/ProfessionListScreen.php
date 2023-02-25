@@ -61,7 +61,7 @@ class ProfessionListScreen extends Screen
         ];
     }
 
-    public function remove( Request $request ) {
+    public function destroy( Request $request ) {
         Profession::findOrFail($request->get('id'))->forceDelete();
 
         Toast::success(config('toasts.toasts.delete.success'));

@@ -77,7 +77,8 @@ class ProfessionProfileScreen extends Screen
                         Sight::make('description', __("Описание")),
                         Sight::make('headHunter_title', __('Поисковая фраза для сервиса HeadHunter'))
                             ->popover(__("Используется для поиска вакансий")),
-                        Sight::make('vacancies_count', __('Количество вакансий по данным HeadHunter')),
+                        Sight::make('vacancies_count', __('Количество вакансий по данным HeadHunter по РФ')),
+                        Sight::make('area_vacancies_count', __('Количество вакансий по данным HeadHunter по Области')),
                         Sight::make('maximal_salary', __('Максимальная зарплата по данным HeadHunter')),
                         Sight::make('minimal_salary', __('Минимальная зарплата по данным HeadHunter')),
                         Sight::make('median_salary', __('Медианная зарплата по данным HeadHunter')),

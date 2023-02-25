@@ -23,6 +23,7 @@ class Profession extends Model
         'description',
         'headHunter_title',
         'vacancies_count',
+        'area_vacancies_count',
         'maximal_salary',
         'minimal_salary',
         'median_salary',

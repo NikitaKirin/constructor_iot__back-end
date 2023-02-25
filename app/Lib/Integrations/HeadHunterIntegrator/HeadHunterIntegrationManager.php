@@ -41,27 +41,36 @@ class HeadHunterIntegrationManager extends IntegrationManager
         $professions = $this->getProfessions();
         $professions->each(function (Profession $profession) {
             Log::info("Получаю данные по профессии : $profession->title");
+            echo("Получаю данные по профессии : $profession->title" . PHP_EOL);
             $headHunterRepository = $this->getProviderRepository();
             $headHunterRepository->setProfessionTitle($profession->headHunter_title);
             $vacancies = $headHunterRepository->getVacancies();
             $vacanciesCount = $vacancies->count();
             $vacanciesSalaries = $headHunterRepository->getVacanciesSalaries();
+            $currentAreaVacanciesCount = $headHunterRepository->getTotalAreaVacanciesCount();
             $minimalSalary = CalculateSalary::getMinimalSalary($vacanciesSalaries);
             $maximalSalary = CalculateSalary::getMaximalSalary($vacanciesSalaries);
             $medianSalary = CalculateSalary::getMedianSalary($vacanciesSalaries);
+            echo("Минимальная зарплата: " . $minimalSalary . PHP_EOL);
+            echo("Максимальная зарплата: " . $maximalSalary . PHP_EOL);
+            echo("Медианная зарплата: " . $medianSalary . PHP_EOL);
+            echo("Общее кол-во вакансий: " . $vacanciesCount . PHP_EOL);
+            echo("Кол-во вакансий по Свердловской области: " . $currentAreaVacanciesCount . PHP_EOL);
             Log::info("Обновляю данные по профессии: $profession->title", [
-                'vacancies_count' => $vacanciesCount,
-                'minimal_salary' => $minimalSalary,
-                'maximal_salary' => $maximalSalary,
-                'median_salary' => $medianSalary,
-                'updated_at' => Carbon::now(),
+                'vacancies_count'      => $vacanciesCount,
+                'area_vacancies_count' => $currentAreaVacanciesCount,
+                'minimal_salary'       => $minimalSalary,
+                'maximal_salary'       => $maximalSalary,
+                'median_salary'        => $medianSalary,
+                'updated_at'           => Carbon::now(),
             ]);
             $profession->update([
-                'vacancies_count' => $vacanciesCount,
-                'minimal_salary' => $minimalSalary,
-                'maximal_salary' => $maximalSalary,
-                'median_salary' => $medianSalary,
-                'updated_at' => Carbon::now(),
+                'vacancies_count'      => $vacanciesCount,
+                'area_vacancies_count' => $currentAreaVacanciesCount,
+                'minimal_salary'       => $minimalSalary,
+                'maximal_salary'       => $maximalSalary,
+                'median_salary'        => $medianSalary,
+                'updated_at'           => Carbon::now(),
             ]);
         });
     }
