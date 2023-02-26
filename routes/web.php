@@ -19,6 +19,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $manager = new HeadHunterIntegrationManager();
-    $manager->updateVacanciesData();
+    return redirect('/admin');
 });

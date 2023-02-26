@@ -155,55 +155,9 @@ class DisciplineEditScreen extends Screen
                           ->target('_blank'),
                   ]),
         ];
-
-        /* Layout::block([
-             Layout::rows([
-                 Relation::make('professionalTrajectories.')
-                         ->fromModel(ProfessionalTrajectory::class, 'title')
-                     //->chunk(30)
-                         ->multiple()
-                         ->value($this->discipline->professionalTrajectories)
-                         ->title(__('Список профессиональных траекторий')),
-             ]),
-         ])
-               ->title(__('Профессиональные траектории'))
-               ->description(__('Выберите траектории, которые принадлежат данной дисциплине, из предложенного списка'))
-               ->commands([
-                   Button::make(__('Save'))
-                         ->type(Color::SUCCESS())
-                         ->method('save'),
-                   Link::make(__('Создать новую траекторию'))
-                       ->icon('plus')
-                       ->route('platform.professionalTrajectories.create')
-                       ->target('_blank'),
-               ]),
-
-         Layout::block([
-             Layout::rows([
-                 Matrix::make('course_levels')
-                       ->title(__('Оценивание'))
-                       ->columns([
-                           'Профессиональная траектория' => 'professional_trajectory',
-                           'Значение курса'              => 'course_level_id',
-                       ])
-                       ->fields([
-                           'professional_trajectory' => Input::make()
-                                                             ->type('text')
-                                                             ->disabled(),
-                           'course_level_id'         => Select::make('course_level')
-                                                              ->fromModel(DisciplineLevel::class, 'title', 'id'),
-                       ])
-                       ->canSee($this->discipline->professionalTrajectories()->exists())
-                       ->value($this->getJsonForCourseLevelsField()),
-             ]),
-         ])
-               ->title(__('Оценивание')),
-     ];*/
     }
 
     public function save( Discipline $discipline, CreateDisciplineRequest $request ) {
-
-        //dd($request->input('trajectories_levels'));
 
         $trajectories = collect($request->input('trajectories_levels', []))
             ->unique('professional_trajectory')
@@ -224,12 +178,6 @@ class DisciplineEditScreen extends Screen
             $courses = Course::findMany($courses_ids);
             $discipline->courses()->saveMany($courses);
         }
-
-        $sums = ProfessionalTrajectory::countSumDisciplineLevelsPoints();
-
-        $sums->each(function ( $item, $key ) {
-            ProfessionalTrajectory::find($key)->update(['sum_discipline_levels_points' => $item]);
-        });
 
         Toast::success(__(Config::get('toasts.toasts.update.success')))
              ->autoHide();
