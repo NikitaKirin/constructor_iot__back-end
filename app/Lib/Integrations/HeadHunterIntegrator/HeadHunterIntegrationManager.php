@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 class HeadHunterIntegrationManager extends IntegrationManager
 {
     private HeadHunterApiClient $headHunterApiClient;
-    private HeadHunterRepository $headHunterRepository;
 
     private Collection $professions;
 
@@ -23,10 +22,7 @@ class HeadHunterIntegrationManager extends IntegrationManager
     }
 
     protected function getProviderRepository(): HeadHunterRepository {
-        if (!isset($this->headHunterRepository)) {
-            $this->headHunterRepository = new HeadHunterRepository($this->getApiClient());
-        }
-        return $this->headHunterRepository;
+        return new HeadHunterRepository($this->getApiClient());
     }
 
     private function getProfessions(): Collection {
@@ -43,11 +39,10 @@ class HeadHunterIntegrationManager extends IntegrationManager
             Log::info("Получаю данные по профессии : $profession->title");
             echo("Получаю данные по профессии : $profession->title" . PHP_EOL);
             $headHunterRepository = $this->getProviderRepository();
-            $headHunterRepository->setProfessionTitle($profession->headHunter_title);
-            $vacancies = $headHunterRepository->getVacancies();
-            $vacanciesCount = $vacancies->count();
+            $headHunterRepository->setSearchText($profession->headHunter_title);
+            $vacanciesCount = $headHunterRepository->getVacanciesCount();
             $vacanciesSalaries = $headHunterRepository->getVacanciesSalaries();
-            $currentAreaVacanciesCount = $headHunterRepository->getTotalAreaVacanciesCount();
+            $currentAreaVacanciesCount = $headHunterRepository->getSpecificAreaVacanciesCount("Россия", "Свердловская область");
             $minimalSalary = CalculateSalary::getMinimalSalary($vacanciesSalaries);
             $maximalSalary = CalculateSalary::getMaximalSalary($vacanciesSalaries);
             $medianSalary = CalculateSalary::getMedianSalary($vacanciesSalaries);

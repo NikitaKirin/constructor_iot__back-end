@@ -15,24 +15,13 @@ class HeadHunterApiClient extends ProviderApiClient
     public function loadVacancies(array $queryParameters = []): array {
         $result = [];
         $defaultHeaders = $this->getDefaultHeaders();
-        $response = Http::retry(3, 5000)->withHeaders($defaultHeaders)->get($this->domain . 'vacancies', $queryParameters)->json();
-        $result = array_merge($result, $response['items']);
-        for ($i = 0; $i < $response['pages']; $i++) {
-            if ($i === 19) {
-                break;
-            }
-            $newQueryParameters = array_merge($queryParameters, ['page' => $i + 1]);
-            $currentResponse = Http::retry(3, 5000)->get($this->domain . 'vacancies', $newQueryParameters)->json()['items'];
-            $result = array_merge($result, $currentResponse);
-        }
-        return $result;
+        return Http::retry(3, 5000)->withHeaders($defaultHeaders)->get($this->domain . 'vacancies', $queryParameters)->json();
     }
 
-    public function loadAreas() {
+    public function loadAreas(): array {
         $defaultHeaders = $this->getDefaultHeaders();
         if (empty($this->areas)) {
-            $responce = Http::withHeaders($defaultHeaders)->get(HeadHunter::Domain->value . 'areas')->json();
-            $this->areas = $responce;
+            $this->areas = Http::withHeaders($defaultHeaders)->get(HeadHunter::Domain->value . 'areas')->json();
         }
         return $this->areas;
     }
