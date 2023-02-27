@@ -25,13 +25,12 @@ class ProfessionalTrajectoryResource extends JsonResource
             'description' => $this->description,
             'slug' => $this->slug,
             'color' => $this->color,
-            'sum_discipline_levels_points' => $this->sum_discipline_levels_points,
             'icons' => $this->getIconsUrls(),
             'discipline_evaluation' => $this->whenPivotLoaded('discipline_professional_trajectory', function () {
                 return $this->pivot->discipline_level_digital_value;
             }),
             'disciplines_count' => $this->whenCounted('disciplines'),
-            'vacancies_count' => 100,
+            'vacancies_count' => $this->professions()->sum('vacancies_count'),
             'professions' => ProfessionResource::collection($this->whenLoaded('professions')),
         ];
     }

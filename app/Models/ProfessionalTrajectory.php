@@ -24,7 +24,6 @@ class ProfessionalTrajectory extends Model
         'description',
         'color',
         'slug',
-        'sum_discipline_levels_points',
     ];
 
     protected $allowedSorts = [

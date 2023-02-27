@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 class HeadHunterRepository extends ProviderRepository
 {
 
-    private string $professionTitle;
+    private string $searchText;
 
     private array $vacancies = [];
 
@@ -24,7 +24,7 @@ class HeadHunterRepository extends ProviderRepository
         $result = [];
         if (empty($this->vacancies)) {
             $queryParameters = [
-                'text'             => $this->professionTitle,
+                'text'             => $this->searchText,
                 'only_with_salary' => true,
                 'page'             => 0,
                 'per_page'         => 100,
@@ -94,9 +94,9 @@ class HeadHunterRepository extends ProviderRepository
         return collect($resultRegion);
     }
 
-    public function setSearchText(string $professionTitle) {
+    public function setSearchText(string $searchText) {
         $this->vacancies = [];
-        $this->professionTitle = $professionTitle;
+        $this->searchText = $searchText;
     }
 
     public function getSpecificAreaVacanciesCount(string $countryName = "Россия",
@@ -104,7 +104,7 @@ class HeadHunterRepository extends ProviderRepository
                                                   string $cityName = null): int {
         $area = $this->getArea($countryName, $regionName, $cityName);
         $vacancies = $this->apiClient->loadVacancies([
-            'text'     => $this->professionTitle,
+            'text'     => $this->searchText,
             'page'     => 0,
             'per_page' => 100,
             'area'     => $area->get('id'),

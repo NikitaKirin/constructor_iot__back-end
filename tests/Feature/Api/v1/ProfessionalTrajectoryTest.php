@@ -11,8 +11,7 @@ class ProfessionalTrajectoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testProfessionalTrajectoryIndexAssertJsonStructure()
-    {
+    public function testProfessionalTrajectoryIndexAssertJsonStructure() {
         ProfessionalTrajectory::factory(5)
             ->create();
         $response = $this->get(route('professionalTrajectories.index'));
@@ -25,7 +24,6 @@ class ProfessionalTrajectoryTest extends TestCase
                     'description',
                     'slug',
                     'color',
-                    'sum_discipline_levels_points',
                     'icons',
                     'vacancies_count',
                 ],
@@ -33,8 +31,7 @@ class ProfessionalTrajectoryTest extends TestCase
         ]);
     }
 
-    public function testProfessionalTrajectoryIndexAssertJsonValue()
-    {
+    public function testProfessionalTrajectoryIndexAssertJsonValue() {
         $professionalTrajectories = ProfessionalTrajectory::factory(5)
             ->create();
         $professionalTrajectory = $professionalTrajectories->first();
@@ -48,14 +45,12 @@ class ProfessionalTrajectoryTest extends TestCase
                     ->where('description', $professionalTrajectory->description)
                     ->where('slug', $professionalTrajectory->slug)
                     ->where('color', $professionalTrajectory->color)
-                    ->where('sum_discipline_levels_points', $professionalTrajectory->sum_discipline_levels_points)
                     ->where('icons', [])
                     ->etc()
             ));
     }
 
-    public function testProfessionalTrajectoryExistingShowWithoutDisciplinesCount()
-    {
+    public function testProfessionalTrajectoryExistingShowWithoutDisciplinesCount() {
         $professionalTrajectories = ProfessionalTrajectory::factory(5)
             ->create();
         $professionalTrajectory = $professionalTrajectories->first();
@@ -69,14 +64,12 @@ class ProfessionalTrajectoryTest extends TestCase
                     ->where('slug', $professionalTrajectory->slug)
                     ->where('color', $professionalTrajectory->color)
                     ->where('icons', [])
-                    ->where('sum_discipline_levels_points', $professionalTrajectory->sum_discipline_levels_points)
-                    ->where('vacancies_count', 100)
+                    ->etc()
                 )
             );
     }
 
-    public function testProfessionalTrajectoryExistingShowWithDisciplinesCount()
-    {
+    public function testProfessionalTrajectoryExistingShowWithDisciplinesCount() {
         $professionalTrajectories = ProfessionalTrajectory::factory(5)
             ->create();
         $professionalTrajectory = $professionalTrajectories->first()->loadCount('disciplines');
@@ -92,15 +85,13 @@ class ProfessionalTrajectoryTest extends TestCase
                     ->where('slug', $professionalTrajectory->slug)
                     ->where('color', $professionalTrajectory->color)
                     ->where('icons', [])
-                    ->where('sum_discipline_levels_points', $professionalTrajectory->sum_discipline_levels_points)
-                    ->where('vacancies_count', 100)
                     ->where('disciplines_count', $professionalTrajectory->disciplines_count)
+                    ->etc()
                 )
             );
     }
 
-    public function testProfessionalTrajectoryNonExistingShow()
-    {
+    public function testProfessionalTrajectoryNonExistingShow() {
         $id = ProfessionalTrajectory::all()->last()?->id + 100;
 
         $response = $this->get(route('professionalTrajectories.show', $id))

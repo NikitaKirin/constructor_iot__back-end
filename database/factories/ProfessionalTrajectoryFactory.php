@@ -20,7 +20,6 @@ class ProfessionalTrajectoryFactory extends Factory
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'slug' => $this->faker->text(15),
-            'sum_discipline_levels_points' => $this->faker->randomNumber(),
             'user_id' => User::factory(),
         ];
     }

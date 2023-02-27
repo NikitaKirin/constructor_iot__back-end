@@ -1,10 +1,5 @@
 <?php
 
-use App\Lib\Integrations\HeadHunterIntegrator\CalculateSalary;
-use App\Lib\Integrations\HeadHunterIntegrator\HeadHunter;
-use App\Lib\Integrations\HeadHunterIntegrator\HeadHunterApiClient;
-use App\Lib\Integrations\HeadHunterIntegrator\HeadHunterIntegrationManager;
-use App\Lib\Integrations\HeadHunterIntegrator\HeadHunterRepository;
 use Illuminate\Support\Facades\Route;
 
 /*

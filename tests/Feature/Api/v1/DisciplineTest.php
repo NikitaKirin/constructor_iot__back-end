@@ -13,8 +13,7 @@ class DisciplineTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDisciplinesShowAssertJsonStructure()
-    {
+    public function testDisciplinesShowAssertJsonStructure() {
         $disciplines = Discipline::factory(5)
             ->hasProfessionalTrajectories(2)
             ->hasCourses(3)
@@ -28,7 +27,7 @@ class DisciplineTest extends TestCase
                         'id',
                         'title',
                         'description',
-                        'courses' => [
+                        'courses'                   => [
                             '*' => [
                                 'id',
                                 'title',
@@ -50,7 +49,6 @@ class DisciplineTest extends TestCase
                                 'description',
                                 'slug',
                                 'color',
-                                'sum_discipline_levels_points',
                                 'discipline_evaluation',
                             ],
                         ],
@@ -59,8 +57,7 @@ class DisciplineTest extends TestCase
             );
     }
 
-    public function testDisciplineShowAssertJsonValue()
-    {
+    public function testDisciplineShowAssertJsonValue() {
         $disciplines = Discipline::factory(5)
             ->hasProfessionalTrajectories(2)
             ->hasCourses(3)
@@ -99,22 +96,17 @@ class DisciplineTest extends TestCase
                                 ->where('slug', $professionalTrajectory->slug)
                                 ->where('color', $professionalTrajectory->color)
                                 ->where(
-                                    'sum_discipline_levels_points',
-                                    $professionalTrajectory->sum_discipline_levels_points
-                                )
-                                ->where(
                                     'discipline_evaluation',
                                     $professionalTrajectory->pivot->discipline_level_digital_value
                                 )
                                 ->where('icons', [])
-                                ->where('vacancies_count', 100)
+                                ->etc()
                         )
                 )
             );
     }
 
-    public function testDisciplineNonExistingShow()
-    {
+    public function testDisciplineNonExistingShow() {
         $discipline = Discipline::factory(5)
                 ->create()
                 ->last()

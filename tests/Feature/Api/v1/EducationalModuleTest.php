@@ -129,7 +129,6 @@ class EducationalModuleTest extends TestCase
                                     'description',
                                     'slug',
                                     'color',
-                                    'sum_discipline_levels_points',
                                     'discipline_evaluation',
                                 ],
                             ],
