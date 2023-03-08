@@ -15,10 +15,11 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->integer('limit');
+            $table->smallInteger('limit');
             $table->foreignId('discipline_id')
-                  ->constrained('disciplines', 'id')
-                  ->cascadeOnDelete()
+                  ->nullable()
+                  ->constrained()
+                  ->nullOnDelete()
                   ->cascadeOnUpdate();
             $table->foreignId('partner_id')
                   ->nullable()

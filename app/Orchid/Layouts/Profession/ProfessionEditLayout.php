@@ -44,11 +44,11 @@ class ProfessionEditLayout extends Rows
                 ->multiple()
                 ->value($this->query->get('profession')->professionalTrajectories),
 
-            Input::make('headHunter_title')
+            Input::make('headhunter_search_text')
                 ->title(__('Поисковая фраза для сервиса HeadHunter'))
                 ->popover(__("Используется для поиска вакансий"))
                 ->type('text')
-                ->value($this->query->get('profession.headHunter_title'))
+                ->value($this->query->get('profession.headhunter_search_text'))
                 ->required(),
 
             Input::make('vacancies_count')

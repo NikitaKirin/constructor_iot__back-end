@@ -38,8 +38,8 @@ class EducationalModule extends Model
      * Relationship - educational module to educational direction
      * @return BelongsToMany
      */
-    public function educationalDirections(): BelongsToMany {
-        return $this->belongsToMany(EducationalDirection::class);
+    public function educationalPrograms(): BelongsToMany {
+        return $this->belongsToMany(EducationalProgram::class);
     }
 
     /**

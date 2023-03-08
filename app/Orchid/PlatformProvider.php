@@ -55,12 +55,12 @@ class PlatformProvider extends OrchidServiceProvider
                 ])->title(__('Основное')),
 
 
-            Menu::make(__('Направления подготовки'))
+            Menu::make(__('Образовательные программы'))
                 ->icon('graduation')
                 ->list([
-                    Menu::make(__('Список всех направлений'))
+                    Menu::make(__('Список всех программ'))
                         ->icon('list')
-                        ->route('platform.educationalDirections'),
+                        ->route('platform.educationalPrograms'),
                 ]),
 
             Menu::make(__('Профессиональные траектории'))

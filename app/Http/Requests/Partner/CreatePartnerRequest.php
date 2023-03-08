@@ -8,8 +8,8 @@ class CreatePartnerRequest extends FormRequest
 {
     public function rules(): array {
         return [
-            'title'       => ['required', 'string'],
-            'description' => ['required', 'string'],
+            'title'     => ['required', 'string'],
+            'site_link' => ['nullable', 'url'],
         ];
     }
 

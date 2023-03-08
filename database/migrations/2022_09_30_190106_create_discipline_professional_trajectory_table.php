@@ -17,10 +17,14 @@ return new class extends Migration
             $table->foreignId('discipline_id')
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->foreignId('professional_trajectory')
+            $table->foreignId('professional_trajectory_id')
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->primary(['discipline_id', 'professional_trajectory']);
+            $table->foreignId('discipline_level_digital_value')
+                ->constrained('discipline_levels', 'digital_value')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+            $table->primary(['discipline_id', 'professional_trajectory_id']);
         });
     }
 

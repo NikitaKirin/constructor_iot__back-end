@@ -21,7 +21,7 @@ class Profession extends Model
     protected $fillable = [
         'title',
         'description',
-        'headHunter_title',
+        'headhunter_search_text',
         'vacancies_count',
         'area_vacancies_count',
         'maximal_salary',

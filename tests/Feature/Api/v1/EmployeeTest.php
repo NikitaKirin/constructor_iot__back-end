@@ -5,7 +5,7 @@ namespace Tests\Feature\Api\v1;
 use App\Http\Resources\Position\PositionResource;
 use App\Models\Employee;
 use Database\Factories\EmployeeFactory;
-use Database\Seeders\PositionsSeeder;
+use Database\Seeders\PositionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
@@ -16,7 +16,7 @@ class EmployeeTest extends TestCase
 
     public function testEmployeeIndexAssertJsonStructure()
     {
-        $this->seed([PositionsSeeder::class]);
+        $this->seed([PositionSeeder::class]);
 
         Employee::factory(10)->create();
 
@@ -43,7 +43,7 @@ class EmployeeTest extends TestCase
 
     public function testEmployeeIndexAssertJsonValue()
     {
-        $this->seed([PositionsSeeder::class]);
+        $this->seed([PositionSeeder::class]);
 
         $employee = Employee::factory(10)
             ->create()->sortBy('full_name')->first();

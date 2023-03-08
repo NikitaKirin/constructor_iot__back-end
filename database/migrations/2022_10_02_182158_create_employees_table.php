@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('address')->nullable();
             $table->string('audience')->nullable();
             $table->string('additional_information')->nullable();
+            $table->string('vk_profile')->nullable();
             $table->foreignId('photo_id')->nullable()
                   ->constrained('attachments', 'id')
                   ->nullOnDelete();

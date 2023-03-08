@@ -17,11 +17,9 @@ class DatabaseSeeder extends Seeder
         DB::transaction(function () {
             $this->call([
                 InstituteSeeder::class,
-                EducationalDirectionSeeder::class,
-                PositionsSeeder::class,
+                EducationalProgramSeeder::class,
+                PositionSeeder::class,
                 SemesterSeeder::class,
-                EmployeeSeeder::class,
-                PartnerSeeder::class,
                 RealizationSeeder::class,
                 AdmissionCommitteeContactsBlockSeeder::class,
                 SocialNetworksBlockSeeder::class,

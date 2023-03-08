@@ -5,28 +5,18 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up() {
-        Schema::create('semesters', function ( Blueprint $table ) {
+        Schema::create('discipline_levels', function ( Blueprint $table ) {
             $table->increments('id');
-            $table->string('text_representation')->unique();
-            $table->smallInteger('numerical_representation')->unique();
+            $table->string('title');
+            $table->smallInteger('digital_value')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down() {
-        Schema::dropIfExists('semesters');
+        Schema::dropIfExists('discipline_levels');
     }
 };

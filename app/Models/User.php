@@ -80,7 +80,7 @@ class User extends Authenticatable
      * @return HasMany
      */
     public function educationalDirections(): HasMany {
-        return $this->hasMany(EducationalDirection::class);
+        return $this->hasMany(EducationalProgram::class);
     }
 
     /**

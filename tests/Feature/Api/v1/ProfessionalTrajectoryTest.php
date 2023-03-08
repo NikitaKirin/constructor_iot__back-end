@@ -22,7 +22,7 @@ class ProfessionalTrajectoryTest extends TestCase
                     'id',
                     'title',
                     'description',
-                    'slug',
+                    'abbreviated_name',
                     'color',
                     'icons',
                     'vacancies_count',
@@ -43,7 +43,7 @@ class ProfessionalTrajectoryTest extends TestCase
                 fn(AssertableJson $json) => $json->where('id', $professionalTrajectory->id)
                     ->where('title', $professionalTrajectory->title)
                     ->where('description', $professionalTrajectory->description)
-                    ->where('slug', $professionalTrajectory->slug)
+                    ->where('abbreviated_name', $professionalTrajectory->abbreviated_name)
                     ->where('color', $professionalTrajectory->color)
                     ->where('icons', [])
                     ->etc()
@@ -61,7 +61,7 @@ class ProfessionalTrajectoryTest extends TestCase
                     ->where('id', $professionalTrajectory->id)
                     ->where('title', $professionalTrajectory->title)
                     ->where('description', $professionalTrajectory->description)
-                    ->where('slug', $professionalTrajectory->slug)
+                    ->where('abbreviated_name', $professionalTrajectory->abbreviated_name)
                     ->where('color', $professionalTrajectory->color)
                     ->where('icons', [])
                     ->etc()
@@ -82,7 +82,7 @@ class ProfessionalTrajectoryTest extends TestCase
                     ->where('id', $professionalTrajectory->id)
                     ->where('title', $professionalTrajectory->title)
                     ->where('description', $professionalTrajectory->description)
-                    ->where('slug', $professionalTrajectory->slug)
+                    ->where('abbreviated_name', $professionalTrajectory->abbreviated_name)
                     ->where('color', $professionalTrajectory->color)
                     ->where('icons', [])
                     ->where('disciplines_count', $professionalTrajectory->disciplines_count)

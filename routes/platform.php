@@ -22,7 +22,7 @@ use App\Orchid\Screens\Course\CourseProfileScreen;
 use App\Orchid\Screens\Discipline\DisciplineEditScreen;
 use App\Orchid\Screens\Discipline\DisciplineListScreen;
 use App\Orchid\Screens\Discipline\DisciplineProfileScreen;
-use App\Orchid\Screens\EducationalDirection\EducationalDirectionListScreen;
+use App\Orchid\Screens\EducationalProgram\EducationalProgramListScreen;
 use App\Orchid\Screens\EducationalModule\EducationalModuleEditScreen;
 use App\Orchid\Screens\EducationalModule\EducationalModuleListScreen;
 use App\Orchid\Screens\EducationalModule\EducationalModuleProfileScreen;
@@ -178,12 +178,12 @@ Route::screen('institutes', InstituteListScreen::class)
      });
 
 //Platform > Educational Directions
-Route::screen('educational-directions', EducationalDirectionListScreen::class)
-     ->name('platform.educationalDirections')
+Route::screen('educationalPrograms', EducationalProgramListScreen::class)
+     ->name('platform.educationalPrograms')
      ->breadcrumbs(function ( Trail $trail ) {
          return $trail
              ->parent('platform.index')
-             ->push(__('Направления подготовки'), route('platform.educationalDirections'));
+             ->push(__('Образовательные программы'), route('platform.educationalPrograms'));
      });
 
 // Platform > Employees

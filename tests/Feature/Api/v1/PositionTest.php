@@ -3,7 +3,7 @@
 namespace Tests\Feature\Api\v1;
 
 use App\Models\Position;
-use Database\Seeders\PositionsSeeder;
+use Database\Seeders\PositionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
@@ -14,7 +14,7 @@ class PositionTest extends TestCase
 
     public function testPositionIndexAssertJsonStructure()
     {
-        $this->seed([PositionsSeeder::class]);
+        $this->seed([PositionSeeder::class]);
         $response = $this->get(route('positions.index'));
 
         $response->assertOk()
@@ -32,7 +32,7 @@ class PositionTest extends TestCase
 
     public function testPositionIndexAssertJsonValue()
     {
-        $this->seed([PositionsSeeder::class]);
+        $this->seed([PositionSeeder::class]);
         $response = $this->get(route('positions.index'));
         $position = Position::all()->first();
 

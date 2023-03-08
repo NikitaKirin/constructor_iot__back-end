@@ -15,12 +15,12 @@ class PartnerResource extends JsonResource
      * @param Request $request
      * @return array
      */
-    public function toArray( $request ) {
+    public function toArray($request) {
         return [
-            'id'          => $this->id,
-            'title'       => $this->title,
-            'description' => $this->description,
-            'logo'        => $this->logo?->url() ?? asset(Config::get('constants.avatars.employee.url')),
+            'id'        => $this->id,
+            'title'     => $this->title,
+            'site_link' => $this->site_link,
+            'logo'      => $this->logo?->url() ?? asset(Config::get('constants.avatars.employee.url')),
         ];
     }
 }

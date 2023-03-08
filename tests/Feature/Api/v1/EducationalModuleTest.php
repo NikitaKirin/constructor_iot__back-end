@@ -3,9 +3,11 @@
 namespace Tests\Feature\Api\v1;
 
 use App\Models\Discipline;
-use App\Models\EducationalDirection;
+use App\Models\EducationalProgram;
 use App\Models\EducationalModule;
-use Database\Factories\EducationalDirectionFactory;
+use App\Models\ProfessionalTrajectory;
+use Database\Factories\EducationalProgramFactory;
+use Database\Seeders\DisciplineLevelSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,12 +20,12 @@ class EducationalModuleTest extends TestCase
         $educationalModules = EducationalModule::factory(3)
             ->hasSemesters(2)
             ->hasDisciplines(2)
-            ->hasEducationalDirections(1)
+            ->hasEducationalPrograms(1)
             ->create();
 
-        $educationalDirection = $educationalModules[0]->educationalDirections()->first();
+        $educationalProgram = $educationalModules[0]->educationalPrograms()->first();
 
-        $response = $this->get(route('educationalModules.index', $educationalDirection));
+        $response = $this->get(route('educationalModules.index', $educationalProgram));
 
         $response->assertStatus(200);
 
@@ -51,7 +53,6 @@ class EducationalModuleTest extends TestCase
                                             'description',
                                             'slug',
                                             'color',
-                                            'sum_disciplines_levels_points',
                                             'icons',
                                             'discipline_evaluation',
                                             'vacancies_count',
@@ -69,17 +70,17 @@ class EducationalModuleTest extends TestCase
     public function testEducationalModulesShowWithoutDisciplinesAssertJsonStructure()
     {
         $educationalModule = EducationalModule::factory(1)
-            ->hasEducationalDirections(1)
+            ->hasEducationalPrograms(1)
             ->create()
             ->first();
 
-        $educationalDirection = $educationalModule->first()
-            ->educationalDirections
+        $educationalProgram = $educationalModule->first()
+            ->educationalPrograms
             ->first();
         $this->get(
             route(
                 'educationalModules.show',
-                ['educationalDirection' => $educationalDirection->id, 'educationalModule' => $educationalModule->id]
+                ['educationalProgram' => $educationalProgram->id, 'educationalModule' => $educationalModule->id]
             )
         )
             ->assertOk()
@@ -95,9 +96,11 @@ class EducationalModuleTest extends TestCase
 
     public function testEducationalModuleShowWithDisciplinesAssertJsonStructure()
     {
+        $this->seed(DisciplineLevelSeeder::class);
+        $professionalTrajectories = ProfessionalTrajectory::factory(2)->create();
         $educationalModule = EducationalModule::factory(1)
-            ->hasEducationalDirections(1)
-            ->has(Discipline::factory(2)->hasProfessionalTrajectories(1))
+            ->hasEducationalPrograms(1)
+            ->has(Discipline::factory(2)->hasAttached($professionalTrajectories, ['discipline_level_digital_value' => 1]))
             ->create()
             ->first();
 
@@ -127,7 +130,7 @@ class EducationalModuleTest extends TestCase
                                     'id',
                                     'title',
                                     'description',
-                                    'slug',
+                                    'abbreviated_name',
                                     'color',
                                     'discipline_evaluation',
                                 ],

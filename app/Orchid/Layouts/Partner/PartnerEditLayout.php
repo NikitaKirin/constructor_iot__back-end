@@ -31,11 +31,10 @@ class PartnerEditLayout extends Rows
                 ->required()
                 ->value($this->query->get('partner.title')),
 
-            Quill::make('description')
-                ->title(__('Описание'))
-                ->toolbar(["text", "color", "header", "list", "format"])
-                ->required()
-                ->value($this->query->get('partner.description')),
+            Input::make('site_link')
+                ->title(__('Ссылка на сайт компании'))
+                ->type('url')
+                ->value($this->query->get('partner.site_link')),
 
             Upload::make('logo_id')
                 ->title(__('Логотип'))

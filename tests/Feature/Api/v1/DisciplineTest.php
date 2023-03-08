@@ -4,6 +4,10 @@ namespace Tests\Feature\Api\v1;
 
 use App\Models\Course;
 use App\Models\Discipline;
+use App\Models\DisciplineLevel;
+use App\Models\ProfessionalTrajectory;
+use Database\Factories\ProfessionalTrajectoryFactory;
+use Database\Seeders\DisciplineLevelSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -14,8 +18,10 @@ class DisciplineTest extends TestCase
     use RefreshDatabase;
 
     public function testDisciplinesShowAssertJsonStructure() {
+        $this->seed(DisciplineLevelSeeder::class);
+        $professionalTrajectories = ProfessionalTrajectory::factory(2)->create();
         $disciplines = Discipline::factory(5)
-            ->hasProfessionalTrajectories(2)
+            ->hasAttached($professionalTrajectories, ['discipline_level_digital_value' => 1])
             ->hasCourses(3)
             ->create();
         $discipline = $disciplines->first()
@@ -47,7 +53,7 @@ class DisciplineTest extends TestCase
                                 'id',
                                 'title',
                                 'description',
-                                'slug',
+                                'abbreviated_name',
                                 'color',
                                 'discipline_evaluation',
                             ],
@@ -58,8 +64,10 @@ class DisciplineTest extends TestCase
     }
 
     public function testDisciplineShowAssertJsonValue() {
+        $this->seed(DisciplineLevelSeeder::class);
+        $professionalTrajectories = ProfessionalTrajectory::factory(2)->create();
         $disciplines = Discipline::factory(5)
-            ->hasProfessionalTrajectories(2)
+            ->hasAttached($professionalTrajectories, ['discipline_level_digital_value' => 1])
             ->hasCourses(3)
             ->create();
         $discipline = $disciplines->first()
@@ -93,7 +101,7 @@ class DisciplineTest extends TestCase
                             fn(AssertableJson $json) => $json->where('id', $professionalTrajectory->id)
                                 ->where('title', $professionalTrajectory->title)
                                 ->where('description', $professionalTrajectory->description)
-                                ->where('slug', $professionalTrajectory->slug)
+                                ->where('abbreviated_name', $professionalTrajectory->abbreviated_name)
                                 ->where('color', $professionalTrajectory->color)
                                 ->where(
                                     'discipline_evaluation',

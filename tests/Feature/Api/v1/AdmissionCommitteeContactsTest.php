@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api\v1;
 
 use App\Models\AdmissionCommitteeContactsBlock;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;

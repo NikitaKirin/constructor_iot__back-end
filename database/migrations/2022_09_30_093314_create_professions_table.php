@@ -15,7 +15,16 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->foreignId('professional_trajectory_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('headhunter_search_text')->nullable();
+            $table->integer('vacancies_count')->nullable();
+            $table->integer('area_vacancies_count')->nullable();
+            $table->integer('maximal_salary')->nullable();
+            $table->integer('minimal_salary')->nullable();
+            $table->integer('median_salary')->nullable();
+            $table->foreignId('photo_id')
+                ->nullable()
+                ->constrained('attachments', 'id')
+                ->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();

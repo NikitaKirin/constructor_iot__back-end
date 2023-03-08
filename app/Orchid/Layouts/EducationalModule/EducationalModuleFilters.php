@@ -3,7 +3,7 @@
 namespace App\Orchid\Layouts\EducationalModule;
 
 use App\Orchid\Filters\EducationalModule\ChoiceLimitFilter;
-use App\Orchid\Filters\EducationalModule\EducationalDirectionFilter;
+use App\Orchid\Filters\EducationalModule\EducationalProgramFilter;
 use App\Orchid\Filters\EducationalModule\IsSpecFilter;
 use App\Orchid\Filters\EducationalModule\SemesterFilter;
 use App\Orchid\Filters\TitleFilter;
@@ -18,7 +18,7 @@ class EducationalModuleFilters extends Selection
     public function filters(): iterable {
         return [
             TitleFilter::class,
-            EducationalDirectionFilter::class,
+            EducationalProgramFilter::class,
             SemesterFilter::class,
             IsSpecFilter::class,
             ChoiceLimitFilter::class,

@@ -41,13 +41,13 @@ class ProfessionalTrajectoryEditLayout extends Rows
                  ->required()
                  ->value($this->query->get('professionalTrajectory.description') ?? __('Нет описания')),
 
-            Input::make('slug')
+            Input::make('abbreviated_name')
                  ->type('text')
                  ->max(15)
                  ->title(__('Краткое название'))
                  ->help(__('Используется в отображении на карточках дисциплин'))
                  ->required()
-                 ->value($this->query->get('professionalTrajectory.slug')),
+                 ->value($this->query->get('professionalTrajectory.abbreviated_name')),
 
             Input::make('color')
                  ->type('color')

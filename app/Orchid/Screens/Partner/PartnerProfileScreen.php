@@ -25,8 +25,7 @@ class PartnerProfileScreen extends Screen
      *
      * @return array
      */
-    public function query(Partner $partner): iterable
-    {
+    public function query(Partner $partner): iterable {
         $partner->load('courses');
         return [
             "partner" => $partner,
@@ -39,8 +38,7 @@ class PartnerProfileScreen extends Screen
      *
      * @return string|null
      */
-    public function name(): ?string
-    {
+    public function name(): ?string {
         return "{$this->partner->title}";
     }
 
@@ -49,8 +47,7 @@ class PartnerProfileScreen extends Screen
      *
      * @return \Orchid\Screen\Action[]
      */
-    public function commandBar(): iterable
-    {
+    public function commandBar(): iterable {
         return [
             Link::make(__('Edit'))
                 ->icon("pencil")
@@ -68,8 +65,7 @@ class PartnerProfileScreen extends Screen
      *
      * @return \Orchid\Screen\Layout[]|string[]
      */
-    public function layout(): iterable
-    {
+    public function layout(): iterable {
         return [
             Layout::tabs([
                 __('Основная информация') =>
@@ -82,19 +78,23 @@ class PartnerProfileScreen extends Screen
                                 return "<img src='$link' width='100' alt='Логотип компании: {$this->partner->title}'";
                             }),
                         Sight::make('title', __("Название компании")),
-                        Sight::make("description", __('Описание'))
+                        Sight::make("site_link", __('Ссылка на сайт компании'))
                             ->render(function () {
-                                return $this->partner->description;
+                                if ($this->partner->site_link) {
+                                    return Link::make(__($this->partner->site_link))
+                                        ->href($this->partner->site_link)
+                                        ->target('_blank');
+                                }
+                                return __('Не задана');
                             }),
                     ]),
-                __("Курсы партнёра") => CourseListLayout::class,
+                __("Курсы партнёра")      => CourseListLayout::class,
             ]),
 
         ];
     }
 
-    public function destroy(Request $request): RedirectResponse
-    {
+    public function destroy(Request $request): RedirectResponse {
         Partner::findOrFail($request->get('id'))->forceDelete();
 
         Toast::success(__('Партнер успешно удален'));

@@ -15,7 +15,7 @@ class SemesterFactory extends Factory
     {
         return [
             'text_representation' => $this->faker->text(),
-            'numerical_representation' => $this->faker->randomNumber(),
+            'numerical_representation' => $this->faker->unique()->numberBetween(1, 8),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'user_id' => User::factory(),

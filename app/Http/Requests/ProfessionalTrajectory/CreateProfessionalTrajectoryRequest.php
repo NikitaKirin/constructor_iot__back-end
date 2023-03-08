@@ -17,7 +17,7 @@ class CreateProfessionalTrajectoryRequest extends FormRequest
                 Rule::unique('professional_trajectories')->where(fn( $query ) => $query->where
                 ('id', '<>', $professionalTrajectoryId)),
             ],
-            'slug'        => ['required', 'string', 'max:15'],
+            'abbreviated_name' => ['required', 'string', 'max:15'],
         ];
     }
 

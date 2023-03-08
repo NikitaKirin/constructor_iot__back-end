@@ -23,7 +23,7 @@ class ProfessionalTrajectoryResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'slug' => $this->slug,
+            'abbreviated_name' => $this->abbreviated_name,
             'color' => $this->color,
             'icons' => $this->getIconsUrls(),
             'discipline_evaluation' => $this->whenPivotLoaded('discipline_professional_trajectory', function () {

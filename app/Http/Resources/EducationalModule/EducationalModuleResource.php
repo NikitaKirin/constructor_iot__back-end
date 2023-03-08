@@ -30,7 +30,7 @@ class EducationalModuleResource extends JsonResource
             'disciplines' => $this->whenLoaded('disciplines', fn() => $this->getDisciplines($request)),
 
 
-            /*'educationalDirections' => EducationalDirectionResourceCollection::collection($this->whenLoaded('educationalDirections')),*/
+            /*'educationalDirections' => EducationalProgramResourceCollection::collection($this->whenLoaded('educationalDirections')),*/
         ];
     }
 

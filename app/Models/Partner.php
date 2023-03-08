@@ -18,7 +18,7 @@ class Partner extends Model
 
     protected $fillable = [
         'title',
-        'description',
+        'site_link',
     ];
 
     protected $allowedSorts = [

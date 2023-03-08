@@ -25,10 +25,10 @@ class EducationalModuleProfileScreen extends Screen
      * @return array
      */
     public function query( EducationalModule $educationalModule ): iterable {
-        $educationalModule->load(['educationalDirections', 'disciplines']);
+        $educationalModule->load(['educationalPrograms', 'disciplines']);
         return [
             'educationalModule'     => $educationalModule,
-            'educationalDirections' => $educationalModule->educationalDirections,
+            'educationalPrograms' => $educationalModule->educationalPrograms,
             'disciplines'           => $educationalModule->disciplines,
         ];
     }
@@ -77,8 +77,6 @@ class EducationalModuleProfileScreen extends Screen
                                  return $educationalModule->is_spec ? 'Да' : 'Нет';
                              }),
                     ]),
-                /*__('Направления')         =>
-                    EducationalDirectionListLayout::class,*/
 
                 __("Дисциплины модуля") => DisciplineListLayout::class,
             ])

@@ -39,7 +39,7 @@ class HeadHunterIntegrationManager extends IntegrationManager
             Log::info("Получаю данные по профессии : $profession->title");
             echo("Получаю данные по профессии : $profession->title" . PHP_EOL);
             $headHunterRepository = $this->getProviderRepository();
-            $headHunterRepository->setSearchText($profession->headHunter_title);
+            $headHunterRepository->setSearchText($profession->headhunter_search_text);
             $vacanciesCount = $headHunterRepository->getVacanciesCount();
             $vacanciesSalaries = $headHunterRepository->getVacanciesSalaries();
             $currentAreaVacanciesCount = $headHunterRepository->getSpecificAreaVacanciesCount("Россия", "Свердловская область");

@@ -17,9 +17,9 @@ class ProfessionalTrajectoryFactory extends Factory
             'title' => $this->faker->unique()->word(),
             'description' => $this->faker->text(),
             'color' => $this->faker->unique()->hexColor(),
+            'abbreviated_name' => $this->faker->text(15),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'slug' => $this->faker->text(15),
             'user_id' => User::factory(),
         ];
     }

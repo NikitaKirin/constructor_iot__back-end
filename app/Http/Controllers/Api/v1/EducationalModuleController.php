@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EducationalModule\EducationalModuleResource;
 use App\Http\Resources\Semester\SemesterResourceCollection;
-use App\Models\EducationalDirection;
+use App\Models\EducationalProgram;
 use App\Models\EducationalModule;
 use App\Models\Semester;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,14 +17,14 @@ class EducationalModuleController extends Controller
      * Get the list of educational directions' educational modules
      * Pagination by semesters
      * @param  Request  $request
-     * @param  EducationalDirection  $educationalDirection
+     * @param  EducationalProgram  $educationalProgram
      */
-    public function index(Request $request, EducationalDirection $educationalDirection)
+    public function index(Request $request, EducationalProgram $educationalProgram)
     {
-        $data = Semester::whereHas('educationalModules', function (Builder $query) use ($educationalDirection) {
+        $data = Semester::whereHas('educationalModules', function (Builder $query) use ($educationalProgram) {
             return $query->whereHas(
-                'educationalDirections',
-                fn(Builder $query) => $query->where('id', $educationalDirection->id)
+                'educationalPrograms',
+                fn(Builder $query) => $query->where('id', $educationalProgram->id)
             );
         })->with(['educationalModules.disciplines.professionalTrajectories']);
         if ($request->input('paginate')) {

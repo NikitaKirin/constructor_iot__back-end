@@ -23,7 +23,7 @@ class ProfessionalTrajectory extends Model
         'title',
         'description',
         'color',
-        'slug',
+        'abbreviated_name',
     ];
 
     protected $allowedSorts = [

@@ -3,7 +3,7 @@
 namespace App\Orchid\Layouts\EducationalModule;
 
 use App\Models\Discipline;
-use App\Models\EducationalDirection;
+use App\Models\EducationalProgram;
 use App\Models\Semester;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
@@ -54,11 +54,11 @@ class EducationalModuleEditLayout extends Rows
                     ->title(__('Семестры'))
                     ->value($this->query->get('educationalModule')->semesters),
 
-            Relation::make('educationalDirections.')
-                    ->fromModel(EducationalDirection::class, 'title')
+            Relation::make('educationalPrograms.')
+                    ->fromModel(EducationalProgram::class, 'title')
                     ->multiple()
-                    ->title(__('Направления'))
-                    ->value($this->query->get('educationalModule')->educationalDirections),
+                    ->title(__('Образовательные программы'))
+                    ->value($this->query->get('educationalModule')->educationalPrograms),
 
             Relation::make('disciplines.')
                     ->fromModel(Discipline::class, 'title')

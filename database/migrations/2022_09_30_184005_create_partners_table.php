@@ -14,11 +14,11 @@ return new class extends Migration {
         Schema::create('partners', function ( Blueprint $table ) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->string('site_link')->nullable();
             $table->foreignId('logo_id')->nullable()
                   ->constrained('attachments', 'id')
                   ->nullOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

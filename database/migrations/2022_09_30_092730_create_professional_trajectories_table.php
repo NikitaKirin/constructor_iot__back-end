@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->text('description');
             $table->string('color')->unique();
+            $table->string('abbreviated_name', 15);
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();

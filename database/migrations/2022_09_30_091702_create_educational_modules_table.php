@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('educational_modules', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique();
-            $table->integer('choice_limit');
+            $table->smallInteger('choice_limit');
+            $table->boolean('is_spec')->default(false);
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();

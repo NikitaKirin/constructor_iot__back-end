@@ -45,8 +45,8 @@ class Institute extends Model
      * Relationship - institute to educational directions
      * @return HasMany
      */
-    public function educationalDirections(): HasMany {
-        return $this->hasMany(EducationalDirection::class);
+    public function educationalPrograms(): HasMany {
+        return $this->hasMany(EducationalProgram::class);
     }
 
     /**
