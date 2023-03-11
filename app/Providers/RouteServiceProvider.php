@@ -24,8 +24,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         $this->configureRateLimiting();
 
         $this->routes(function () {
@@ -46,6 +45,7 @@ class RouteServiceProvider extends ServiceProvider
                     require base_path('routes/api/v1/employee.php');
                     require base_path('routes/api/v1/profession.php');
                     require base_path('routes/api/v1/headHunter.php');
+                    require base_path('routes/api/v1/faq.php');
                 }
                 );
 
@@ -59,8 +59,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function configureRateLimiting()
-    {
+    protected function configureRateLimiting() {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
