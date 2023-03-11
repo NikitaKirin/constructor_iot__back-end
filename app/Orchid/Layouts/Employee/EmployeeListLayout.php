@@ -53,18 +53,6 @@ class EmployeeListLayout extends Table
                         ->route('platform.employees.profile', $employee);
                 }),
 
-            /*            TD::make('email', __('E-mail'))
-                          ->filter(),
-
-                        TD::make('phone_number', __('Номер телефона'))
-                          ->filter(),
-
-                        TD::make('address', __('Адрес')),
-
-                        TD::make('audience', __('Аудитория')),
-
-                        TD::make('additional_information', __('Дополнительная информация')),*/
-
             TD::make('position_id', __('Должность'))
                 ->render(function (Employee $employee) {
                     return $employee->position->title;

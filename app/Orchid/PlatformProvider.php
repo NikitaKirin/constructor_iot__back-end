@@ -16,7 +16,7 @@ class PlatformProvider extends OrchidServiceProvider
     /**
      * @param Dashboard $dashboard
      */
-    public function boot( Dashboard $dashboard ): void {
+    public function boot(Dashboard $dashboard): void {
         parent::boot($dashboard);
 
         // ...
@@ -154,7 +154,18 @@ class PlatformProvider extends OrchidServiceProvider
                         ->icon('plus')
                         ->route('platform.reviews.create'),
                 ])
-                ->icon('like')
+                ->icon('like'),
+
+            Menu::make(__('FAQ'))
+                ->icon('question')
+                ->list([
+                    Menu::make(__('Список всех вопросов'))
+                        ->icon('list')
+                        ->route('platform.faq'),
+                    Menu::make(__('Добавить новый'))
+                        ->icon('plus')
+                        ->route('platform.faq.create'),
+                ])
                 ->divider(),
 
             Menu::make(__('Панель разработчика'))
@@ -249,8 +260,8 @@ class PlatformProvider extends OrchidServiceProvider
     public function registerPermissions(): array {
         return [
             ItemPermission::group(__('System'))
-                          ->addPermission('platform.systems.roles', __('Roles'))
-                          ->addPermission('platform.systems.users', __('Users')),
+                ->addPermission('platform.systems.roles', __('Roles'))
+                ->addPermission('platform.systems.users', __('Users')),
         ];
     }
 }
