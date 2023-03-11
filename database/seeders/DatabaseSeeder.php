@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
                 AdmissionCommitteeContactsBlockSeeder::class,
                 SocialNetworksBlockSeeder::class,
                 ProfessionalTrajectorySeeder::class,
+                DisciplineLevelSeeder::class,
             ]);
         });
     }

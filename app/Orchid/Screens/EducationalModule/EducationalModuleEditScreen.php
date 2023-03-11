@@ -80,8 +80,8 @@ class EducationalModuleEditScreen extends Screen
         $educationalModule->semesters()
                           ->sync($request->get('semesters', []));
 
-        $educationalModule->educationalDirections()
-                          ->sync($request->get('educationalDirections', []));
+        $educationalModule->educationalPrograms()
+                          ->sync($request->get('educationalPrograms', []));
 
         $educationalModule->disciplines()
                           ->sync($request->get('disciplines', []));

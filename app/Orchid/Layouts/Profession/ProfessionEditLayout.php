@@ -82,11 +82,13 @@ class ProfessionEditLayout extends Rows
                 ->disabled(),
 
             Upload::make('photo_id')
+                ->required()
                 ->title(__('Фото'))
                 ->targetId()
                 ->maxFiles(1)
                 ->acceptedFiles('.png,.svg,.jpg')
-                ->value($this->query->get('profession')?->photo_id),
+                ->media()
+                ->value($this->query->get('profession')->photo_id),
         ];
     }
 }

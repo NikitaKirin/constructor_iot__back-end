@@ -75,7 +75,6 @@ class ProfessionEditScreen extends Screen
     }
 
     public function save(Profession $profession, CreateOrUpdateProfessionRequest $request) {
-
         $profession->fill($request->validated())
             ->user()->associate(Auth::user())
             ->save();
@@ -83,14 +82,10 @@ class ProfessionEditScreen extends Screen
         $profession->professionalTrajectories()
             ->sync($request->input('professional_trajectories', []));
 
-        if ($request->input('photo_id')) {
-            $profession->attachment()
-                ->sync($request->input('photo_id', []));
-            $profession->photo_id = $profession->attachment()->first()?->id;
-            $profession->save();
-        } else {
-            $profession->photo->delete();
-        }
+        $profession->attachment()->sync($request->input('photo_id'));
+        $profession->photo_id = $profession->attachment()->first()->id;
+
+        $profession->save();
 
         Toast::success(config('toasts.toasts.update.success'));
     }
