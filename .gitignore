@@ -18,3 +18,4 @@ yarn-error.log
 .env.testing
 .DS_Store
 database_dumps
+tmp
