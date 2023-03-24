@@ -86,7 +86,7 @@ class ProfessionEditLayout extends Rows
                 ->title(__('Фото'))
                 ->targetId()
                 ->maxFiles(1)
-                ->acceptedFiles('.png,.svg,.jpg')
+                ->acceptedFiles('image/*')
                 ->media()
                 ->value($this->query->get('profession')->photo_id),
         ];
