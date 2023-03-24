@@ -9,7 +9,7 @@ class CreateFAQRequest extends FormRequest
     public function rules(): array {
         return [
             'question' => ['required', 'string', 'max:255'],
-            'answer' => ['required', 'string', 'max:255'],
+            'answer' => ['required', 'string'],
         ];
     }
 

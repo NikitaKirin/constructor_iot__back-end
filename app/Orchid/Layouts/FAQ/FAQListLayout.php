@@ -35,7 +35,10 @@ class FAQListLayout extends Table
 
             TD::make('question', __('Вопрос')),
 
-            TD::make('answer', __('Ответ')),
+            TD::make('answer', __('Ответ'))
+            ->render(function (FAQ $faq) {
+                return $faq->answer;
+            }),
 
             TD::make('user_id', __('Создано/изменено последним'))
                 ->render(function (FAQ $faq) {

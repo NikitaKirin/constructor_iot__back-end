@@ -4,6 +4,7 @@ namespace App\Orchid\Layouts\FAQ;
 
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Layouts\Rows;
 
@@ -30,9 +31,9 @@ class FAQEditLayout extends Rows
                 ->required()
                 ->value($this->query->get('faq.question')),
 
-            TextArea::make('answer')
+            Quill::make('answer')
                 ->title(__('Ответ'))
-                ->max(255)
+                ->toolbar(["text", "color", "list", "format"])
                 ->required()
                 ->value($this->query->get('faq.answer')),
         ];
