@@ -16,8 +16,8 @@ class PartnerFactory extends Factory
      */
     public function definition() {
         return [
-            'title'       => fake('ru_RU')->company(),
-            'description' => fake('ru_RU')->realText(300),
+            'title'     => fake('ru_RU')->company(),
+            'site_link' => fake()->url(),
         ];
     }
 }

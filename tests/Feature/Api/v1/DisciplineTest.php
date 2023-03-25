@@ -43,7 +43,6 @@ class DisciplineTest extends TestCase
                                 'partner' => [
                                     'id',
                                     'title',
-                                    'description',
                                     'logo',
                                 ],
                             ],
@@ -90,7 +89,7 @@ class DisciplineTest extends TestCase
                             ->where('realization', $course->realization->title)
                             ->has('partner', fn(AssertableJson $json) => $json->where('id', $partner->id)
                                 ->where('title', $partner->title)
-                                ->where('description', $partner->description)
+                                ->where('site_link', $partner->site_link)
                                 ->where(
                                     'logo',
                                     $partner->logo?->url() ?? asset(Config::get('constants.avatars.employee.url'))

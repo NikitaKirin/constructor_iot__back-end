@@ -32,8 +32,8 @@ class PartnerTest extends TestCase
                         $testPartner->title
                     )
                     ->where(
-                        'description',
-                        $testPartner->description
+                        'site_link',
+                        $testPartner->site_link
                     )
                     ->etc()
             )
