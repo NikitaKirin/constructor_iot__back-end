@@ -58,10 +58,10 @@ class ProfessionalTrajectoryEditLayout extends Rows
             Upload::make('icons')
                   ->groups('icons')
                   ->maxFiles(10)
-                  ->acceptedFiles('.png,.svg')
+                  ->acceptedFiles('image/*')
                   ->title(__('Иконки'))
                   ->popover(__("Иконки отображаются в конструкторе траекторий."))
-                  ->value($this->query->get('professionalTrajectory')?->attachment->where('group', 'icons')),
+                  ->value($this->query->get('professionalTrajectory')?->icons),
         ];
     }
 }

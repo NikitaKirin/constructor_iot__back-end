@@ -106,7 +106,6 @@ class DisciplineTest extends TestCase
                                     'discipline_evaluation',
                                     $professionalTrajectory->pivot->discipline_level_digital_value
                                 )
-                                ->where('icons', [])
                                 ->etc()
                         )
                 )

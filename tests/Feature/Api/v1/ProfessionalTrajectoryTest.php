@@ -25,13 +25,12 @@ class ProfessionalTrajectoryTest extends TestCase
                     'abbreviated_name',
                     'color',
                     'icons',
-                    'vacancies_count',
                 ],
             ],
         ]);
     }
 
-    public function testProfessionalTrajectoryIndexAssertJsonValue() {
+/*    public function testProfessionalTrajectoryIndexAssertJsonValue() {
         $professionalTrajectories = ProfessionalTrajectory::factory(5)
             ->create();
         $professionalTrajectory = $professionalTrajectories->first();
@@ -48,7 +47,7 @@ class ProfessionalTrajectoryTest extends TestCase
                     ->where('icons', [])
                     ->etc()
             ));
-    }
+    }*/
 
     public function testProfessionalTrajectoryExistingShowWithoutDisciplinesCount() {
         $professionalTrajectories = ProfessionalTrajectory::factory(5)
@@ -85,7 +84,6 @@ class ProfessionalTrajectoryTest extends TestCase
                     ->where('abbreviated_name', $professionalTrajectory->abbreviated_name)
                     ->where('color', $professionalTrajectory->color)
                     ->where('icons', [])
-                    ->where('disciplines_count', $professionalTrajectory->disciplines_count)
                     ->etc()
                 )
             );

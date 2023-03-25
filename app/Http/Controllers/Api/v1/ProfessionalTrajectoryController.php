@@ -3,27 +3,30 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfessionalTrajectory\IndexProfessionalTrajectoryRequest;
 use App\Http\Resources\ProfessionalTrajectory\ProfessionalTrajectoryResource;
 use App\Http\Resources\ProfessionalTrajectory\ProfessionalTrajectoryResourceCollection;
 use App\Models\ProfessionalTrajectory;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ProfessionalTrajectoryController extends Controller
 {
     public function index(Request $request) {
-        $withProfessions = $request->input('withProfessions', false);
+        $withProfessions = $request->boolean('loadProfessions');
+        $professionalTrajectoryQuery = ProfessionalTrajectory::query()->with(['icons']);
         if ($withProfessions) {
-            return new ProfessionalTrajectoryResourceCollection(ProfessionalTrajectory::with(['professions'])
-                ->orderBy('id')
-                ->get());
+            $professionalTrajectoryQuery = $professionalTrajectoryQuery->with(['professions']);
         }
-        return new ProfessionalTrajectoryResourceCollection(ProfessionalTrajectory::orderBy('id')->get());
+        return new ProfessionalTrajectoryResourceCollection($professionalTrajectoryQuery->orderBy('title')->get());
     }
 
     public function show(ProfessionalTrajectory $professionalTrajectory, Request $request) {
-        if ($request->input('disciplinesCount', false)) {
-            return new ProfessionalTrajectoryResource($professionalTrajectory->loadCount('disciplines'));
+        $professionalTrajectory->load(['icons']);
+        if ($request->boolean('loadDisciplinesCount')) {
+           $professionalTrajectory->loadCount('disciplines');
+        }
+        if ($request->boolean('loadProfessions')){
+            $professionalTrajectory->load(['professions']);
         }
         return new ProfessionalTrajectoryResource($professionalTrajectory);
     }

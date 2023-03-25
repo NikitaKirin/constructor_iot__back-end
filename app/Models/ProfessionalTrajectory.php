@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -46,8 +47,8 @@ class ProfessionalTrajectory extends Model
                     ->withPivot('discipline_level_digital_value');
     }
 
-    public function icons() {
-        return $this->hasMany(Attachment::class)->where('group', 'icons');
+    public function icons(): MorphToMany {
+        return $this->attachment('icons');
     }
 
     public function professions(): BelongsToMany {
