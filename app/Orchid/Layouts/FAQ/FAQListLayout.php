@@ -33,9 +33,11 @@ class FAQListLayout extends Table
 
             TD::make('#')->render(fn(FAQ $faq, object $loop) => ++$loop->index),
 
-            TD::make('question', __('Вопрос')),
+            TD::make('question', __('Вопрос'))
+            ->width(200),
 
             TD::make('answer', __('Ответ'))
+                ->width(400)
             ->render(function (FAQ $faq) {
                 return $faq->answer;
             }),
