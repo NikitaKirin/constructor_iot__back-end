@@ -25,6 +25,7 @@ class Course extends Model
         'video_id',
         'presentation_id',
         'realization_id',
+        'partner_id',
     ];
 
     protected $allowedSorts = [

@@ -15,6 +15,6 @@ class DisciplineController extends Controller
                 ['data' => 'Not found'], 404
             );
         }
-        return new DisciplineResource($discipline->load(['courses', 'professionalTrajectories']));
+        return new DisciplineResource($discipline->load(['courses', 'professionalTrajectories', 'courses.partner']));
     }
 }

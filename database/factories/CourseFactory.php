@@ -23,7 +23,7 @@ class CourseFactory extends Factory
         return [
             'title' => $this->faker->unique()->name,
             'description' => $this->faker->realText,
-            'limit' => $this->faker->numberBetween(0, 100),
+            'seat_limit' => $this->faker->numberBetween(0, 100),
             'discipline_id' => Discipline::factory(),
             'partner_id' => Partner::factory(),
             'user_id' => User::factory(),
