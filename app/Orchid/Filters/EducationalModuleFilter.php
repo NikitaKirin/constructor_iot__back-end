@@ -36,7 +36,6 @@ class EducationalModuleFilter extends Filter
      * @return Builder
      */
     public function run( Builder $builder ): Builder {
-        //$this->request->dd();
         return $builder->whereHas('educationalModules', function ( Builder $query ) {
             return $query->whereIntegerInRaw('educational_module_id', $this->request->input('educationalModules'));
         });

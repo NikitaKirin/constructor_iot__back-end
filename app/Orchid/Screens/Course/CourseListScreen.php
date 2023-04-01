@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens\Course;
 
+use App\Actions\Course\DestroyCourseAction;
 use App\Models\Course;
 use App\Orchid\Layouts\Course\CourseFilters;
 use App\Orchid\Layouts\Course\CourseListLayout;
@@ -61,8 +62,11 @@ class CourseListScreen extends Screen
     }
 
     public function destroy( Request $request ) {
-        Course::findOrFail($request->input('id'))->forceDelete();
-
-        Toast::success(__(Config::get('toasts.toasts.delete.success')));
+        $status = (new DestroyCourseAction())->run($request);
+        if ($status) {
+            Toast::success(config('toasts.toasts.delete.success'));
+            return redirect()->route('platform.courses');
+        } else
+            Toast::error(config('toasts.toasts.delete.error'));
     }
 }

@@ -77,10 +77,6 @@ class ProfessionListLayout extends Table
                     return DropDown::make()
                         ->icon('options-vertical')
                         ->list([
-                            /*Link::make(__('Открыть'))
-                                ->icon('eye')
-                                ->route('platform.professions.profile', $profession),*/
-
                             Link::make(__('Edit'))
                                 ->icon('pencil')
                                 ->route('platform.professions.edit', $profession),

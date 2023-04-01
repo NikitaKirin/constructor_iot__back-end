@@ -4,6 +4,8 @@ namespace App\Orchid\Screens\Course;
 
 use App\Models\Course;
 use App\Models\Discipline;
+use App\Models\Partner;
+use App\Orchid\Screens\Partner\PartnerProfileScreen;
 use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
@@ -22,8 +24,10 @@ class CourseProfileScreen extends Screen
      * @return array
      */
     public function query( Course $course ): iterable {
+        $course->load('partner');
         return [
             'course' => $course,
+            'partner' => $course->partner,
         ];
     }
 
@@ -69,7 +73,7 @@ class CourseProfileScreen extends Screen
                             ->render(function (Course $course){
                                 return $course->description;
                             }),
-                        Sight::make('limit', __('Лимит мест')),
+                        Sight::make('seat_limit', __('Лимит мест')),
                         Sight::make('discipline_id', __("Дисциплина"))
                             ->render(function (Course $course){
                                 $discipline = $course->discipline;

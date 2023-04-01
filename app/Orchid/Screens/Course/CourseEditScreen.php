@@ -2,14 +2,18 @@
 
 namespace App\Orchid\Screens\Course;
 
+use App\Actions\Course\CreateCourseAction;
+use App\Actions\Course\DestroyCourseAction;
+use App\Actions\Course\DTO\CreateCourseData;
+use App\Actions\Course\DTO\UpdateCourseData;
+use App\Actions\Course\UpdateCourseAction;
 use App\Http\Requests\Course\CreateCourseRequest;
+use App\Http\Requests\Course\UpdateCourseRequest;
 use App\Models\Course;
 use App\Models\Discipline;
 use App\Models\Partner;
-use App\Models\Realization;
 use App\Orchid\Layouts\Course\CourseEditLayout;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
@@ -28,7 +32,7 @@ class CourseEditScreen extends Screen
      *
      * @return array
      */
-    public function query( Course $course ): iterable {
+    public function query(Course $course): iterable {
         $course->load(['partner', 'discipline', 'realization']);
         return [
             'course' => $course,
@@ -52,11 +56,11 @@ class CourseEditScreen extends Screen
     public function commandBar(): iterable {
         return [
             Button::make(__('Delete'))
-                  ->icon('trash')
-                  ->confirm(__(Config::get('toasts.confirm.forceDelete')))
-                  ->type(Color::DANGER())
-                  ->canSee($this->course->exists)
-                  ->method('remove', ['id' => $this->course->id]),
+                ->icon('trash')
+                ->confirm(__(Config::get('toasts.confirm.forceDelete')))
+                ->type(Color::DANGER())
+                ->canSee($this->course->exists)
+                ->method('destroy', ['id' => $this->course->id]),
         ];
     }
 
@@ -70,20 +74,25 @@ class CourseEditScreen extends Screen
             Layout::block([
                 CourseEditLayout::class,
             ])
-                  ->title(__('Основная информация'))
-                  ->description(__('Заполните основную информацию о курсе.'))
-                  ->commands([
-                      Button::make(__('Save'))
-                            ->type(Color::SUCCESS())
-                            ->method('save'),
-                  ]),
+                ->title(__('Основная информация'))
+                ->description(__('Заполните основную информацию о курсе.'))
+                ->commands([
+                    Button::make(__('Создать'))
+                        ->type(Color::SUCCESS())
+                        ->method('create')
+                        ->canSee(!$this->course->exists),
+                    Button::make(__('Обновить'))
+                        ->type(Color::SUCCESS())
+                        ->method('update')
+                        ->canSee($this->course->exists),
+                ]),
 
             Layout::block([
                 Layout::rows([
                     Relation::make('discipline_id')
-                            ->title(__('Дисциплина'))
-                            ->fromModel(Discipline::class, 'title')
-                            ->value($this->course->discipline),
+                        ->title(__('Дисциплина'))
+                        ->fromModel(Discipline::class, 'title')
+                        ->value($this->course->discipline),
 
                     Link::make(__('Создать новую'))
                         ->icon('plus')
@@ -91,17 +100,24 @@ class CourseEditScreen extends Screen
                         ->target('__blank'),
                 ]),
             ])
-                  ->description(__('Добавьте дисциплину, к которой относится данный курс. Наличие дисциплины необходимо исключительно для абитуриентов.'))
-                  ->commands(Button::make(__('Save'))
-                                   ->type(Color::SUCCESS())
-                                   ->method('save')),
+                ->description(__('Добавьте дисциплину, к которой относится данный курс. Наличие дисциплины необходимо исключительно для абитуриентов.'))
+                ->commands([
+                    Button::make(__('Создать'))
+                        ->type(Color::SUCCESS())
+                        ->method('create')
+                        ->canSee(!$this->course->exists),
+                    Button::make(__('Обновить'))
+                        ->type(Color::SUCCESS())
+                        ->method('update')
+                        ->canSee($this->course->exists),
+                ]),
 
             Layout::block([
                 Layout::rows([
                     Relation::make('partner_id')
-                            ->title(__('Партнер'))
-                            ->fromModel(Partner::class, 'title')
-                            ->value($this->course->partner),
+                        ->title(__('Партнер'))
+                        ->fromModel(Partner::class, 'title')
+                        ->value($this->course->partner),
 
                     Link::make(__('Создать нового'))
                         ->icon('plus')
@@ -109,39 +125,71 @@ class CourseEditScreen extends Screen
                         ->target('__blank'),
                 ]),
             ])
-                  ->description(__('Добавьте партнера, который является создателем курса.'))
-                  ->commands(Button::make(__('Save'))
-                                   ->type(Color::SUCCESS())
-                                   ->method('save'))
-            ,
+                ->description(__('Добавьте партнера, который является создателем курса.'))
+                ->commands([
+                    Button::make(__('Создать'))
+                        ->type(Color::SUCCESS())
+                        ->method('create')
+                        ->canSee(!$this->course->exists),
+                    Button::make(__('Обновить'))
+                        ->type(Color::SUCCESS())
+                        ->method('update')
+                        ->canSee($this->course->exists),
+                ]),
         ];
     }
 
-    public function save( Course $course, CreateCourseRequest $request ) {
-
-        $course->fill($request->validated())
-               ->user()->associate(Auth::user());
-
-        if ( $discipline_id = $request->input('discipline_id') ) {
-            $course->discipline()
-                   ->associate(Discipline::findOrFail($discipline_id));
-        }
-
-        if ( $partnerId = $request->input('partner_id') ) {
-            $course->partner()->associate(Partner::findOrFail($partnerId));
-        }
-
-        $course->realization()->associate(Realization::findOrFail($request->input('realization_id')));
-
-        $course->save();
-
-        Toast::success(__(Config::get('toasts.toasts.update.success')))
-             ->autoHide();
-
-        //return redirect()->route('platform.courses.edit');
+    public function create(CreateCourseRequest $request) {
+        $validated = collect($request->validated());
+        $course = (new CreateCourseAction())->run(
+            new CreateCourseData(
+                title: $validated->get('title'),
+                description: $validated->get('description'),
+                seatLimit: $validated->get('seat_limit'),
+                realizationId: $validated->get('realization_id'),
+                videoId: $validated->get('video_id', default: [null])[0],
+                presentationId: $validated->get('presentation_id', default: [null])[0],
+                documentsIds: $validated->get('documents', default: []),
+                disciplineId: $validated->get('discipline_id'),
+                partnerId: $validated->get('partner_id'),
+            )
+        );
+        Toast::success(__(Config::get('toasts.toasts.create.success')))
+            ->autoHide();
+        return redirect()->route('platform.courses.edit', $course);
     }
 
-    public function destroy( Request $request ) {
-        Course::findOrFail($request->input('id'))->forceDelete();
+    public function update(Course $course, UpdateCourseRequest $request) {
+        $validated = collect($request->validated());
+        $status = (new UpdateCourseAction())->run(
+            $course,
+            new UpdateCourseData(
+                title: $validated->get('title'),
+                description: $validated->get('description'),
+                seatLimit: $validated->get('seat_limit'),
+                realizationId: $validated->get('realization_id'),
+                videoId: $validated->get('video_id', default: [])[0],
+                presentationId: $validated->get('presentation_id', default: [])[0],
+                documentsIds: $validated->get('documents', default: []),
+                disciplineId: $validated->get('discipline_id'),
+                partnerId: $validated->get('partner_id'),
+            )
+        );
+        if ($status) {
+            Toast::success(__(Config::get('toasts.toasts.update.success')))
+                ->autoHide();
+        }
+        else {
+            Toast::error(__(\config('toasts.toasts.update.error')));
+        }
+    }
+
+    public function destroy(Request $request) {
+        $status = (new DestroyCourseAction())->run($request);
+        if ($status) {
+            Toast::success(config('toasts.toasts.delete.success'));
+            return redirect()->route('platform.courses');
+        } else
+            Toast::error(config('toasts.toasts.delete.error'));
     }
 }

@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Course;
 use App\Models\Employee;
 use App\Models\Partner;
 use App\Models\Profession;
 use App\Models\ProfessionalTrajectory;
 use App\Models\Review;
+use App\Observers\CourseObserver;
 use App\Observers\EmployeeObserver;
 use App\Observers\PartnerObserver;
 use App\Observers\ProfessionalTrajectoryObserver;
@@ -50,7 +52,11 @@ class EventServiceProvider extends ServiceProvider
 
         Profession::class => [
             ProfessionObserver::class,
-        ]
+        ],
+
+        Course::class => [
+            CourseObserver::class,
+        ],
     ];
 
     /**

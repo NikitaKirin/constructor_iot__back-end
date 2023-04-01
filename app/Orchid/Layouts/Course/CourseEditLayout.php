@@ -7,6 +7,7 @@ use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Fields\Relation;
+use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Layouts\Rows;
 
 class CourseEditLayout extends Rows
@@ -27,39 +28,49 @@ class CourseEditLayout extends Rows
         return [
 
             Input::make('title')
-                 ->type('text')
-                 ->title(__('Название'))
-                 ->required()
-                 ->value($this->query->get('course.title')),
+                ->type('text')
+                ->title(__('Название'))
+                ->required()
+                ->value($this->query->get('course.title')),
 
             Quill::make('description')
-                 ->toolbar(["text", "color", "header", "list", "format"])
-                 ->title(__('Описание'))
-                 ->required()
-                 ->value($this->query->get('course.description') ?? __('Описания нет')),
+                ->toolbar(["text", "color", "header", "list", "format"])
+                ->title(__('Описание'))
+                ->required()
+                ->value($this->query->get('course.description') ?? __('Описания нет')),
 
-            Input::make('limit')
-                 ->title(__('Лимит мест'))
-                 ->type('number')
-                 ->required()
-                 ->value($this->query->get('course.limit')),
-
-            /*Relation::make('discipline_id')
-                    ->title(__('Дисциплина'))
-                    ->required()
-                    ->fromModel(Discipline::class, 'title')
-                    ->value($this->query->get('course')->discipline),*/
+            Input::make('seat_limit')
+                ->title(__('Лимит мест'))
+                ->type('number')
+                ->required()
+                ->value($this->query->get('course.seat_limit')),
 
             Relation::make('realization_id')
-                    ->title(__('Способ реализации'))
-                    ->required()
-                    ->fromModel(Realization::class, 'title')
-                    ->value($this->query->get('course')->realization),
+                ->title(__('Способ реализации'))
+                ->required()
+                ->fromModel(Realization::class, 'title')
+                ->value($this->query->get('course')->realization),
 
-            /*Relation::make('partner_id')
-                    ->title(__('Партнер'))
-                    ->fromModel(Partner::class, 'title')
-                    ->value($this->query->get('course')->partner),*/
+            Upload::make('video_id')
+                ->title(__('Видео'))
+                ->targetId()
+                ->maxFiles(1)
+                ->acceptedFiles('video/*')
+                ->value($this->query->get('course')->video_id),
+
+            Upload::make('presentation_id')
+                ->title(__('Презентация'))
+                ->targetId()
+                ->maxFiles(1)
+                ->acceptedFiles('.pdf,.pptx,.ppt')
+                ->value($this->query->get('course')->presentation_id),
+
+            Upload::make('documents')
+                ->groups('documents')
+                ->title(__('Другие документы'))
+                ->maxFiles(10)
+                ->acceptedFiles('.pdf,.pptx,.ppt,.rtf,.doc,.docx,.doc,.xls,.xlsx')
+                ->value($this->query->get('course')->documents),
         ];
     }
 }

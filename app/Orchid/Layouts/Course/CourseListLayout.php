@@ -32,75 +32,73 @@ class CourseListLayout extends Table
         return [
 
             TD::make('#')
-              ->render(function ( Course $course, object $loop ) {
-                  return ++$loop->index;
-              }),
+                ->render(function (Course $course, object $loop) {
+                    return ++$loop->index;
+                }),
 
             TD::make('title', __('Название'))
-              ->sort()
-              ->width(250)
-            ->render(function (Course $course) {
-                return Link::make($course->title)
-                    ->icon('eye')
-                    ->route('platform.courses.profile', $course);
-            }),
+                ->width(100)
+                ->sort()
+                ->render(function (Course $course) {
+                    return Link::make($course->title)
+                        ->icon('eye')
+                        ->route('platform.courses.profile', $course);
+                }),
 
-            /*TD::make('description', __('Описание'))
-              ->width(200),*/
-
-            TD::make('limit', __('Лимит мест'))
-              ->sort(),
+            TD::make('seat_limit', __('Лимит мест'))
+                ->sort(),
 
             TD::make('discipline_id', __("Дисциплина"))
-              ->render(function ( Course $course ) {
-                  return $course->discipline?->title ?? __('Не определено');
-              }),
+                ->width(200)
+                ->render(function (Course $course) {
+                    return $course->discipline?->title ?? __('Не определено');
+                }),
 
             TD::make('realization_id', __('Вид реализации'))
-              ->render(function ( Course $course ) {
-                  return $course->realization->title;
-              })
-              ->defaultHidden(),
+                ->render(function (Course $course) {
+                    return $course->realization->title;
+                })
+                ->defaultHidden(),
 
             TD::make('partner_id', __('Партнер'))
-              ->render(function ( Course $course ) {
-                  return $course->partner->title;
-              })
-              ->defaultHidden(),
+                ->render(function (Course $course) {
+                    return $course->partner->title;
+                })
+                ->defaultHidden(),
 
             TD::make('user_id', __('Сохранено/изменено последним'))
-              ->render(function ( Course $course ) {
-                  return $course->user->name;
-              }),
+                ->render(function (Course $course) {
+                    return $course->user->name;
+                }),
 
             TD::make('updated_at', __('Дата и время последнего изменения'))
-              ->sort()
-              ->render(function ( Course $course ) {
-                  return $course->updated_at;
-              }),
+                ->sort()
+                ->render(function (Course $course) {
+                    return $course->updated_at;
+                }),
 
             TD::make(__('Actions'))
-              ->width(100)
-              ->align(TD::ALIGN_CENTER)
-              ->render(function ( Course $course ) {
-                  return DropDown::make()
-                                 ->icon('options-vertical')
-                                 ->list([
-                                     Link::make(__('Открыть'))
-                                         ->icon('eye')
-                                         ->route('platform.courses.profile', $course),
+                ->width(100)
+                ->align(TD::ALIGN_CENTER)
+                ->render(function (Course $course) {
+                    return DropDown::make()
+                        ->icon('options-vertical')
+                        ->list([
+                            Link::make(__('Открыть'))
+                                ->icon('eye')
+                                ->route('platform.courses.profile', $course),
 
-                                     Link::make(__('Edit'))
-                                         ->icon('pencil')
-                                         ->route('platform.courses.edit', $course),
+                            Link::make(__('Edit'))
+                                ->icon('pencil')
+                                ->route('platform.courses.edit', $course),
 
-                                     Button::make(__('Delete'))
-                                           ->type(Color::DANGER())
-                                           ->icon('trash')
-                                           ->method('destroy', ['id' => $course->id])
-                                           ->canSee(Route::is('platform.courses*')),
-                                 ]);
-              }),
+                            Button::make(__('Delete'))
+                                ->type(Color::DANGER())
+                                ->icon('trash')
+                                ->method('destroy', ['id' => $course->id])
+                                ->canSee(Route::is('platform.courses*')),
+                        ]);
+                }),
         ];
 
     }
