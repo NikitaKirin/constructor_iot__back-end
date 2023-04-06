@@ -18,8 +18,12 @@ class PartnerController extends Controller
      * Get the list of the partners
      * @return PartnerResourceCollection
      */
-    public function index() {
-        return new PartnerResourceCollection(Partner::paginate(5));
+    public function index(Request $request) {
+        $partnerBuilder = Partner::query()->orderBy('title');
+        if ($paginate = $request->input('paginate', default: false)){
+            return new PartnerResourceCollection($partnerBuilder->paginate($paginate));
+        }
+        return new PartnerResourceCollection($partnerBuilder->get());
     }
 
     /**

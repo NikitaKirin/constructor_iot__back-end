@@ -15,16 +15,14 @@ class PartnerTest extends TestCase
 
     public function testPartnersIndex()
     {
-        $testPartner = Partner::factory(10)->create()->first();
+        $testPartner = Partner::factory(10)->create()->sortBy('title')->first();
 
         $response = $this->get(route('partners.index'));
 
         $response->assertOk();
 
-        $response->assertJson(fn(AssertableJson $json) => $json->has('meta')
-            ->has('links', 4)
-            ->has('partners', 5)
-            ->has(
+        $response->assertJson(
+            fn(AssertableJson $json) => $json->has(
                 'partners.0',
                 fn($json) => $json->where('id', $testPartner->id)
                     ->where(
