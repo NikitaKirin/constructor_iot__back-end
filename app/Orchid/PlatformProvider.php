@@ -41,7 +41,7 @@ class PlatformProvider extends OrchidServiceProvider
                             'socialNetworksBlock' =>
                                 SocialNetworksBlock::first(),
                         ]),
-                ]),
+                ])->permission('contacts'),
 
             Menu::make(__('Институты'))
                 ->icon('building')
@@ -52,7 +52,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Добавить новый'))
                         ->icon('plus')
                         ->route('platform.institutes.create'),
-                ])->title(__('Основное')),
+                ])->permission('institutes'),
 
 
             Menu::make(__('Образовательные программы'))
@@ -61,7 +61,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Список всех программ'))
                         ->icon('list')
                         ->route('platform.educationalPrograms'),
-                ]),
+                ])->permission('educationalModules'),
 
             Menu::make(__('Профессиональные траектории'))
                 ->icon('cursor')
@@ -72,7 +72,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Добавить новую'))
                         ->icon('plus')
                         ->route('platform.professionalTrajectories.create'),
-                ]),
+                ])->permission('professionalTrajectories'),
 
             Menu::make(__('Профессии'))
                 ->icon('paypal')
@@ -83,7 +83,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Добавить новую'))
                         ->icon('plus')
                         ->route('platform.professions.create'),
-                ]),
+                ])->permission('professions'),
 
             Menu::make(__('Образовательны модули'))
                 ->icon('graduation')
@@ -94,7 +94,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Добавить новый'))
                         ->icon('plus')
                         ->route('platform.educationalModules.create'),
-                ]),
+                ])->permission('educationalModules'),
 
             Menu::make(__('Дисциплины'))
                 ->icon('graduation')
@@ -105,7 +105,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Добавить новую'))
                         ->icon('plus')
                         ->route('platform.disciplines.create'),
-                ]),
+                ])->permission('disciplines'),
 
             Menu::make(__('Курсы'))
                 ->icon('graduation')
@@ -116,11 +116,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Добавить новый'))
                         ->icon('plus')
                         ->route('platform.courses.create'),
-                ]),
-
-            /*Menu::make(__('Семестры'))
-                ->icon('number-list')
-                ->route('platform.semesters'),*/
+                ])->permission('courses'),
 
             Menu::make(__('Сотрудники'))
                 ->icon('people')
@@ -131,7 +127,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Добавить нового'))
                         ->icon('plus')
                         ->route('platform.employees.create'),
-                ]),
+                ])->permission('employees'),
 
             Menu::make(__('Партнеры'))
                 ->icon('briefcase')
@@ -142,7 +138,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Добавить нового'))
                         ->icon('plus')
                         ->route('platform.partners.create'),
-                ]),
+                ])->permission('partners'),
 
             Menu::make(__('Отзывы'))
                 ->icon('briefcase')
@@ -154,7 +150,8 @@ class PlatformProvider extends OrchidServiceProvider
                         ->icon('plus')
                         ->route('platform.reviews.create'),
                 ])
-                ->icon('like'),
+                ->icon('like')
+                ->permission('review'),
 
             Menu::make(__('FAQ'))
                 ->icon('question')
@@ -165,13 +162,14 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Добавить новый'))
                         ->icon('plus')
                         ->route('platform.faq.create'),
-                ])
+                ])->permission('faq')
                 ->divider(),
 
             Menu::make(__('Панель разработчика'))
                 ->route('telescope.index')
                 ->icon('monitor')
-                ->title(__('Разработчикам')),
+                ->title(__('Разработчикам'))
+                ->permission('logs'),
 
 
             /*Menu::make('Example screen')
