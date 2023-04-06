@@ -2,6 +2,9 @@
 
 namespace App\Jobs\Professions;
 
+use App\Events\HeadHunterUpdatedEvent;
+use App\Events\HeadHunterUpdatingEvent;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,7 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Artisan;
 
-class HeadHunterUpdateJob implements ShouldQueue
+class HeadHunterUpdateJob implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -20,14 +23,26 @@ class HeadHunterUpdateJob implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 5000;
+    public $timeout = 3600;
+
+    public $tries = 5;
+
+    public $uniqueFor = 3600;
+
+    /**
+     * The unique ID of the job.
+     */
+    public function uniqueId(): string
+    {
+        return $this->user->id;
+    }
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(public User $user) {
         //
     }
 
@@ -36,8 +51,9 @@ class HeadHunterUpdateJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {
+    public function handle() {
+        HeadHunterUpdatingEvent::dispatch($this->user);
         Artisan::call('headhunter:run');
+        HeadHunterUpdatedEvent::dispatch($this->user);
     }
 }

@@ -2,12 +2,17 @@
 
 namespace App\Providers;
 
+use App\Events\HeadHunterUpdatedEvent;
+use App\Events\HeadHunterUpdatingEvent;
+use App\Listeners\SendUserHeadHunterUpdatedNotification;
+use App\Listeners\SendUserHeadHunterUpdatingNotification;
 use App\Models\Course;
 use App\Models\Employee;
 use App\Models\Partner;
 use App\Models\Profession;
 use App\Models\ProfessionalTrajectory;
 use App\Models\Review;
+use App\Notifications\TaskStatusNotification;
 use App\Observers\CourseObserver;
 use App\Observers\EmployeeObserver;
 use App\Observers\PartnerObserver;
@@ -29,6 +34,15 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        HeadHunterUpdatingEvent::class => [
+            SendUserHeadHunterUpdatingNotification::class,
+        ],
+
+        HeadHunterUpdatedEvent::class => [
+            SendUserHeadHunterUpdatedNotification::class,
+        ]
+
     ];
 
 

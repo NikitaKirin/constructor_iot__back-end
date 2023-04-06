@@ -49,7 +49,7 @@ class ProfessionListScreen extends Screen
             Button::make(__('Обновить данные сервиса HeadHunter'))
                 ->method('updateHeadHunter')
                 ->type(Color::PRIMARY())
-                ->disabled(true),
+                //->disabled(true),
         ];
     }
 
@@ -72,7 +72,7 @@ class ProfessionListScreen extends Screen
     }
 
     public function updateHeadHunter() {
-        HeadHunterUpdateJob::dispatch();
+        HeadHunterUpdateJob::dispatch(\Auth::user());
         Alert::success(__('Задача успешно добавлена в очередь'));
     }
 }
