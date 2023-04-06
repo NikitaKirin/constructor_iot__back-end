@@ -38,7 +38,7 @@ class PartnerController extends Controller
         if ($courseTitle = $request->input('courseTitle', default: false)) {
             $courseBuilder->where('title', 'ilike', "%${courseTitle}%");
         }
-        if ($educationalProgramms =  $request->input('educationalProgramms', default: false)) {
+        if ($educationalProgramms = $request->input('educationalProgramms', default: false)) {
             $courseBuilder->whereHas('discipline.educationalModules.educationalPrograms',
                 fn(Builder $builder) => $builder->whereIntegerInRaw('id', $educationalProgramms));
         }
@@ -54,11 +54,12 @@ class PartnerController extends Controller
     }
 
     public function courseShow(Course $course) {
-       return new CourseResource($course->load([
-           'realization',
-           'discipline.professionalTrajectories',
-           'discipline.educationalModules.educationalPrograms',
-           'attachment',
-       ]));
+        return new CourseResource($course->load([
+            'realization',
+            'discipline.professionalTrajectories',
+            'discipline.educationalModules.educationalPrograms',
+            'attachment',
+            'partner',
+        ]));
     }
 }
