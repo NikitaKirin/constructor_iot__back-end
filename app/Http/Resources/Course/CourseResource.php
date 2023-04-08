@@ -5,7 +5,7 @@ namespace App\Http\Resources\Course;
 use App\Http\Resources\EducationalProgram\EducationalProgramResource;
 use App\Http\Resources\Partner\PartnerResource;
 use App\Http\Resources\ProfessionalTrajectory\ProfessionalTrajectoryResource;
-use App\Models\EducationalModule;
+use App\Models\Discipline;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
@@ -27,14 +27,14 @@ class CourseResource extends JsonResource
             'description'               => $this->description,
             'limit'                     => $this->limit,
             'realization'               => $this->realization->title,
-            'professional_trajectories' => $this->whenLoaded('discipline', function () {
-                return ProfessionalTrajectoryResource::collection($this->discipline->professionalTrajectories);
+            'professional_trajectories' => $this->whenLoaded('courseAssembly', function () {
+                return ProfessionalTrajectoryResource::collection($this->courseAssembly->professionalTrajectories);
             }),
             'partner'                   => new PartnerResource($this->whenLoaded('partner')),
             'educationalProgramms'      => $this->when(Route::currentRouteNamed('partners.courses.show'), function () {
-                $educationalModules = $this->discipline->educationalModules;
-                $educationalProgramms = $educationalModules->map(
-                    fn(EducationalModule $educationalModule) => $educationalModule->educationalPrograms
+                $disciplines = $this->courseAssembly->disciplines;
+                $educationalProgramms = $disciplines->map(
+                    fn(Discipline $discipline) => $discipline->educationalPrograms
                 )->first();
                 return EducationalProgramResource::collection($educationalProgramms);
             }),

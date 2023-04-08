@@ -30,7 +30,7 @@ class Semester extends Model
      * Relationship - semester to educational modules
      * @return BelongsToMany
      */
-    public function educationalModules(): BelongsToMany {
-        return $this->belongsToMany(EducationalModule::class, 'semester_educational_module');
+    public function disciplines(): BelongsToMany {
+        return $this->belongsToMany(Discipline::class, 'discipline_semester');
     }
 }

@@ -6,52 +6,54 @@ use App\Traits\Userable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
 class Discipline extends Model
 {
-    use HasFactory, SoftDeletes, AsSource, Userable, Filterable;
+    use HasFactory, SoftDeletes, Userable, AsSource, Filterable;
 
     protected $fillable = [
         'title',
-        'description',
+        'choice_limit',
+        'is_spec',
     ];
 
     protected $allowedSorts = [
         'title',
+        'choice_limit',
+        'is_spec',
         'created_at',
         'updated_at',
     ];
 
     protected $allowedFilters = [
         'title',
+        'choice_limit',
+        'is_spec',
     ];
 
     /**
-     * Relationship - discipline to educational modules
+     * Relationship - educational module to educational direction
      * @return BelongsToMany
      */
-    public function educationalModules(): BelongsToMany {
-        return $this->belongsToMany(EducationalModule::class, 'educational_module_discipline');
+    public function educationalPrograms(): BelongsToMany {
+        return $this->belongsToMany(EducationalProgram::class);
     }
 
     /**
-     * Relationship discipline to professional trajectories
+     * Relationship - educational module to semesters
      * @return BelongsToMany
      */
-    public function professionalTrajectories(): belongsToMany {
-        return $this->belongsToMany(ProfessionalTrajectory::class, 'discipline_professional_trajectory')
-                    ->withPivot('discipline_level_digital_value');
+    public function semesters(): BelongsToMany {
+        return $this->belongsToMany(Semester::class, 'discipline_semester');
     }
 
     /**
-     * Relationship discipline to courses
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function courses(): HasMany {
-        return $this->hasMany(Course::class);
+    public function courseAssemblies(): BelongsToMany {
+        return $this->belongsToMany(CourseAssembly::class, 'course_assembly_discipline');
     }
 }

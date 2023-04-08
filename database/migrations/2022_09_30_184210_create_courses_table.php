@@ -15,8 +15,10 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->smallInteger('limit');
-            $table->foreignId('discipline_id')
+            $table->smallInteger('seat_limit');
+            $table->foreignId('video_id')->nullable()->constrained('attachments', 'id')->nullOnDelete();
+            $table->foreignId('presentation_id')->nullable()->constrained('attachments', 'id')->nullOnDelete();
+            $table->foreignId('course_assembly_id')
                   ->nullable()
                   ->constrained()
                   ->nullOnDelete()

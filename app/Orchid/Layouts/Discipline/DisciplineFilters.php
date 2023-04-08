@@ -2,9 +2,10 @@
 
 namespace App\Orchid\Layouts\Discipline;
 
-use App\Orchid\Filters\Discipline\ProfessionalTrajectoryFilter;
+use App\Orchid\Filters\Discipline\ChoiceLimitFilter;
+use App\Orchid\Filters\Discipline\EducationalProgramFilter;
+use App\Orchid\Filters\Discipline\IsSpecFilter;
 use App\Orchid\Filters\Discipline\SemesterFilter;
-use App\Orchid\Filters\EducationalModuleFilter;
 use App\Orchid\Filters\TitleFilter;
 use Orchid\Filters\Filter;
 use Orchid\Screen\Layouts\Selection;
@@ -17,9 +18,10 @@ class DisciplineFilters extends Selection
     public function filters(): iterable {
         return [
             TitleFilter::class,
-            EducationalModuleFilter::class,
+            EducationalProgramFilter::class,
             SemesterFilter::class,
-            ProfessionalTrajectoryFilter::class,
+            IsSpecFilter::class,
+            ChoiceLimitFilter::class,
         ];
     }
 }

@@ -10,7 +10,7 @@ use App\Actions\Course\UpdateCourseAction;
 use App\Http\Requests\Course\CreateCourseRequest;
 use App\Http\Requests\Course\UpdateCourseRequest;
 use App\Models\Course;
-use App\Models\Discipline;
+use App\Models\CourseAssembly;
 use App\Models\Partner;
 use App\Orchid\Layouts\Course\CourseEditLayout;
 use Illuminate\Http\Request;
@@ -33,7 +33,7 @@ class CourseEditScreen extends Screen
      * @return array
      */
     public function query(Course $course): iterable {
-        $course->load(['partner', 'discipline', 'realization']);
+        $course->load(['partner', 'courseAssembly', 'realization']);
         return [
             'course' => $course,
         ];
@@ -89,18 +89,18 @@ class CourseEditScreen extends Screen
 
             Layout::block([
                 Layout::rows([
-                    Relation::make('discipline_id')
-                        ->title(__('Дисциплина'))
-                        ->fromModel(Discipline::class, 'title')
-                        ->value($this->course->discipline),
+                    Relation::make('course_assembly_id')
+                        ->title(__('Курсовая сборка'))
+                        ->fromModel(CourseAssembly::class, 'title')
+                        ->value($this->course->courseAssembly),
 
                     Link::make(__('Создать новую'))
                         ->icon('plus')
-                        ->route("platform.disciplines.create")
+                        ->route("platform.courseAssemblies.create")
                         ->target('__blank'),
                 ]),
             ])
-                ->description(__('Добавьте дисциплину, к которой относится данный курс. Наличие дисциплины необходимо исключительно для абитуриентов.'))
+                ->description(__('Добавьте курсовую сборку, к которой относится данный курс. Наличие курсовой сборки необходимо исключительно для абитуриентов.'))
                 ->commands([
                     Button::make(__('Создать'))
                         ->type(Color::SUCCESS())
@@ -150,7 +150,7 @@ class CourseEditScreen extends Screen
                 videoId: $validated->get('video_id', default: [null])[0],
                 presentationId: $validated->get('presentation_id', default: [null])[0],
                 documentsIds: $validated->get('documents', default: []),
-                disciplineId: $validated->get('discipline_id'),
+                courseAssemblyId: $validated->get('course_assembly_id'),
                 partnerId: $validated->get('partner_id'),
             )
         );

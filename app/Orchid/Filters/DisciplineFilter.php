@@ -25,9 +25,7 @@ class DisciplineFilter extends Filter
      * @return array|null
      */
     public function parameters(): ?array {
-        return [
-            'disciplines',
-        ];
+        return ['disciplines'];
     }
 
     /**
@@ -38,8 +36,8 @@ class DisciplineFilter extends Filter
      * @return Builder
      */
     public function run( Builder $builder ): Builder {
-        return $builder->whereHas('discipline', function ( Builder $query ) {
-            return $query->whereIn('discipline_id', $this->request->input('disciplines'));
+        return $builder->whereHas('disciplines', function ( Builder $query ) {
+            return $query->whereIntegerInRaw('discipline_id', $this->request->input('disciplines'));
         });
     }
 
@@ -51,8 +49,9 @@ class DisciplineFilter extends Filter
     public function display(): iterable {
         return [
             Select::make('disciplines')
-                  ->title(__('Дисциплины'))
+                  ->title(__("Дисциплины"))
                   ->fromModel(Discipline::class, 'title')
+                  ->empty()
                   ->multiple(),
         ];
     }

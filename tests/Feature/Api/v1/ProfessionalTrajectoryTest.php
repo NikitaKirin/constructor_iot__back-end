@@ -49,7 +49,7 @@ class ProfessionalTrajectoryTest extends TestCase
             ));
     }*/
 
-    public function testProfessionalTrajectoryExistingShowWithoutDisciplinesCount() {
+    public function testProfessionalTrajectoryExistingShowWithoutCourseAssembliesCount() {
         $professionalTrajectories = ProfessionalTrajectory::factory(5)
             ->create();
         $professionalTrajectory = $professionalTrajectories->first();
@@ -68,12 +68,12 @@ class ProfessionalTrajectoryTest extends TestCase
             );
     }
 
-    public function testProfessionalTrajectoryExistingShowWithDisciplinesCount() {
+    public function testProfessionalTrajectoryExistingShowWithCourseAssembliesCount() {
         $professionalTrajectories = ProfessionalTrajectory::factory(5)
             ->create();
-        $professionalTrajectory = $professionalTrajectories->first()->loadCount('disciplines');
+        $professionalTrajectory = $professionalTrajectories->first()->loadCount('courseAssemblies');
         $response = $this->get(
-            route('professionalTrajectories.show', [$professionalTrajectory, '?disciplinesCount=true'])
+            route('professionalTrajectories.show', [$professionalTrajectory, '?courseAssembliesCount=true'])
         )
             ->assertOk()
             ->assertJson(

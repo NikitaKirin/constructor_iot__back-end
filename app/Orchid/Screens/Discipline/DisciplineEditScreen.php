@@ -3,22 +3,12 @@
 namespace App\Orchid\Screens\Discipline;
 
 use App\Http\Requests\Discipline\CreateDisciplineRequest;
-use App\Models\Course;
 use App\Models\Discipline;
-use App\Models\DisciplineLevel;
-use App\Models\EducationalModule;
-use App\Models\ProfessionalTrajectory;
 use App\Orchid\Layouts\Discipline\DisciplineEditLayout;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Fields\Matrix;
-use Orchid\Screen\Fields\Relation;
-use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
@@ -33,10 +23,9 @@ class DisciplineEditScreen extends Screen
      *
      * @return array
      */
-    public function query( Discipline $discipline ): iterable {
-        $discipline->load(['educationalModules', 'courses', 'professionalTrajectories']);
+    public function query(Discipline $discipline ): iterable {
         return [
-            'discipline' => $discipline,
+            "discipline" => $discipline,
         ];
     }
 
@@ -46,7 +35,7 @@ class DisciplineEditScreen extends Screen
      * @return string|null
      */
     public function name(): ?string {
-        return $this->discipline->exists ? __("Обновить дисциплину: {$this->discipline->title}") : __("Создать новую дисциплину");
+        return $this->discipline->exists ? __("Изменить дисциплину: {$this->discipline->title}") : __('Создать новую дисциплину');
     }
 
     /**
@@ -56,12 +45,6 @@ class DisciplineEditScreen extends Screen
      */
     public function commandBar(): iterable {
         return [
-            Button::make(__('Delete'))
-                  ->icon('trash')
-                  ->confirm(__(Config::get('toasts.confirm.forceDelete')))
-                  ->type(Color::DANGER())
-                  ->canSee($this->discipline->exists)
-                  ->method('remove', ['id' => $this->discipline->id]),
         ];
     }
 
@@ -69,146 +52,50 @@ class DisciplineEditScreen extends Screen
      * Views.
      *
      * @return \Orchid\Screen\Layout[]|string[]
-     * @throws BindingResolutionException
      */
     public function layout(): iterable {
         return [
             Layout::block(DisciplineEditLayout::class)
                   ->title(__('Основная информация'))
-                  ->description(__('Обновите информацию о дисциплине, заполнив соответсвующее поля.'))
+                  ->description(__('Обновите информацию об образовательной дисциплине, заполнив соответсвующее поля.'))
                   ->commands([
                       Button::make(__('Save'))
                             ->type(Color::SUCCESS())
                             ->method('save'),
-                  ]),
-
-            Layout::block([
-                Layout::rows([
-                    Relation::make('educationalModules.')
-                            ->fromModel(EducationalModule::class, 'title')
-                            ->multiple()
-                            ->value($this->discipline->educationalModules)
-                            ->title(__('Список образовательных модулей')),
-                ]),
-            ])
-                  ->title(__('Образовательные модули'))
-                  ->description(__('Выберите образовательные модули, которым принадлежит данная дисциплина, из предложенного списка'))
-                  ->commands([
-                      Button::make(__('Save'))
-                            ->type(Color::SUCCESS())
-                            ->method('save'),
-                      Link::make(__('Создать новый модуль'))
-                          ->icon('plus')
-                          ->target('_blank')
-                          ->route('platform.educationalModules.create'),
-                  ]),
-
-
-            Layout::block([
-                Layout::rows([
-                    Relation::make('courses.')
-                            ->fromModel(Course::class, 'title')
-                            ->multiple()
-                            ->value($this->discipline->courses)
-                            ->title(__('Список курсов')),
-                ]),
-            ])
-                  ->title(__('Курсы'))
-                  ->description(__('Выберите курсы, которые принадлежат данной дисциплине, из предложенного списка'))
-                  ->commands([
-                      Button::make(__('Save'))
-                            ->type(Color::SUCCESS())
-                            ->method('save'),
-                      Link::make(__('Создать новый курс'))
-                          ->icon('plus')
-                          ->route('platform.courses.create')
-                          ->target('_blank'),
-                  ]),
-
-            Layout::block([
-                Layout::rows([
-                    Matrix::make('trajectories_levels')
-                          ->title(__('Оценивание'))
-                          ->columns([
-                              'Профессиональная траектория' => 'professional_trajectory',
-                              'Оценка курса для траектории' => 'discipline_level',
-                          ])
-                          ->fields([
-                              'professional_trajectory' => Select::make('professional_trajectory')
-                                                                 ->fromModel(ProfessionalTrajectory::class, 'title'),
-                              'discipline_level'        => Select::make('discipline_level')
-                                                                 ->fromModel(DisciplineLevel::class, 'title',
-                                                                     'digital_value'),
-                          ])
-                        //->canSee($this->discipline->professionalTrajectories()->exists())
-                          ->value($this->getJsonForCourseLevelsField()),
-                ]),
-            ])
-                  ->title(__('Профессиональные траектории'))
-                  ->commands([
-                      Button::make(__('Save'))
-                            ->type(Color::SUCCESS())
-                            ->method('save'),
-                      Link::make(__('Создать новую траекторию'))
-                          ->icon('plus')
-                          ->route('platform.professionalTrajectories.create')
-                          ->target('_blank'),
+                      Button::make(__('Delete'))
+                            ->confirm(__(Config::get('toasts.confirm.forceDelete')))
+                            ->type(Color::DANGER())
+                            ->canSee($this->discipline->exists)
+                            ->method('remove', ['id' => $this->discipline->id]),
                   ]),
         ];
     }
 
-    public function save( Discipline $discipline, CreateDisciplineRequest $request ) {
-
-        $trajectories = collect($request->input('trajectories_levels', []))
-            ->unique('professional_trajectory')
-            ->keyBy('professional_trajectory')
-            ->map(fn( $item ) => ['discipline_level_digital_value' => $item['discipline_level']]);
+    public function save(Discipline $discipline, CreateDisciplineRequest $request ) {
 
         $discipline->fill($request->validated())
-                   ->user()->associate(Auth::user())
-                   ->save();
+                          ->user()->associate(Auth::user())
+                          ->save();
 
-        $discipline->educationalModules()
-                   ->sync($request->input('educationalModules', []));
+        $discipline->semesters()
+                          ->sync($request->get('semesters', []));
 
-        $discipline->professionalTrajectories()
-                   ->sync($trajectories);
+        $discipline->educationalPrograms()
+                          ->sync($request->get('educationalPrograms', []));
 
-        if ( $courses_ids = $request->input('courses') ) {
-            $courses = Course::findMany($courses_ids);
-            $discipline->courses()->saveMany($courses);
-        }
+        $discipline->courseAssemblies()
+                          ->sync($request->get('courseAssemblies', []));
 
-        Toast::success(__(Config::get('toasts.toasts.update.success')))
+        Toast::success(__(\config('toasts.toasts.update.success')))
              ->autoHide();
-
-        return redirect()->route('platform.disciplines.edit', $discipline);
     }
 
-    public function remove( Request $request ): RedirectResponse {
+    public function remove( Request $request ) {
         Discipline::findOrFail($request->input('id'))->forceDelete();
 
-        Toast::success(__(Config::get('toasts.toasts.delete.success')))
+        Toast::success(__(\config('toasts.toasts.delete.success')))
              ->autoHide();
 
         return redirect()->route('platform.disciplines');
-    }
-
-
-    /**
-     * @return array
-     */
-    private function getJsonForCourseLevelsField(): array {
-
-        $disciplineLevels = DisciplineLevel::all()->groupBy('digital_value')->get(1)->first();
-
-        return collect($this->discipline->professionalTrajectories)
-            ->map(function ( ProfessionalTrajectory $professionalTrajectory ) {
-                return [
-                    'professional_trajectory' => $professionalTrajectory->id,
-                    'discipline_level'        => $professionalTrajectory->pivot->discipline_level_digital_value,
-                ];
-
-            })->toArray();
     }
 }

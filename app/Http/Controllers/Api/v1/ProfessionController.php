@@ -27,7 +27,7 @@ class ProfessionController extends Controller
         });
         $professionsQuery->when($professionTitle, fn(Builder $query) => $query->where('title', 'ILIKE', '%' . $professionTitle . '%'));
         $professionsQuery->when($educationalPrograms, function (Builder $query) use ($educationalPrograms) {
-            return $query->whereHas('professionalTrajectories.disciplines.educationalModules.educationalPrograms',
+            return $query->whereHas('professionalTrajectories.courseAssemblies.disciplines.educationalPrograms',
                 fn(Builder $query) => $query->whereIntegerInRaw('educational_program_id', $educationalPrograms));
         });
         $professionsQuery = $this->setSorting($professionsQuery, $request);

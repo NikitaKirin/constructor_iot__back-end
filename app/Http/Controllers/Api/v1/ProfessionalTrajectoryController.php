@@ -22,8 +22,8 @@ class ProfessionalTrajectoryController extends Controller
 
     public function show(ProfessionalTrajectory $professionalTrajectory, Request $request) {
         $professionalTrajectory->load(['icons']);
-        if ($request->boolean('loadDisciplinesCount')) {
-           $professionalTrajectory->loadCount('disciplines');
+        if ($request->boolean('loadCourseAssembliesCount')) {
+           $professionalTrajectory->loadCount('courseAssemblies');
         }
         if ($request->boolean('loadProfessions')){
             $professionalTrajectory->load(['professions']);

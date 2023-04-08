@@ -41,7 +41,7 @@ class ProfessionResource extends JsonResource
     }
 
     private function getEducationalPrograms(): AnonymousResourceCollection {
-        return EducationalProgramResource::collection(EducationalProgram::whereHas('educationalModules.disciplines.professionalTrajectories.professions',
+        return EducationalProgramResource::collection(EducationalProgram::whereHas('disciplines.courseAssemblies.professionalTrajectories.professions',
             function (Builder $builder) {
                 $builder->where('id', $this->id);
             })->get());

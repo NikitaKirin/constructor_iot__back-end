@@ -35,7 +35,7 @@ class PartnerController extends Controller
     public function coursesIndex(Request $request) {
         $paginate = $request->integer('paginate', default: 18);
         $courseBuilder = Course::with([
-            'discipline.professionalTrajectories',
+            'courseAssembly.professionalTrajectories',
             'partner.logo',
             'realization',
         ])->has('partner');
@@ -43,7 +43,7 @@ class PartnerController extends Controller
             $courseBuilder->where('title', 'ilike', "%${courseTitle}%");
         }
         if ($educationalProgramms = $request->input('educationalProgramms', default: false)) {
-            $courseBuilder->whereHas('discipline.educationalModules.educationalPrograms',
+            $courseBuilder->whereHas('courseAssembly.disciplines.educationalPrograms',
                 fn(Builder $builder) => $builder->whereIntegerInRaw('id', $educationalProgramms));
         }
         if ($partners = $request->input('partners', default: false)) {
@@ -60,8 +60,8 @@ class PartnerController extends Controller
     public function courseShow(Course $course) {
         return new CourseResource($course->load([
             'realization',
-            'discipline.professionalTrajectories',
-            'discipline.educationalModules.educationalPrograms',
+            'courseAssembly.professionalTrajectories',
+            'courseAssembly.disciplines.educationalPrograms',
             'attachment',
             'partner',
         ]));

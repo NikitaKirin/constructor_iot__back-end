@@ -27,13 +27,13 @@ class ProfessionalTrajectoryResource extends JsonResource
             'icons'                 => $this->whenLoaded('icons', function () {
                 return collect($this->icons)->map(fn(Attachment $img) => $img->url());
             }),
-            'discipline_evaluation' => $this->whenPivotLoaded('discipline_professional_trajectory', function () {
-                return $this->pivot->discipline_level_digital_value;
+            'course_assembly_evaluation' => $this->whenPivotLoaded('course_assembly_professional_trajectory', function () {
+                return $this->pivot->course_assembly_level_digital_value;
             }),
             'amount_vacancies'      => $this->whenLoaded('professions', function () {
                 return $this->professions->sum('vacancies_count');
             }),
-            'disciplines_count'     => $this->whenCounted('disciplines'),
+            'course_assemblies_count'     => $this->whenCounted('courseAssemblies'),
             'professions'           => ProfessionResource::collection($this->whenLoaded('professions')),
         ];
     }

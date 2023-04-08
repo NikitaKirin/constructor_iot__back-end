@@ -3,7 +3,7 @@
 namespace App\Orchid\Screens\ProfessionalTrajectory;
 
 use App\Http\Requests\ProfessionalTrajectory\CreateProfessionalTrajectoryRequest;
-use App\Models\Discipline;
+use App\Models\CourseAssembly;
 use App\Models\ProfessionalTrajectory;
 use App\Orchid\Layouts\ProfessionalTrajectory\ProfessionalTrajectoryEditLayout;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class ProfessionalTrajectoryEditScreen extends Screen
      * @return array
      */
     public function query( ProfessionalTrajectory $professionalTrajectory ): iterable {
-        $professionalTrajectory->load(['disciplines']);
+        $professionalTrajectory->load(['courseAssemblies']);
         return [
             'professionalTrajectory' => $professionalTrajectory,
         ];
@@ -73,23 +73,23 @@ class ProfessionalTrajectoryEditScreen extends Screen
             Layout::block([
                 Layout::rows([
 
-                    Relation::make('disciplines.')
-                            ->fromModel(Discipline::class, 'title')
+                    Relation::make('courseAssemblies.')
+                            ->fromModel(CourseAssembly::class, 'title')
                             ->multiple()
-                            ->value($this->professionalTrajectory->disciplines)
-                            ->title(__('Список дисциплин')),
+                            ->value($this->professionalTrajectory->courseAssemblies)
+                            ->title(__('Список курсовых сборок')),
 
                 ]),
             ])
-                  ->title(__('Дисциплины'))
-                  ->description(__('Выберете дисциплины, которые определяют текущий профессиональный трек.'))
+                  ->title(__('Курсовые сборки'))
+                  ->description(__('Выберете курсовые сборки, которые определяют текущий профессиональный трек.'))
                   ->commands([
                       Button::make(__('Save'))
                             ->type(Color::SUCCESS())
                             ->method('save'),
-                      Link::make(__('Создать новую дисциплину'))
+                      Link::make(__('Создать новую курсовую сборку'))
                           ->icon('plus')
-                          ->route('platform.disciplines.create')
+                          ->route('platform.courseAssemblies.create')
                           ->target('_blank'),
                   ]),
 
@@ -102,8 +102,9 @@ class ProfessionalTrajectoryEditScreen extends Screen
                                ->user()->associate(Auth::user())
                                ->save();
 
-        $professionalTrajectory->disciplines()
-                               ->sync($request->input('disciplines', []));
+        $professionalTrajectory->courseAssemblies()->syncWithPivotValues(
+            $request->input('courseAssemblies', []),
+            ['course_assembly_level_digital_value' => 1]); //todo: pivot
 
         $professionalTrajectory->attachment()->sync(
             $request->input('icons', [])

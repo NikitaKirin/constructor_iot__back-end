@@ -26,6 +26,7 @@ class Course extends Model
         'presentation_id',
         'realization_id',
         'partner_id',
+        'course_assembly_id',
     ];
 
     protected $allowedSorts = [
@@ -52,8 +53,8 @@ class Course extends Model
      * Relationship - course to discipline
      * @return BelongsTo
      */
-    public function discipline(): BelongsTo {
-        return $this->belongsTo(Discipline::class)
+    public function courseAssembly(): BelongsTo {
+        return $this->belongsTo(CourseAssembly::class)
             ->withDefault(['title' => __('Нет')]);
     }
 

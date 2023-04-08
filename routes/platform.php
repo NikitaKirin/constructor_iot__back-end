@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Models\AdmissionCommitteeContactsBlock;
 use App\Models\Course;
+use App\Models\CourseAssembly;
 use App\Models\Discipline;
-use App\Models\EducationalModule;
 use App\Models\Employee;
 use App\Models\FAQ;
 use App\Models\Institute;
@@ -20,13 +20,13 @@ use App\Orchid\Screens\AdmissionCommitteeContactsBlock\AdmissionCommitteeContact
 use App\Orchid\Screens\Course\CourseEditScreen;
 use App\Orchid\Screens\Course\CourseListScreen;
 use App\Orchid\Screens\Course\CourseProfileScreen;
+use App\Orchid\Screens\CourseAssemblies\CourseAssemblyEditScreen;
+use App\Orchid\Screens\CourseAssemblies\CourseAssemblyListScreen;
+use App\Orchid\Screens\CourseAssemblies\CourseAssemblyProfileScreen;
+use App\Orchid\Screens\EducationalProgram\EducationalProgramListScreen;
 use App\Orchid\Screens\Discipline\DisciplineEditScreen;
 use App\Orchid\Screens\Discipline\DisciplineListScreen;
 use App\Orchid\Screens\Discipline\DisciplineProfileScreen;
-use App\Orchid\Screens\EducationalProgram\EducationalProgramListScreen;
-use App\Orchid\Screens\EducationalModule\EducationalModuleEditScreen;
-use App\Orchid\Screens\EducationalModule\EducationalModuleListScreen;
-use App\Orchid\Screens\EducationalModule\EducationalModuleProfileScreen;
 use App\Orchid\Screens\Employee\EmployeeEditScreen;
 use App\Orchid\Screens\Employee\EmployeeListScreen;
 use App\Orchid\Screens\Employee\EmployeeProfileScreen;
@@ -307,47 +307,8 @@ Route::middleware(['access:reviews'])->group(function (){
         });
 });
 
-Route::middleware(['access:educationalModules'])->group(function (){
-// Platform > EducationalModules
-    Route::screen('educationalModules', EducationalModuleListScreen::class)
-        ->name('platform.educationalModules')
-        ->breadcrumbs(function (Trail $trail) {
-            return $trail
-                ->parent('platform.index')
-                ->push(__("Список образовательных модулей"), \route('platform.educationalModules'));
-        });
-
-// Platform > EducationalModules > Create
-    Route::screen('educationalModules/create', EducationalModuleEditScreen::class)
-        ->name('platform.educationalModules.create')
-        ->breadcrumbs(function (Trail $trail) {
-            return $trail
-                ->parent('platform.educationalModules')
-                ->push(__('Добавить образовательный модуль'), route('platform.educationalModules.create'));
-        });
-
-// Platform > EducationalModules > Profile
-    Route::screen('educationalModules/{educationalModule}/profile', EducationalModuleProfileScreen::class)
-        ->name('platform.educationalModules.profile')
-        ->breadcrumbs(function (Trail $trail, EducationalModule $educationalModule) {
-            return $trail
-                ->parent('platform.educationalModules')
-                ->push(__("$educationalModule->title"), route('platform.educationalModules.profile', $educationalModule));
-        });
-
-// Platform > EducationalModules > Edit
-    Route::screen('educationalModules/{educationalModule}/edit', EducationalModuleEditScreen::class)
-        ->name('platform.educationalModules.edit')
-        ->breadcrumbs(function (Trail $trail, EducationalModule $educationalModule) {
-            return $trail
-                ->parent('platform.educationalModules')
-                ->push(__("Изменить образовательный модуль: {$educationalModule->title}"),
-                    route('platform.educationalModules.edit', $educationalModule));
-        });
-});
-
 Route::middleware(['access:disciplines'])->group(function (){
-    // Platform > Disciplines
+// Platform > disciplines
     Route::screen('disciplines', DisciplineListScreen::class)
         ->name('platform.disciplines')
         ->breadcrumbs(function (Trail $trail) {
@@ -356,16 +317,16 @@ Route::middleware(['access:disciplines'])->group(function (){
                 ->push(__("Список дисциплин"), \route('platform.disciplines'));
         });
 
-// Platform > Disciplines > Create
+// Platform > disciplines > Create
     Route::screen('disciplines/create', DisciplineEditScreen::class)
         ->name('platform.disciplines.create')
         ->breadcrumbs(function (Trail $trail) {
             return $trail
                 ->parent('platform.disciplines')
-                ->push(__('Добавить новую дисциплину'), route('platform.disciplines.create'));
+                ->push(__('Добавить образовательный модуль'), route('platform.disciplines.create'));
         });
 
-// Platform > Disciplines > Profile
+// Platform > disciplines > Profile
     Route::screen('disciplines/{discipline}/profile', DisciplineProfileScreen::class)
         ->name('platform.disciplines.profile')
         ->breadcrumbs(function (Trail $trail, Discipline $discipline) {
@@ -374,7 +335,7 @@ Route::middleware(['access:disciplines'])->group(function (){
                 ->push(__("$discipline->title"), route('platform.disciplines.profile', $discipline));
         });
 
-// Platform > Disciplines > Edit
+// Platform > disciplines > Edit
     Route::screen('disciplines/{discipline}/edit', DisciplineEditScreen::class)
         ->name('platform.disciplines.edit')
         ->breadcrumbs(function (Trail $trail, Discipline $discipline) {
@@ -382,6 +343,45 @@ Route::middleware(['access:disciplines'])->group(function (){
                 ->parent('platform.disciplines')
                 ->push(__("Изменить дисциплину: {$discipline->title}"),
                     route('platform.disciplines.edit', $discipline));
+        });
+});
+
+Route::middleware(['access:courseAssemblies'])->group(function (){
+    // Platform > courseAssemblies
+    Route::screen('courseAssemblies', CourseAssemblyListScreen::class)
+        ->name('platform.courseAssemblies')
+        ->breadcrumbs(function (Trail $trail) {
+            return $trail
+                ->parent('platform.index')
+                ->push(__("Список курсовых сборок"), \route('platform.courseAssemblies'));
+        });
+
+// Platform > courseAssemblies > Create
+    Route::screen('courseAssemblies/create', CourseAssemblyEditScreen::class)
+        ->name('platform.courseAssemblies.create')
+        ->breadcrumbs(function (Trail $trail) {
+            return $trail
+                ->parent('platform.courseAssemblies')
+                ->push(__('Добавить новую курсовую сборку'), route('platform.courseAssemblies.create'));
+        });
+
+// Platform > courseAssemblies > Profile
+    Route::screen('courseAssemblies/{courseAssembly}/profile', CourseAssemblyProfileScreen::class)
+        ->name('platform.courseAssemblies.profile')
+        ->breadcrumbs(function (Trail $trail, CourseAssembly $courseAssembly) {
+            return $trail
+                ->parent('platform.courseAssemblies')
+                ->push(__("$courseAssembly->title"), route('platform.courseAssemblies.profile', $courseAssembly));
+        });
+
+// Platform > courseAssemblies > Edit
+    Route::screen('courseAssemblies/{courseAssembly}/edit', CourseAssemblyEditScreen::class)
+        ->name('platform.courseAssemblies.edit')
+        ->breadcrumbs(function (Trail $trail, CourseAssembly $courseAssembly) {
+            return $trail
+                ->parent('platform.courseAssemblies')
+                ->push(__("Изменить курсовую сборку: {$courseAssembly->title}"),
+                    route('platform.courseAssemblies.edit', $courseAssembly));
         });
 });
 

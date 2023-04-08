@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Discipline;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +12,8 @@ class DisciplineSeeder extends Seeder
      *
      * @return void
      */
-    public function run() {
-        Discipline::factory(10)->create();
+    public function run()
+    {
+        //
     }
 }

@@ -42,9 +42,9 @@ class ProfessionalTrajectory extends Model
      * Relationship professional trajectory to disciplines
      * @return BelongsToMany
      */
-    public function disciplines(): BelongsToMany {
-        return $this->belongsToMany(Discipline::class, 'discipline_professional_trajectory')
-                    ->withPivot('discipline_level_digital_value');
+    public function courseAssemblies(): BelongsToMany {
+        return $this->belongsToMany(CourseAssembly::class, 'course_assembly_professional_trajectory')
+                    ->withPivot('course_assembly_level_digital_value');
     }
 
     public function icons(): MorphToMany {

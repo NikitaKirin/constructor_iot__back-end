@@ -8,8 +8,9 @@ class CreateDisciplineRequest extends FormRequest
 {
     public function rules(): array {
         return [
-            'title'       => ['required', 'string'],
-            'description' => ['required', 'string'],
+            'title'        => ['required', 'string'],
+            'choice_limit' => ['required', 'integer'],
+            'is_spec'      => ['required', 'boolean'],
         ];
     }
 
@@ -19,8 +20,8 @@ class CreateDisciplineRequest extends FormRequest
 
     public function messages(): array {
         return [
-            'required' => 'Поле обязательно для заполнения',
-            'string'   => 'Недопустимые символы',
+            'required' => 'Обязательное поле',
+            'string'   => 'Введены недопустимые символы',
         ];
     }
 }

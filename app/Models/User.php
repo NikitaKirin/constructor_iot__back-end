@@ -103,8 +103,8 @@ class User extends Authenticatable
      * Relationship - user to educational modules
      * @return HasMany
      */
-    public function educationalModules(): HasMany {
-        return $this->hasMany(EducationalModule::class);
+    public function disciplines(): HasMany {
+        return $this->hasMany(Discipline::class);
     }
 
 
@@ -112,8 +112,8 @@ class User extends Authenticatable
      * Relationship - user to disciplines
      * @return HasMany
      */
-    public function disciplines(): HasMany {
-        return $this->hasMany(Discipline::class);
+    public function courseAssemblies(): HasMany {
+        return $this->hasMany(CourseAssembly::class);
     }
 
     /**

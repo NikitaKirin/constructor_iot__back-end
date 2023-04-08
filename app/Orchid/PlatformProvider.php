@@ -61,7 +61,41 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make(__('Список всех программ'))
                         ->icon('list')
                         ->route('platform.educationalPrograms'),
-                ])->permission('educationalModules'),
+                ])->permission('educationalPrograms'),
+
+            Menu::make(__('Дисциплины'))
+                ->icon('graduation')
+                ->list([
+                    Menu::make(__('Список всех дисциплин'))
+                        ->icon('list')
+                        ->route('platform.disciplines'),
+                    Menu::make(__('Добавить новый'))
+                        ->icon('plus')
+                        ->route('platform.disciplines.create'),
+                ])->permission('disciplines'),
+
+            Menu::make(__('Курсовые сборки'))
+                ->icon('graduation')
+                ->list([
+                    Menu::make(__('Список всех сборок'))
+                        ->icon('list')
+                        ->route('platform.courseAssemblies'),
+                    Menu::make(__('Добавить новую'))
+                        ->icon('plus')
+                        ->route('platform.courseAssemblies.create'),
+                ])->permission('courseAssemblies'),
+
+            Menu::make(__('Курсы'))
+                ->icon('graduation')
+                ->list([
+                    Menu::make(__('Список всех курсов'))
+                        ->icon('list')
+                        ->route('platform.courses'),
+                    Menu::make(__('Добавить новый'))
+                        ->icon('plus')
+                        ->route('platform.courses.create'),
+                ])->permission('courses'),
+
 
             Menu::make(__('Профессиональные траектории'))
                 ->icon('cursor')
@@ -84,39 +118,6 @@ class PlatformProvider extends OrchidServiceProvider
                         ->icon('plus')
                         ->route('platform.professions.create'),
                 ])->permission('professions'),
-
-            Menu::make(__('Образовательны модули'))
-                ->icon('graduation')
-                ->list([
-                    Menu::make(__('Список всех модулей'))
-                        ->icon('list')
-                        ->route('platform.educationalModules'),
-                    Menu::make(__('Добавить новый'))
-                        ->icon('plus')
-                        ->route('platform.educationalModules.create'),
-                ])->permission('educationalModules'),
-
-            Menu::make(__('Дисциплины'))
-                ->icon('graduation')
-                ->list([
-                    Menu::make(__('Список всех дисциплин'))
-                        ->icon('list')
-                        ->route('platform.disciplines'),
-                    Menu::make(__('Добавить новую'))
-                        ->icon('plus')
-                        ->route('platform.disciplines.create'),
-                ])->permission('disciplines'),
-
-            Menu::make(__('Курсы'))
-                ->icon('graduation')
-                ->list([
-                    Menu::make(__('Список всех курсов'))
-                        ->icon('list')
-                        ->route('platform.courses'),
-                    Menu::make(__('Добавить новый'))
-                        ->icon('plus')
-                        ->route('platform.courses.create'),
-                ])->permission('courses'),
 
             Menu::make(__('Сотрудники'))
                 ->icon('people')

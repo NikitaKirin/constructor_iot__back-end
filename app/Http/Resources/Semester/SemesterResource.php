@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Semester;
 
-use App\Http\Resources\EducationalModule\EducationalModuleResource;
+use App\Http\Resources\Discipline\DisciplineResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +20,8 @@ class SemesterResource extends JsonResource
             'id'                       => $this->id,
             'text_representation'      => $this->text_representation,
             'numerical_representation' => $this->numerical_representation,
-            'educationalModules'       => $this->whenLoaded('educationalModules', function () {
-                return EducationalModuleResource::collection($this->educationalModules);
+            'disciplines'       => $this->whenLoaded('disciplines', function () {
+                return DisciplineResource::collection($this->disciplines);
             }),
         ];
     }

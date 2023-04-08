@@ -2,9 +2,13 @@
 
 namespace App\Orchid\Layouts\Discipline;
 
+use App\Models\CourseAssembly;
+use App\Models\EducationalProgram;
+use App\Models\Semester;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Quill;
+use Orchid\Screen\Fields\Relation;
+use Orchid\Screen\Fields\Switcher;
 use Orchid\Screen\Layouts\Rows;
 
 class DisciplineEditLayout extends Rows
@@ -30,11 +34,36 @@ class DisciplineEditLayout extends Rows
                  ->required()
                  ->value($this->query->get('discipline.title')),
 
-            Quill::make('description')
-                 ->toolbar(["text", "color", "header", "list", "format"])
-                 ->title(__('Описание'))
-                 ->required()
-                 ->value($this->query->get('discipline.description') ?? __('Описания нет')),
+            Switcher::make('is_spec')
+                    ->popover(__('Спец-дисциплина – дисциплина, который имеет более одной дисциплины. В этот перечень не входят дисциплины с обязательными курсами.'))
+                    ->sendTrueOrFalse()
+                    ->title('Спец-дисциплина')
+                    ->value($this->query->get('discipline.is_spec'))
+                    ->placeholder('Является спец-дисциплиной'),
+
+            Input::make('choice_limit')
+                 ->type('number')
+                 ->title(__('Количество выбираемых курсов'))
+                 ->value($this->query->get('discipline.choice_limit')),
+
+
+            Relation::make('semesters.')
+                    ->fromModel(Semester::class, 'text_representation')
+                    ->multiple()
+                    ->title(__('Семестры'))
+                    ->value($this->query->get('discipline')->semesters),
+
+            Relation::make('educationalPrograms.')
+                    ->fromModel(EducationalProgram::class, 'title')
+                    ->multiple()
+                    ->title(__('Образовательные программы'))
+                    ->value($this->query->get('discipline')->educationalPrograms),
+
+            Relation::make('courseAssemblies.')
+                    ->fromModel(CourseAssembly::class, 'title')
+                    ->multiple()
+                    ->title(__('Курсовые сборки'))
+                    ->value($this->query->get('discipline')->courseAssemblies),
 
         ];
     }

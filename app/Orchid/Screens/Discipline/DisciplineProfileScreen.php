@@ -3,9 +3,7 @@
 namespace App\Orchid\Screens\Discipline;
 
 use App\Models\Discipline;
-use App\Orchid\Layouts\Course\CourseListLayout;
-use App\Orchid\Layouts\EducationalModule\EducationalModuleListLayout;
-use App\Orchid\Layouts\ProfessionalTrajectory\ProfessionalTrajectoryListLayout;
+use App\Orchid\Layouts\CourseAssembly\CourseAssemblyListLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -26,13 +24,12 @@ class DisciplineProfileScreen extends Screen
      *
      * @return array
      */
-    public function query( Discipline $discipline ): iterable {
-        $discipline->load(['educationalModules', 'professionalTrajectories']);
+    public function query(Discipline $discipline ): iterable {
+        $discipline->load(['educationalPrograms', 'courseAssemblies']);
         return [
-            'discipline'               => $discipline,
-            'educationalModules'       => $discipline->educationalModules,
-            'courses'                  => $discipline->courses,
-            'professionalTrajectories' => $discipline->professionalTrajectories,
+            'discipline'     => $discipline,
+            'educationalPrograms' => $discipline->educationalPrograms,
+            'courseAssemblies'   => $discipline->courseAssemblies,
         ];
     }
 
@@ -58,7 +55,7 @@ class DisciplineProfileScreen extends Screen
             Button::make(__("Delete"))
                   ->icon('trash')
                   ->type(Color::DANGER())
-                  ->confirm(__(Config::get('toasts.confirm.forceDelete')))
+                  ->confirm(__("Вы уверены, что хотите удалить дисциплину? Данное действие нельзя будет отменить."))
                   ->method('destroy', ['id' => $this->discipline->id]),
         ];
     }
@@ -71,17 +68,17 @@ class DisciplineProfileScreen extends Screen
     public function layout(): iterable {
         return [
             Layout::tabs([
-                __('Основная информация')         =>
+                __('Основная информация') =>
                     Layout::legend("discipline", [
                         Sight::make('title', __('Название')),
-                        Sight::make("description", __('Описание'))
-                             ->render(function ( Discipline $discipline ) {
-                                 return $discipline->description;
+                        Sight::make("choice_limit", __('Лимит выбора')),
+                        Sight::make('is_spec', __('Спец-дисциплина'))
+                             ->render(function (Discipline $discipline ) {
+                                 return $discipline->is_spec ? 'Да' : 'Нет';
                              }),
                     ]),
-                __("Курсы дисциплины")            => CourseListLayout::class,
-                __("Профессиональные траектории") => ProfessionalTrajectoryListLayout::class,
-                __('Образовательные модули')      => EducationalModuleListLayout::class,
+
+                __("Курсовые сборки дисциплины") => CourseAssemblyListLayout::class,
             ])
                   ->activeTab(__('Основная информация')),
         ];
@@ -92,6 +89,6 @@ class DisciplineProfileScreen extends Screen
 
         Toast::success(__(Config::get('toasts.toasts.delete.success')));
 
-        return redirect()->route('platform.educationalModules');
+        return redirect()->route('platform.disciplines');
     }
 }
