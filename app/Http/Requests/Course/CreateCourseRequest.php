@@ -16,7 +16,7 @@ class CreateCourseRequest extends FormRequest
             'video_id'        => ['array'],
             'presentation_id' => ['array'],
             'documents'       => ['array'],
-            'course_assembly_id'  => ['nullable', Rule::exists('course_assemblies', 'id')],
+            'courseAssemblies'  => ['required'],
             'partner_id'     => ['nullable', Rule::exists('partners', 'id')],
         ];
     }

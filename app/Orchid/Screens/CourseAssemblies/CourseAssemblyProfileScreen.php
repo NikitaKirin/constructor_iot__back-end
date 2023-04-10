@@ -27,10 +27,10 @@ class CourseAssemblyProfileScreen extends Screen
      * @return array
      */
     public function query(CourseAssembly $courseAssembly): iterable {
-        $courseAssembly->load(['disciplines', 'professionalTrajectories']);
+        $courseAssembly->load(['discipline', 'professionalTrajectories']);
         return [
             'courseAssembly'           => $courseAssembly,
-            'disciplines'              => $courseAssembly->disciplines,
+            'discipline'              => $courseAssembly->discipline,
             'courses'                  => $courseAssembly->courses,
             'professionalTrajectories' => $courseAssembly->professionalTrajectories,
         ];
@@ -78,10 +78,17 @@ class CourseAssemblyProfileScreen extends Screen
                             ->render(function (CourseAssembly $courseAssembly) {
                                 return $courseAssembly->description;
                             }),
+                        Sight::make("educational_program", __('Образовательная программа'))
+                        ->render(function (CourseAssembly $courseAssembly){
+                            return $courseAssembly->discipline->educationalProgram()->first()->title;
+                        }),
+                        Sight::make("discipline", __('Дисциплина'))
+                            ->render(function (CourseAssembly $courseAssembly){
+                                return $courseAssembly->discipline->title;
+                            }),
                     ]),
                 __("Курсы")                       => CourseListLayout::class,
                 __("Профессиональные траектории") => ProfessionalTrajectoryListLayout::class,
-                __('Дисциплины')      => DisciplineListLayout::class,
             ])
                 ->activeTab(__('Основная информация')),
         ];

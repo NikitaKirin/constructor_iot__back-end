@@ -25,10 +25,10 @@ class DisciplineProfileScreen extends Screen
      * @return array
      */
     public function query(Discipline $discipline ): iterable {
-        $discipline->load(['educationalPrograms', 'courseAssemblies']);
+        $discipline->load(['educationalProgram', 'courseAssemblies']);
         return [
             'discipline'     => $discipline,
-            'educationalPrograms' => $discipline->educationalPrograms,
+            'educationalProgram' => $discipline->educationalProgram,
             'courseAssemblies'   => $discipline->courseAssemblies,
         ];
     }
@@ -39,7 +39,8 @@ class DisciplineProfileScreen extends Screen
      * @return string|null
      */
     public function name(): ?string {
-        return __("Дисциплина: {$this->discipline->title}");
+        $educationalProgramTitle = $this->discipline->educationalProgram->title;
+        return __("{$educationalProgramTitle}, Дисциплина: {$this->discipline->title}");
     }
 
     /**

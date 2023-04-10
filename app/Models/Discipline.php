@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Traits\Userable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
@@ -36,10 +38,10 @@ class Discipline extends Model
 
     /**
      * Relationship - educational module to educational direction
-     * @return BelongsToMany
+     * @return BelongsTo
      */
-    public function educationalPrograms(): BelongsToMany {
-        return $this->belongsToMany(EducationalProgram::class);
+    public function educationalProgram(): BelongsTo {
+        return $this->belongsTo(EducationalProgram::class);
     }
 
     /**
@@ -51,9 +53,13 @@ class Discipline extends Model
     }
 
     /**
-     * @return BelongsToMany
+     * @return HasMany
      */
-    public function courseAssemblies(): BelongsToMany {
-        return $this->belongsToMany(CourseAssembly::class, 'course_assembly_discipline');
+    public function courseAssemblies(): HasMany {
+        return $this->hasMany(CourseAssembly::class);
+    }
+
+    public function getWithEducationalProgramAttribute() {
+        return $this->educationalProgram()->get()->first()->title . ": " . $this->attributes['title'];
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Orchid\Screens\Discipline;
 
 use App\Http\Requests\Discipline\CreateDisciplineRequest;
+use App\Models\CourseAssembly;
 use App\Models\Discipline;
+use App\Models\EducationalProgram;
 use App\Orchid\Layouts\Discipline\DisciplineEditLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +26,7 @@ class DisciplineEditScreen extends Screen
      * @return array
      */
     public function query(Discipline $discipline ): iterable {
+        $discipline->load(['educationalProgram']);
         return [
             "discipline" => $discipline,
         ];
@@ -35,7 +38,7 @@ class DisciplineEditScreen extends Screen
      * @return string|null
      */
     public function name(): ?string {
-        return $this->discipline->exists ? __("Изменить дисциплину: {$this->discipline->title}") : __('Создать новую дисциплину');
+        return $this->discipline->exists ? __("{$this->discipline->educationalProgram->title}/ Изменить дисциплину: {$this->discipline->title}") : __('Создать новую дисциплину');
     }
 
     /**
@@ -73,21 +76,22 @@ class DisciplineEditScreen extends Screen
 
     public function save(Discipline $discipline, CreateDisciplineRequest $request ) {
 
+
         $discipline->fill($request->validated())
-                          ->user()->associate(Auth::user())
-                          ->save();
+                          ->user()->associate(Auth::user());
+
+        $discipline->educationalProgram()->associate($request->input('educationalProgram'));
+
+        $discipline->save();
 
         $discipline->semesters()
                           ->sync($request->get('semesters', []));
 
-        $discipline->educationalPrograms()
-                          ->sync($request->get('educationalPrograms', []));
-
-        $discipline->courseAssemblies()
-                          ->sync($request->get('courseAssemblies', []));
 
         Toast::success(__(\config('toasts.toasts.update.success')))
              ->autoHide();
+
+        return redirect()->route('platform.disciplines.edit', ['discipline' => $discipline]);
     }
 
     public function remove( Request $request ) {

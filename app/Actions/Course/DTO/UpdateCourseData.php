@@ -14,6 +14,7 @@ class UpdateCourseData
         public readonly ?int   $presentationId = null,
         public readonly array  $documentsIds = [],
         public readonly ?int   $disciplineId = null,
+        public readonly array  $courseAssembliesIds = [],
         public readonly ?int   $partnerId = null,
     ) {
 

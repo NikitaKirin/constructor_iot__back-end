@@ -48,12 +48,6 @@ class CourseListLayout extends Table
             TD::make('seat_limit', __('Лимит мест'))
                 ->sort(),
 
-            TD::make('discipline_id', __("Дисциплина"))
-                ->width(200)
-                ->render(function (Course $course) {
-                    return $course->discipline?->title ?? __('Не определено');
-                }),
-
             TD::make('realization_id', __('Вид реализации'))
                 ->render(function (Course $course) {
                     return $course->realization->title;
@@ -62,7 +56,7 @@ class CourseListLayout extends Table
 
             TD::make('partner_id', __('Партнер'))
                 ->render(function (Course $course) {
-                    return $course->partner->title;
+                    return $course->partner->title ?? __('Не определено');
                 })
                 ->defaultHidden(),
 

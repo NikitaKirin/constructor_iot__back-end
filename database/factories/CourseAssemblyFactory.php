@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Discipline;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class CourseAssemblyFactory extends Factory
         return [
             'title'       => fake()->title(),
             'description' => fake()->realText(),
+            'discipline_id' => Discipline::factory(1)->create()->id,
         ];
     }
 }

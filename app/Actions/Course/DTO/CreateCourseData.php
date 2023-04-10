@@ -12,7 +12,7 @@ class CreateCourseData
         public readonly ?int $videoId = null,
         public readonly ?int $presentationId = null,
         public readonly array $documentsIds = [],
-        public readonly ?int $courseAssemblyId = null,
+        public readonly array $courseAssemblyIds = [],
         public readonly ?int $partnerId = null,
     ){
 

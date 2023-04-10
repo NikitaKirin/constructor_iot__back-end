@@ -5,6 +5,7 @@ namespace App\Orchid\Screens\Course;
 use App\Models\Course;
 use App\Models\CourseAssembly;
 use App\Models\Partner;
+use App\Orchid\Layouts\CourseAssembly\CourseAssemblyListLayout;
 use App\Orchid\Screens\Partner\PartnerProfileScreen;
 use Illuminate\Support\Facades\Config;
 use Orchid\Screen\Actions\Button;
@@ -24,10 +25,11 @@ class CourseProfileScreen extends Screen
      * @return array
      */
     public function query( Course $course ): iterable {
-        $course->load(['partner', 'courseAssembly']);
+        $course->load(['partner', 'courseAssemblies']);
         return [
             'course' => $course,
             'partner' => $course->partner,
+            'courseAssemblies' => $course->courseAssemblies,
         ];
     }
 
@@ -74,16 +76,6 @@ class CourseProfileScreen extends Screen
                                 return $course->description;
                             }),
                         Sight::make('seat_limit', __('Лимит мест')),
-                        Sight::make('course_assembly_id', __("Курсовая сборка"))
-                            ->render(function (Course $course){
-                                $courseAssembly = $course->courseAssembly;
-                                if ($courseAssembly->title === __("Нет")) {
-                                    return $courseAssembly->title;
-                                }
-                                return Link::make($courseAssembly->title)
-                                    ->icon('eye')
-                                    ->route('platform.courseAssemblies.profile', $courseAssembly);
-                            }),
                         Sight::make('partner_id', __('Партнер'))
                             ->render(function (Course $course){
                                 $partner = $course->partner;
@@ -94,8 +86,14 @@ class CourseProfileScreen extends Screen
                                     ->icon('eye')
                                     ->route('platform.partners.profile', $partner);
                             }),
-                        Sight::make('realization_id', __('Вид реализации')),
+                        Sight::make('realization_id', __('Вид реализации'))
+                        ->render(function (Course $course) {
+                            return $course->realization->title;
+                        }),
                     ]),
+                ],
+                __("Курсовые сборки") => [
+                    CourseAssemblyListLayout::class,
                 ],
             ]),
         ];

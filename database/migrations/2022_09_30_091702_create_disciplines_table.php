@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('disciplines', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
+            $table->string('title');
             $table->smallInteger('choice_limit');
             $table->boolean('is_spec')->default(false);
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('educational_program_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

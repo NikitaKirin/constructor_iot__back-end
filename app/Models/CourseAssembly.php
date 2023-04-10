@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Userable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,10 +32,10 @@ class CourseAssembly extends Model
     ];
 
     /**
-     * @return BelongsToMany
+     * @return BelongsTo
      */
-    public function disciplines(): BelongsToMany {
-        return $this->belongsToMany(Discipline::class, 'course_assembly_discipline');
+    public function discipline(): BelongsTo {
+        return $this->belongsTo(Discipline::class);
     }
 
     /**
@@ -46,9 +47,14 @@ class CourseAssembly extends Model
     }
 
     /**
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function courses(): HasMany {
-        return $this->hasMany(Course::class);
+    public function courses(): BelongsToMany {
+        return $this->belongsToMany(Course::class, 'course_assembly_course');
     }
+
+    public function getWithEducationalProgramAttribute() {
+        return $this->discipline->educationalProgram()->get()->first()->title . " / " . $this->discipline->title . " / " . $this->attributes['title'];
+    }
+
 }

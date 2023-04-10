@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Orchid\Filters\Discipline;
+namespace App\Orchid\Filters\Course;
 
 use App\Models\EducationalProgram;
 use Illuminate\Database\Eloquent\Builder;
@@ -37,10 +37,9 @@ class EducationalProgramFilter extends Filter
      *
      * @return Builder
      */
-    public function run( Builder $builder ): Builder {
-        return $builder->whereHas('educationalProgram', function ( Builder $query ) {
-            return $query->whereIntegerInRaw('id',
-                $this->request->input('educational_programs'));
+    public function run(Builder $builder): Builder {
+        return $builder->whereHas('courseAssemblies.discipline.educationalProgram', function (Builder $builder){
+            return $builder->whereIntegerInRaw('id', $this->request->input('educational_programs'));
         });
     }
 
@@ -52,9 +51,9 @@ class EducationalProgramFilter extends Filter
     public function display(): iterable {
         return [
             Select::make('educational_programs')
-                  ->title(__('Образовательные программы'))
-                  ->fromModel(EducationalProgram::class, 'title')
-                  ->multiple(),
+                ->title(__('Образовательные программы'))
+                ->fromModel(EducationalProgram::class, 'title')
+                ->multiple(),
         ];
     }
 }

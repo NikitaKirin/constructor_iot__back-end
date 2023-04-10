@@ -16,11 +16,11 @@ class CreateCourseAction
             'realization_id'     => $data->realizationId,
             'video_id'           => $data->videoId,
             'presentation_id'    => $data->presentationId,
-            'course_assembly_id' => $data->courseAssemblyId,
             'partner_id'         => $data->partnerId,
             'user_id'            => Auth::id(),
         ]);
         $course->documents()->sync($data->documentsIds);
+        $course->courseAssemblies()->sync($data->courseAssemblyIds);
         return $course;
     }
 }

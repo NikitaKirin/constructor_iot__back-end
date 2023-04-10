@@ -36,6 +36,16 @@ class CourseAssemblyListLayout extends Table
                   return ++$loop->index;
               }),
 
+            TD::make('educational_program', __('Образовательная программа'))
+            ->render(function (CourseAssembly $courseAssembly) {
+               return $courseAssembly->discipline->educationalProgram()->first()->title;
+            }),
+
+            TD::make('discipline', __('Дисциплина'))
+                ->render(function (CourseAssembly $courseAssembly) {
+                    return $courseAssembly->discipline->title;
+                }),
+
             TD::make('title', __('Название'))
               ->sort()
               ->render(function (CourseAssembly $courseAssembly ) {

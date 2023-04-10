@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('discipline_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

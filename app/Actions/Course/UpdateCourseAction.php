@@ -10,6 +10,7 @@ class UpdateCourseAction
 {
     public function run(Course $course, UpdateCourseData $data): bool {
         $course->documents()->sync($data->documentsIds);
+        $course->courseAssemblies()->sync($data->courseAssembliesIds);
         return $course->update([
             'title'           => $data->title,
             'description'     => $data->description,

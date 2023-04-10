@@ -5,6 +5,7 @@ namespace App\Http\Resources\Course;
 use App\Http\Resources\EducationalProgram\EducationalProgramResource;
 use App\Http\Resources\Partner\PartnerResource;
 use App\Http\Resources\ProfessionalTrajectory\ProfessionalTrajectoryResource;
+use App\Models\CourseAssembly;
 use App\Models\Discipline;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,16 +28,25 @@ class CourseResource extends JsonResource
             'description'               => $this->description,
             'limit'                     => $this->limit,
             'realization'               => $this->realization->title,
-            'professional_trajectories' => $this->whenLoaded('courseAssembly', function () {
-                return ProfessionalTrajectoryResource::collection($this->courseAssembly->professionalTrajectories);
+            'professional_trajectories' => $this->whenLoaded('courseAssemblies', function () {
+                $professionalTrajectories = $this->courseAssemblies->map(
+                    fn(CourseAssembly $courseAssembly) => $courseAssembly->professionalTrajectories
+                )->first();
+                if($professionalTrajectories->count() > 0) {
+                    return ProfessionalTrajectoryResource::collection(collect($professionalTrajectories)->unique('id'));
+                }
+                return [];
             }),
             'partner'                   => new PartnerResource($this->whenLoaded('partner')),
-            'educationalProgramms'      => $this->when(Route::currentRouteNamed('partners.courses.show'), function () {
-                $disciplines = $this->courseAssembly->disciplines;
-                $educationalProgramms = $disciplines->map(
-                    fn(Discipline $discipline) => $discipline->educationalPrograms
-                )->first();
-                return EducationalProgramResource::collection($educationalProgramms);
+            'educational_programms'      => $this->when(Route::currentRouteNamed('partners.courses.show'), function () {
+                $courseAssemblies = $this->courseAssemblies;
+                $educationalProgramms = $courseAssemblies->map(
+                    fn(CourseAssembly $courseAssembly) => $courseAssembly->discipline->educationalProgram
+                );
+                if($educationalProgramms->count() > 0){
+                    return EducationalProgramResource::collection(collect($educationalProgramms)->unique('id'));
+                }
+                return [];
             }),
             // ? N+1 problem
             'video'                     => $this->whenLoaded('attachment',

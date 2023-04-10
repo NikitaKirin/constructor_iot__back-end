@@ -6,6 +6,7 @@ use App\Traits\Userable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -46,16 +47,15 @@ class Course extends Model
      * @return BelongsTo
      */
     public function partner(): BelongsTo {
-        return $this->belongsTo(Partner::class)->withDefault(['title' => __('Нет')]);
+        return $this->belongsTo(Partner::class);
     }
 
     /**
      * Relationship - course to discipline
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function courseAssembly(): BelongsTo {
-        return $this->belongsTo(CourseAssembly::class)
-            ->withDefault(['title' => __('Нет')]);
+    public function courseAssemblies(): BelongsToMany {
+        return $this->belongsToMany(CourseAssembly::class, 'course_assembly_course');
     }
 
     /**

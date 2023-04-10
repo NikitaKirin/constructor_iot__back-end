@@ -36,6 +36,12 @@ class DisciplineListLayout extends Table
                   return ++$loop->index;
               }),
 
+            TD::make('title', __("Образовательная программа"))
+                ->sort()
+                ->render(function (Discipline $discipline ) {
+                    return $discipline->educationalProgram()->first()->title;
+                }),
+
             TD::make('title', __("Название"))
               ->sort()
               ->render(function (Discipline $discipline ) {

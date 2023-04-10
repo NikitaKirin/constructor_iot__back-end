@@ -34,7 +34,7 @@ class CourseAssemblyEditScreen extends Screen
      * @return array
      */
     public function query(CourseAssembly $courseAssembly ): iterable {
-        $courseAssembly->load(['disciplines', 'courses', 'professionalTrajectories']);
+        $courseAssembly->load(['discipline', 'courses', 'professionalTrajectories']);
         return [
             'courseAssembly' => $courseAssembly,
         ];
@@ -84,15 +84,16 @@ class CourseAssemblyEditScreen extends Screen
 
             Layout::block([
                 Layout::rows([
-                    Relation::make('disciplines.')
+                    Relation::make('discipline')
+                            ->required()
                             ->fromModel(Discipline::class, 'title')
-                            ->multiple()
-                            ->value($this->courseAssembly->disciplines)
-                            ->title(__('Список дисциплин')),
+                            ->displayAppend('WithEducationalProgram')
+                            ->value($this->courseAssembly->discipline)
+                            ->title(__('Дисциплина')),
                 ]),
             ])
-                  ->title(__('Дисциплины'))
-                  ->description(__('Выберите дисциплины, к которым принадлежит данная сборка, из предложенного списка'))
+                  ->title(__('Дисциплина'))
+                  ->description(__('Выберите дисциплину, к которой принадлежит данная сборка, из предложенного списка'))
                   ->commands([
                       Button::make(__('Save'))
                             ->type(Color::SUCCESS())
@@ -107,6 +108,7 @@ class CourseAssemblyEditScreen extends Screen
             Layout::block([
                 Layout::rows([
                     Relation::make('courses.')
+                            ->required()
                             ->fromModel(Course::class, 'title')
                             ->multiple()
                             ->value($this->courseAssembly->courses)
@@ -168,16 +170,12 @@ class CourseAssemblyEditScreen extends Screen
                    ->user()->associate(Auth::user())
                    ->save();
 
-        $courseAssembly->disciplines()
-                   ->sync($request->input('disciplines', []));
+        $courseAssembly->discipline()->associate($request->input('discipline'))->save();
 
         $courseAssembly->professionalTrajectories()
                    ->sync($trajectories);
 
-        if ( $courses_ids = $request->input('courses') ) {
-            $courses = Course::findMany($courses_ids);
-            $courseAssembly->courses()->saveMany($courses);
-        }
+        $courseAssembly->courses()->sync($request->input('courses', []));
 
         Toast::success(__(Config::get('toasts.toasts.update.success')))
              ->autoHide();

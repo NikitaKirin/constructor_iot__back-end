@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Layouts\CourseAssembly;
 
+use App\Orchid\Filters\CourseAssembly\EducationalProgramFilter;
 use App\Orchid\Filters\CourseAssembly\ProfessionalTrajectoryFilter;
 use App\Orchid\Filters\CourseAssembly\SemesterFilter;
 use App\Orchid\Filters\DisciplineFilter;
@@ -17,6 +18,7 @@ class CourseAssemblyFilters extends Selection
     public function filters(): iterable {
         return [
             TitleFilter::class,
+            EducationalProgramFilter::class,
             DisciplineFilter::class,
             SemesterFilter::class,
             ProfessionalTrajectoryFilter::class,

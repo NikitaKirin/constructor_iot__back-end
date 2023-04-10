@@ -33,7 +33,7 @@ class CourseEditScreen extends Screen
      * @return array
      */
     public function query(Course $course): iterable {
-        $course->load(['partner', 'courseAssembly', 'realization']);
+        $course->load(['partner', 'courseAssemblies', 'realization']);
         return [
             'course' => $course,
         ];
@@ -89,10 +89,13 @@ class CourseEditScreen extends Screen
 
             Layout::block([
                 Layout::rows([
-                    Relation::make('course_assembly_id')
-                        ->title(__('Курсовая сборка'))
+                    Relation::make('courseAssemblies.')
+                        ->required()
+                        ->title(__('Курсовые сборки'))
+                        ->multiple()
                         ->fromModel(CourseAssembly::class, 'title')
-                        ->value($this->course->courseAssembly),
+                        ->displayAppend('WithEducationalProgram')
+                        ->value($this->course->courseAssemblies),
 
                     Link::make(__('Создать новую'))
                         ->icon('plus')
@@ -150,7 +153,7 @@ class CourseEditScreen extends Screen
                 videoId: $validated->get('video_id', default: [null])[0],
                 presentationId: $validated->get('presentation_id', default: [null])[0],
                 documentsIds: $validated->get('documents', default: []),
-                courseAssemblyId: $validated->get('course_assembly_id'),
+                courseAssemblyIds: $validated->get('courseAssemblies', default: []),
                 partnerId: $validated->get('partner_id'),
             )
         );
@@ -172,6 +175,7 @@ class CourseEditScreen extends Screen
                 presentationId: $validated->get('presentation_id', default: [null])[0],
                 documentsIds: $validated->get('documents', default: []),
                 disciplineId: $validated->get('discipline_id'),
+                courseAssembliesIds: $validated->get('courseAssemblies', default: []),
                 partnerId: $validated->get('partner_id'),
             )
         );

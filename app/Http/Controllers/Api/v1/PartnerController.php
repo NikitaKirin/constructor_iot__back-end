@@ -35,7 +35,7 @@ class PartnerController extends Controller
     public function coursesIndex(Request $request) {
         $paginate = $request->integer('paginate', default: 18);
         $courseBuilder = Course::with([
-            'courseAssembly.professionalTrajectories',
+            'courseAssemblies.professionalTrajectories',
             'partner.logo',
             'realization',
         ])->has('partner');
@@ -60,8 +60,8 @@ class PartnerController extends Controller
     public function courseShow(Course $course) {
         return new CourseResource($course->load([
             'realization',
-            'courseAssembly.professionalTrajectories',
-            'courseAssembly.disciplines.educationalPrograms',
+            'courseAssemblies.professionalTrajectories',
+            'courseAssemblies.discipline.educationalProgram',
             'attachment',
             'partner',
         ]));

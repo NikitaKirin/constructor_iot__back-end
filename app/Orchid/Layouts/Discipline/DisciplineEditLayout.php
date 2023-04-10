@@ -42,28 +42,30 @@ class DisciplineEditLayout extends Rows
                     ->placeholder('Является спец-дисциплиной'),
 
             Input::make('choice_limit')
+                 ->required()
                  ->type('number')
                  ->title(__('Количество выбираемых курсов'))
                  ->value($this->query->get('discipline.choice_limit')),
 
 
             Relation::make('semesters.')
+                    ->required()
                     ->fromModel(Semester::class, 'text_representation')
                     ->multiple()
                     ->title(__('Семестры'))
                     ->value($this->query->get('discipline')->semesters),
 
-            Relation::make('educationalPrograms.')
+            Relation::make('educationalProgram')
+                    ->required()
                     ->fromModel(EducationalProgram::class, 'title')
-                    ->multiple()
-                    ->title(__('Образовательные программы'))
-                    ->value($this->query->get('discipline')->educationalPrograms),
+                    ->title(__('Образовательная программа'))
+                    ->value($this->query->get('discipline')->educationalProgram),
 
-            Relation::make('courseAssemblies.')
+/*            Relation::make('courseAssemblies.')
                     ->fromModel(CourseAssembly::class, 'title')
                     ->multiple()
                     ->title(__('Курсовые сборки'))
-                    ->value($this->query->get('discipline')->courseAssemblies),
+                    ->value($this->query->get('discipline')->courseAssemblies),*/
 
         ];
     }

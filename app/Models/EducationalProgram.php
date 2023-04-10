@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
@@ -50,11 +51,11 @@ class EducationalProgram extends Model
 
     /**
      * Relationship - educational direction to educational modules
-     * @return BelongsToMany
+     * @return HasMany
      */
-    public function disciplines(): BelongsToMany
+    public function disciplines(): HasMany
     {
-        return $this->belongsToMany(Discipline::class);
+        return $this->hasMany(Discipline::class);
     }
 
     /**
