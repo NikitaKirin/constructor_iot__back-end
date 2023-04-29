@@ -38,10 +38,10 @@ class Discipline extends Model
 
     /**
      * Relationship - educational module to educational direction
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function educationalProgram(): BelongsTo {
-        return $this->belongsTo(EducationalProgram::class);
+    public function educationalPrograms(): BelongsToMany {
+        return $this->belongsToMany(EducationalProgram::class, 'discipline_educational_program');
     }
 
     /**
@@ -60,6 +60,7 @@ class Discipline extends Model
     }
 
     public function getWithEducationalProgramAttribute() {
-        return $this->educationalProgram()->get()->first()->title . ": " . $this->attributes['title'];
+        $educationalPrograms = get_educational_programs_ciphers_string($this->educationalPrograms()->get()->toArray());
+        return $educationalPrograms . ": " . $this->attributes['title'];
     }
 }

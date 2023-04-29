@@ -55,11 +55,12 @@ class DisciplineEditLayout extends Rows
                     ->title(__('Семестры'))
                     ->value($this->query->get('discipline')->semesters),
 
-            Relation::make('educationalProgram')
+            Relation::make('educationalPrograms.')
                     ->required()
                     ->fromModel(EducationalProgram::class, 'title')
-                    ->title(__('Образовательная программа'))
-                    ->value($this->query->get('discipline')->educationalProgram),
+                    ->multiple()
+                    ->title(__('Образовательные программы'))
+                    ->value($this->query->get('discipline')->educationalPrograms),
 
 /*            Relation::make('courseAssemblies.')
                     ->fromModel(CourseAssembly::class, 'title')

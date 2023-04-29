@@ -40,11 +40,11 @@ class CourseResource extends JsonResource
             'partner'                   => new PartnerResource($this->whenLoaded('partner')),
             'educational_programms'      => $this->when(Route::currentRouteNamed('partners.courses.show'), function () {
                 $courseAssemblies = $this->courseAssemblies;
-                $educationalProgramms = $courseAssemblies->map(
-                    fn(CourseAssembly $courseAssembly) => $courseAssembly->discipline->educationalProgram
-                );
-                if($educationalProgramms->count() > 0){
-                    return EducationalProgramResource::collection(collect($educationalProgramms)->unique('id'));
+                $educationalPrograms = $courseAssemblies->map(
+                    fn(CourseAssembly $courseAssembly) => $courseAssembly->discipline->educationalPrograms
+                )->first();
+                if($educationalPrograms->count() > 0){
+                    return EducationalProgramResource::collection(collect($educationalPrograms)->unique('id'));
                 }
                 return [];
             }),

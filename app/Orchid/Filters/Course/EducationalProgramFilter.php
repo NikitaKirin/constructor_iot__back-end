@@ -38,7 +38,7 @@ class EducationalProgramFilter extends Filter
      * @return Builder
      */
     public function run(Builder $builder): Builder {
-        return $builder->whereHas('courseAssemblies.discipline.educationalProgram', function (Builder $builder){
+        return $builder->whereHas('courseAssemblies.discipline.educationalPrograms', function (Builder $builder){
             return $builder->whereIntegerInRaw('id', $this->request->input('educational_programs'));
         });
     }

@@ -38,7 +38,7 @@ class SemesterFilter extends Filter
      * @return Builder
      */
     public function run( Builder $builder ): Builder {
-        return $builder->whereHas('disciplines', function ( Builder $query ) {
+        return $builder->whereHas('discipline', function ( Builder $query ) {
             return $query->whereHas('semesters', function ( Builder $query ) {
                 return $query->whereIntegerInRaw('semester_id', $this->request->input('semesters'));
             });

@@ -1,6 +1,6 @@
 -- Adminer 4.8.1 PostgreSQL 10.3 (Debian 10.3-1.pgdg90+1) dump
 
-INSERT INTO "educational_modules" ("id", "title", "choice_limit", "user_id", "created_at", "updated_at", "deleted_at", "is_spec") VALUES
+INSERT INTO "disciplines" ("id", "title", "choice_limit", "user_id", "created_at", "updated_at", "deleted_at", "is_spec") VALUES
 (1,	'Обязательные курсы ч.1',	0,	3,	'2022-11-10 19:26:29',	'2022-11-10 19:26:29',	NULL,	'f'),
 (2,	'Обязательные курсы ч.2',	0,	3,	'2022-11-10 19:40:40',	'2022-11-10 19:41:37',	NULL,	'f'),
 (3,	'Обязательные курсы ч.3',	0,	3,	'2022-11-10 19:49:37',	'2022-11-10 19:50:17',	NULL,	'f'),

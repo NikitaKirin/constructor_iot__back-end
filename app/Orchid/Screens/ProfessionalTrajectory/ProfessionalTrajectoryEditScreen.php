@@ -76,6 +76,7 @@ class ProfessionalTrajectoryEditScreen extends Screen
                     Relation::make('courseAssemblies.')
                             ->fromModel(CourseAssembly::class, 'title')
                             ->multiple()
+                            ->displayAppend('WithEducationalProgram')
                             ->value($this->professionalTrajectory->courseAssemblies)
                             ->title(__('Список курсовых сборок')),
 

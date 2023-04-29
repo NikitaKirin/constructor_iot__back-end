@@ -4,6 +4,7 @@ namespace App\Orchid\Screens\Discipline;
 
 use App\Models\Discipline;
 use App\Orchid\Layouts\CourseAssembly\CourseAssemblyListLayout;
+use App\Orchid\Layouts\EducationalProgram\EducationalProgramListLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -25,10 +26,10 @@ class DisciplineProfileScreen extends Screen
      * @return array
      */
     public function query(Discipline $discipline ): iterable {
-        $discipline->load(['educationalProgram', 'courseAssemblies']);
+        $discipline->load(['educationalPrograms', 'courseAssemblies']);
         return [
             'discipline'     => $discipline,
-            'educationalProgram' => $discipline->educationalProgram,
+            'educationalPrograms' => $discipline->educationalPrograms,
             'courseAssemblies'   => $discipline->courseAssemblies,
         ];
     }
@@ -39,8 +40,7 @@ class DisciplineProfileScreen extends Screen
      * @return string|null
      */
     public function name(): ?string {
-        $educationalProgramTitle = $this->discipline->educationalProgram->title;
-        return __("{$educationalProgramTitle}, Дисциплина: {$this->discipline->title}");
+        return __( "Дисциплина: {$this->discipline->title}");
     }
 
     /**
@@ -69,6 +69,7 @@ class DisciplineProfileScreen extends Screen
     public function layout(): iterable {
         return [
             Layout::tabs([
+                __('Образовательные программы') => EducationalProgramListLayout::class,
                 __('Основная информация') =>
                     Layout::legend("discipline", [
                         Sight::make('title', __('Название')),

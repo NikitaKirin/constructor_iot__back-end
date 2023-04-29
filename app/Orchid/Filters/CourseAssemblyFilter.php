@@ -38,8 +38,8 @@ class CourseAssemblyFilter extends Filter
      * @return Builder
      */
     public function run( Builder $builder ): Builder {
-        return $builder->whereHas('courseAssembly', function ( Builder $query ) {
-            return $query->whereIn('course_assembly_id', $this->request->input('courseAssemblies'));
+        return $builder->whereHas('courseAssemblies', function ( Builder $query ) {
+            return $query->whereIn('id', $this->request->input('courseAssemblies'));
         });
     }
 

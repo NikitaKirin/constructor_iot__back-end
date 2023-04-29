@@ -54,7 +54,8 @@ class CourseAssembly extends Model
     }
 
     public function getWithEducationalProgramAttribute() {
-        return $this->discipline->educationalProgram()->get()->first()->title . " / " . $this->discipline->title . " / " . $this->attributes['title'];
+        $educationalPrograms = get_educational_programs_ciphers_string($this->discipline->educationalPrograms()->get()->toArray());
+        return $educationalPrograms . " | " . $this->discipline->title . " | " . $this->attributes['title'];
     }
 
 }

@@ -17,7 +17,7 @@ class ProfessionController extends Controller
         $professionTitle = $request->input('professionTitle', default: false);
         $educationalPrograms = $request->input('educationalPrograms');
         $paginate = $request->integer('paginate', default: 10);
-        $professionsQuery = Profession::query();
+        $professionsQuery = Profession::query()->with(['photo', 'professionalTrajectories.courseAssemblies.discipline.educationalPrograms']);
         if ($withProfessionalTrajectories) {
             $professionsQuery->with('professionalTrajectories');
         }
@@ -27,7 +27,7 @@ class ProfessionController extends Controller
         });
         $professionsQuery->when($professionTitle, fn(Builder $query) => $query->where('title', 'ILIKE', '%' . $professionTitle . '%'));
         $professionsQuery->when($educationalPrograms, function (Builder $query) use ($educationalPrograms) {
-            return $query->whereHas('professionalTrajectories.courseAssemblies.disciplines.educationalPrograms',
+            return $query->whereHas('professionalTrajectories.courseAssemblies.discipline.educationalPrograms',
                 fn(Builder $query) => $query->whereIntegerInRaw('educational_program_id', $educationalPrograms));
         });
         $professionsQuery = $this->setSorting($professionsQuery, $request);

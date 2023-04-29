@@ -19,7 +19,6 @@ return new class extends Migration
             $table->smallInteger('choice_limit');
             $table->boolean('is_spec')->default(false);
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('educational_program_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

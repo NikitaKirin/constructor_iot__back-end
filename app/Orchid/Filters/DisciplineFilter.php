@@ -36,7 +36,7 @@ class DisciplineFilter extends Filter
      * @return Builder
      */
     public function run( Builder $builder ): Builder {
-        return $builder->whereHas('disciplines', function ( Builder $query ) {
+        return $builder->whereHas('discipline', function ( Builder $query ) {
             return $query->whereIntegerInRaw('discipline_id', $this->request->input('disciplines'));
         });
     }

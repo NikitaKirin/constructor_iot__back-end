@@ -5,6 +5,7 @@ namespace App\Orchid\Screens\CourseAssemblies;
 use App\Models\CourseAssembly;
 use App\Orchid\Layouts\Course\CourseListLayout;
 use App\Orchid\Layouts\Discipline\DisciplineListLayout;
+use App\Orchid\Layouts\EducationalProgram\EducationalProgramListLayout;
 use App\Orchid\Layouts\ProfessionalTrajectory\ProfessionalTrajectoryListLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,12 +28,13 @@ class CourseAssemblyProfileScreen extends Screen
      * @return array
      */
     public function query(CourseAssembly $courseAssembly): iterable {
-        $courseAssembly->load(['discipline', 'professionalTrajectories']);
+        $courseAssembly->load(['discipline.educationalPrograms', 'professionalTrajectories']);
         return [
             'courseAssembly'           => $courseAssembly,
             'discipline'              => $courseAssembly->discipline,
             'courses'                  => $courseAssembly->courses,
             'professionalTrajectories' => $courseAssembly->professionalTrajectories,
+            'educationalPrograms' => $courseAssembly->discipline->educationalPrograms,
         ];
     }
 
@@ -71,6 +73,7 @@ class CourseAssemblyProfileScreen extends Screen
     public function layout(): iterable {
         return [
             Layout::tabs([
+                __('Образовательные программы') => EducationalProgramListLayout::class,
                 __('Основная информация')         =>
                     Layout::legend("courseAssembly", [
                         Sight::make('title', __('Название')),
@@ -78,10 +81,6 @@ class CourseAssemblyProfileScreen extends Screen
                             ->render(function (CourseAssembly $courseAssembly) {
                                 return $courseAssembly->description;
                             }),
-                        Sight::make("educational_program", __('Образовательная программа'))
-                        ->render(function (CourseAssembly $courseAssembly){
-                            return $courseAssembly->discipline->educationalProgram()->first()->title;
-                        }),
                         Sight::make("discipline", __('Дисциплина'))
                             ->render(function (CourseAssembly $courseAssembly){
                                 return $courseAssembly->discipline->title;

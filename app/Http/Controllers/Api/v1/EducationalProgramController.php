@@ -9,6 +9,6 @@ use App\Models\EducationalProgram;
 class EducationalProgramController extends Controller
 {
     public function index() {
-        return new EducationalProgramResourceCollection(EducationalProgram::orderBy('title')->paginate(4));
+        return new EducationalProgramResourceCollection(EducationalProgram::orderBy('title')->has('disciplines')->paginate(4));
     }
 }

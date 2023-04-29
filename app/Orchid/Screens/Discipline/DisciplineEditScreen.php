@@ -26,7 +26,7 @@ class DisciplineEditScreen extends Screen
      * @return array
      */
     public function query(Discipline $discipline ): iterable {
-        $discipline->load(['educationalProgram']);
+        $discipline->load(['educationalPrograms']);
         return [
             "discipline" => $discipline,
         ];
@@ -38,7 +38,7 @@ class DisciplineEditScreen extends Screen
      * @return string|null
      */
     public function name(): ?string {
-        return $this->discipline->exists ? __("{$this->discipline->educationalProgram->title}/ Изменить дисциплину: {$this->discipline->title}") : __('Создать новую дисциплину');
+        return $this->discipline->exists ? __("Изменить дисциплину: {$this->discipline->title}") : __('Создать новую дисциплину');
     }
 
     /**
@@ -80,7 +80,7 @@ class DisciplineEditScreen extends Screen
         $discipline->fill($request->validated())
                           ->user()->associate(Auth::user());
 
-        $discipline->educationalProgram()->associate($request->input('educationalProgram'));
+        $discipline->educationalPrograms()->sync($request->get('educationalPrograms', []));
 
         $discipline->save();
 

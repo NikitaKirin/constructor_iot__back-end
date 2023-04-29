@@ -3,16 +3,15 @@
 namespace App\Http\Resources\Profession;
 
 use App\Http\Resources\EducationalProgram\EducationalProgramResource;
-use App\Http\Resources\EducationalProgram\EducationalProgramResourceCollection;
 use App\Http\Resources\ProfessionalTrajectory\ProfessionalTrajectoryResource;
-use App\Http\Resources\ProfessionalTrajectory\ProfessionalTrajectoryResourceCollection;
+use App\Models\CourseAssembly;
 use App\Models\EducationalProgram;
 use App\Models\Profession;
+use App\Models\ProfessionalTrajectory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Config;
 
 /** @mixin Profession */
 class ProfessionResource extends JsonResource
@@ -36,7 +35,19 @@ class ProfessionResource extends JsonResource
             'photo'                    => $this->photo->url(),
             'professionalTrajectories' => ProfessionalTrajectoryResource::collection($this->whenLoaded('professionalTrajectories')),
             'educationalPrograms'      => $this->when($request->boolean('withEducationalPrograms'),
-                fn() => $this->getEducationalPrograms()),
+                function () {
+                    $professionalTrajectories = $this->professionalTrajectories;
+                    $educationalPrograms = collect($professionalTrajectories)->map(function (ProfessionalTrajectory $professionalTrajectory) {
+                        $courseAssemblies = $professionalTrajectory->courseAssemblies;
+                        return collect($courseAssemblies)->map(function (CourseAssembly $courseAssembly) {
+                            return $courseAssembly->discipline->educationalPrograms;
+                        })->first();
+                    })->first();
+                    if ($educationalPrograms->count() > 0) {
+                        return EducationalProgramResource::collection(collect($educationalPrograms)->unique('id'));
+                    }
+                    return [];
+                }),
         ];
     }
 

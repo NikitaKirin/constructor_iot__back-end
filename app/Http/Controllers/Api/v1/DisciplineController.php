@@ -24,7 +24,7 @@ class DisciplineController extends Controller
     {
         $data = Semester::whereHas('disciplines', function (Builder $query) use ($educationalProgram) {
             return $query->whereHas(
-                'educationalProgram',
+                'educationalPrograms',
                 fn(Builder $query) => $query->where('id', $educationalProgram->id)
             );
         })->with(['disciplines.courseAssemblies.professionalTrajectories'])->orderBy('numerical_representation');

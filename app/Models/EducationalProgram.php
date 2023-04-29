@@ -51,11 +51,11 @@ class EducationalProgram extends Model
 
     /**
      * Relationship - educational direction to educational modules
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function disciplines(): HasMany
+    public function disciplines(): BelongsToMany
     {
-        return $this->hasMany(Discipline::class);
+        return $this->belongsToMany(Discipline::class, 'discipline_educational_program');
     }
 
     /**
