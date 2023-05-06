@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Statisiticable;
 use App\Traits\Userable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ use Orchid\Screen\AsSource;
 
 class Profession extends Model
 {
-    use HasFactory, SoftDeletes, Userable, Attachable, AsSource, Filterable;
+    use HasFactory, SoftDeletes, Userable, Attachable, AsSource, Filterable, Statisiticable;
 
     protected $fillable = [
         'title',

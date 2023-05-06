@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Statisiticable;
 use App\Traits\Userable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,7 @@ use Orchid\Screen\AsSource;
 
 class ProfessionalTrajectory extends Model
 {
-    use HasFactory, SoftDeletes, Userable, AsSource, Attachable, Filterable;
+    use HasFactory, SoftDeletes, Userable, AsSource, Attachable, Filterable, Statisiticable;
 
     protected $fillable = [
         'title',

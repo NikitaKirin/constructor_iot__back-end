@@ -14,7 +14,6 @@ use App\Models\Profession;
 use App\Models\ProfessionalTrajectory;
 use App\Models\Review;
 use App\Models\SocialNetworksBlock;
-use App\Orchid\Layouts\Profession\ProfessionListLayout;
 use App\Orchid\Screens\AdmissionCommitteeContactsBlock\AdmissionCommitteeContactsBlockEditScreen;
 use App\Orchid\Screens\AdmissionCommitteeContactsBlock\AdmissionCommitteeContactsBlockProfileScreen;
 use App\Orchid\Screens\Course\CourseEditScreen;
@@ -23,10 +22,10 @@ use App\Orchid\Screens\Course\CourseProfileScreen;
 use App\Orchid\Screens\CourseAssemblies\CourseAssemblyEditScreen;
 use App\Orchid\Screens\CourseAssemblies\CourseAssemblyListScreen;
 use App\Orchid\Screens\CourseAssemblies\CourseAssemblyProfileScreen;
-use App\Orchid\Screens\EducationalProgram\EducationalProgramListScreen;
 use App\Orchid\Screens\Discipline\DisciplineEditScreen;
 use App\Orchid\Screens\Discipline\DisciplineListScreen;
 use App\Orchid\Screens\Discipline\DisciplineProfileScreen;
+use App\Orchid\Screens\EducationalProgram\EducationalProgramListScreen;
 use App\Orchid\Screens\Employee\EmployeeEditScreen;
 use App\Orchid\Screens\Employee\EmployeeListScreen;
 use App\Orchid\Screens\Employee\EmployeeProfileScreen;
@@ -142,6 +141,30 @@ Route::screen('roles', RoleListScreen::class)
             ->push(__('Roles'), route('platform.systems.roles'));
     });
 
+Route::middleware(['access:analytics'])->group(function () {
+    //Platform > System > Analytics
+    Route::screen('analytics', \App\Orchid\Screens\AnalyticsScreen::class)
+        ->name('platform.analytics')
+        ->breadcrumbs(function (Trail $trail) {
+            return $trail
+                ->parent('platform.index')
+                ->push(__('Аналитика'), route('platform.analytics'));
+        });
+
+    //Platform > System > DetailAnalytics
+    Route::screen('detail-analytics', \App\Orchid\Screens\DetailAnalyticsScreen::class)
+        ->name('platform.detail-analytics')
+        ->breadcrumbs(function (Trail $trail) {
+            return $trail
+                ->parent('platform.index')
+                ->push(__('Детальная аналитика'), route('platform.detail-analytics'));
+        })
+        ->where([
+            'educational_program_id',
+            'period',
+        ]);
+});
+
 Route::middleware(['access:institutes'])->group(function () {
     //Platform > Institutes > Create
     Route::screen('institutes/create', InstituteEditScreen::class)
@@ -181,7 +204,7 @@ Route::middleware(['access:institutes'])->group(function () {
 
 });
 
-Route::middleware(['access:educationalPrograms'])->group(function (){
+Route::middleware(['access:educationalPrograms'])->group(function () {
     //Platform > Educational Programms
     Route::screen('educationalPrograms', EducationalProgramListScreen::class)
         ->name('platform.educationalPrograms')
@@ -192,7 +215,7 @@ Route::middleware(['access:educationalPrograms'])->group(function (){
         });
 });
 
-Route::middleware(['access:employees'])->group(function (){
+Route::middleware(['access:employees'])->group(function () {
     // Platform > Employees
     Route::screen('employees', EmployeeListScreen::class)
         ->name('platform.employees')
@@ -230,7 +253,7 @@ Route::middleware(['access:employees'])->group(function (){
         });
 });
 
-Route::middleware(['access:partners'])->group(function (){
+Route::middleware(['access:partners'])->group(function () {
     // Platform > Partners
     Route::screen('partners', PartnerListScreen::class)
         ->name('platform.partners')
@@ -269,7 +292,7 @@ Route::middleware(['access:partners'])->group(function (){
         });
 });
 
-Route::middleware(['access:reviews'])->group(function (){
+Route::middleware(['access:reviews'])->group(function () {
 // Platform > Reviews
     Route::screen('reviews', ReviewListScreen::class)
         ->name('platform.reviews')
@@ -307,7 +330,7 @@ Route::middleware(['access:reviews'])->group(function (){
         });
 });
 
-Route::middleware(['access:disciplines'])->group(function (){
+Route::middleware(['access:disciplines'])->group(function () {
 // Platform > disciplines
     Route::screen('disciplines', DisciplineListScreen::class)
         ->name('platform.disciplines')
@@ -346,7 +369,7 @@ Route::middleware(['access:disciplines'])->group(function (){
         });
 });
 
-Route::middleware(['access:courseAssemblies'])->group(function (){
+Route::middleware(['access:courseAssemblies'])->group(function () {
     // Platform > courseAssemblies
     Route::screen('courseAssemblies', CourseAssemblyListScreen::class)
         ->name('platform.courseAssemblies')
@@ -385,7 +408,7 @@ Route::middleware(['access:courseAssemblies'])->group(function (){
         });
 });
 
-Route::middleware(['access:courses'])->group(function (){
+Route::middleware(['access:courses'])->group(function () {
     // Platform > Courses
     Route::screen('courses', CourseListScreen::class)
         ->name('platform.courses')
@@ -424,7 +447,7 @@ Route::middleware(['access:courses'])->group(function (){
         });
 });
 
-Route::middleware(['access:contacts'])->group(function (){
+Route::middleware(['access:contacts'])->group(function () {
     // Platform > AdmissionCommitteeContactsBlock > Profile
     Route::screen('admissionCommitteeContactsBlocks/{admissionCommitteeContactsBlock}/profile',
         AdmissionCommitteeContactsBlockProfileScreen::class)
@@ -459,7 +482,7 @@ Route::middleware(['access:contacts'])->group(function (){
         });
 });
 
-Route::middleware(['access:professionalTrajectories'])->group(function (){
+Route::middleware(['access:professionalTrajectories'])->group(function () {
     // Platform > ProfessionalTrajectories
     Route::screen('professionalTrajectories', ProfessionalTrajectoryListScreen::class)
         ->name('platform.professionalTrajectories')
@@ -490,7 +513,7 @@ Route::middleware(['access:professionalTrajectories'])->group(function (){
         });
 });
 
-Route::middleware(['access:professions'])->group(function (){
+Route::middleware(['access:professions'])->group(function () {
 
 // Platform > Professions
     Route::screen('professions', ProfessionListScreen::class)
@@ -531,7 +554,7 @@ Route::middleware(['access:professions'])->group(function (){
         });
 });
 
-Route::middleware(['access:faq'])->group(function (){
+Route::middleware(['access:faq'])->group(function () {
 
 // Platform > FAQ
     Route::screen('faq', FAQListScreen::class)
@@ -562,14 +585,14 @@ Route::middleware(['access:faq'])->group(function (){
         });
 });
 
-Route::middleware(['access:logs'])->group(function (){
+Route::middleware(['access:logs'])->group(function () {
     Route::screen('/telescope', TelescopeViewScreen::class)
         ->name('telescope.index');
 });
 
 
 // Example...
-Route::screen('example', ExampleScreen::class)
+/*Route::screen('example', ExampleScreen::class)
     ->name('platform.example')
     ->breadcrumbs(function (Trail $trail) {
         return $trail
@@ -582,6 +605,6 @@ Route::screen('example-layouts', ExampleLayoutsScreen::class)->name('platform.ex
 Route::screen('example-charts', ExampleChartsScreen::class)->name('platform.example.charts');
 Route::screen('example-editors', ExampleTextEditorsScreen::class)->name('platform.example.editors');
 Route::screen('example-cards', ExampleCardsScreen::class)->name('platform.example.cards');
-Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
+Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');*/
 
 //Route::screen('idea', Idea::class, 'platform.screens.idea');

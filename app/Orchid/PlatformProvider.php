@@ -43,6 +43,11 @@ class PlatformProvider extends OrchidServiceProvider
                         ]),
                 ])->permission('contacts'),
 
+            Menu::make(__('Аналитика'))
+            ->icon('bar-chart')
+            ->route('platform.analytics')
+            ->permission('analytics'),
+
             Menu::make(__('Институты'))
                 ->icon('building')
                 ->list([
@@ -204,11 +209,7 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Overview layouts')
                 ->title('Layouts')
                 ->icon('layers')
-                ->route('platform.example.layouts'),
-
-            Menu::make('Chart tools')
-                ->icon('bar-chart')
-                ->route('platform.example.charts'),
+                ->route('platform.example.layouts'),,
 
             Menu::make('Cards')
                 ->icon('grid')

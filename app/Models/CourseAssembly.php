@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Statisiticable;
 use App\Traits\Userable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Orchid\Screen\AsSource;
 
 class CourseAssembly extends Model
 {
-    use HasFactory, SoftDeletes, AsSource, Userable, Filterable;
+    use HasFactory, SoftDeletes, AsSource, Userable, Filterable, Statisiticable;
 
     protected $fillable = [
         'title',

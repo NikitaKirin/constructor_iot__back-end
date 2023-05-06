@@ -39,6 +39,7 @@ class PermissionServiceProvider extends ServiceProvider
 
         $dashboard->registerPermissions($permissions);
         $dashboard->registerPermissions(ItemPermission::group('Система')
-            ->addPermission('logs', __('Логи системы')));
+            ->addPermission('logs', __('Логи системы'))
+            ->addPermission('analytics', __('Аналитика')));
     }
 }
