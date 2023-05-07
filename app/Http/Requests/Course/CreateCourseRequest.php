@@ -11,7 +11,6 @@ class CreateCourseRequest extends FormRequest
         return [
             'title'           => ['required', 'string'],
             'description'     => ['required', 'string'],
-            'seat_limit'      => ['required', 'numeric'],
             'realization_id'  => ['required', Rule::exists('realizations', 'id')],
             'video_id'        => ['array'],
             'presentation_id' => ['array'],

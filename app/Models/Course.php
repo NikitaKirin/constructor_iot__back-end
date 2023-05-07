@@ -23,7 +23,6 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
-        'seat_limit',
         'video_id',
         'presentation_id',
         'realization_id',

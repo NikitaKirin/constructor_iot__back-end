@@ -14,7 +14,6 @@ class UpdateCourseAction
         return $course->update([
             'title'           => $data->title,
             'description'     => $data->description,
-            'seat_limit'      => $data->seatLimit,
             'realization_id'  => $data->realizationId,
             'video_id'        => $data->videoId,
             'presentation_id' => $data->presentationId,

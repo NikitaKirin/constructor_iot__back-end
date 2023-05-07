@@ -148,7 +148,6 @@ class CourseEditScreen extends Screen
             new CreateCourseData(
                 title: $validated->get('title'),
                 description: $validated->get('description'),
-                seatLimit: $validated->get('seat_limit'),
                 realizationId: $validated->get('realization_id'),
                 videoId: $validated->get('video_id', default: [null])[0],
                 presentationId: $validated->get('presentation_id', default: [null])[0],
@@ -169,7 +168,6 @@ class CourseEditScreen extends Screen
             new UpdateCourseData(
                 title: $validated->get('title'),
                 description: $validated->get('description'),
-                seatLimit: $validated->get('seat_limit'),
                 realizationId: $validated->get('realization_id'),
                 videoId: $validated->get('video_id', default: [null])[0],
                 presentationId: $validated->get('presentation_id', default: [null])[0],

@@ -39,12 +39,6 @@ class CourseEditLayout extends Rows
                 ->required()
                 ->value($this->query->get('course.description') ?? __('Описания нет')),
 
-            Input::make('seat_limit')
-                ->title(__('Лимит мест'))
-                ->type('number')
-                ->required()
-                ->value($this->query->get('course.seat_limit')),
-
             Relation::make('realization_id')
                 ->title(__('Способ реализации'))
                 ->required()

@@ -7,7 +7,6 @@ class CreateCourseData
     public function __construct(
         public readonly string $title,
         public readonly string $description,
-        public readonly int $seatLimit,
         public readonly int $realizationId,
         public readonly ?int $videoId = null,
         public readonly ?int $presentationId = null,

@@ -75,16 +75,14 @@ class CourseProfileScreen extends Screen
                             ->render(function (Course $course){
                                 return $course->description;
                             }),
-                        Sight::make('seat_limit', __('Лимит мест')),
                         Sight::make('partner_id', __('Партнер'))
                             ->render(function (Course $course){
-                                $partner = $course->partner;
-                                if ($partner->title === __("Нет")) {
-                                    return $partner->title;
+                                if ($partner = $course->partner) {
+                                    return Link::make($partner->title)
+                                        ->icon('eye')
+                                        ->route('platform.partners.profile', $partner);
                                 }
-                                return Link::make($partner->title)
-                                    ->icon('eye')
-                                    ->route('platform.partners.profile', $partner);
+                                return 'Нет';
                             }),
                         Sight::make('realization_id', __('Вид реализации'))
                         ->render(function (Course $course) {
