@@ -26,13 +26,12 @@ class CourseResource extends JsonResource
             'id'                        => $this->id,
             'title'                     => $this->title,
             'description'               => $this->description,
-            'limit'                     => $this->limit,
             'realization'               => $this->realization->title,
             'professional_trajectories' => $this->whenLoaded('courseAssemblies', function () {
                 $professionalTrajectories = $this->courseAssemblies->map(
                     fn(CourseAssembly $courseAssembly) => $courseAssembly->professionalTrajectories
                 )->first();
-                if($professionalTrajectories->count() > 0) {
+                if(collect($professionalTrajectories)->count() > 0) {
                     return ProfessionalTrajectoryResource::collection(collect($professionalTrajectories)->unique('id'));
                 }
                 return [];
@@ -43,7 +42,7 @@ class CourseResource extends JsonResource
                 $educationalPrograms = $courseAssemblies->map(
                     fn(CourseAssembly $courseAssembly) => $courseAssembly->discipline->educationalPrograms
                 )->first();
-                if($educationalPrograms->count() > 0){
+                if(collect($educationalPrograms)->count() > 0){
                     return EducationalProgramResource::collection(collect($educationalPrograms)->unique('id'));
                 }
                 return [];
