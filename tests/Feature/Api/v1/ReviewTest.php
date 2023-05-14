@@ -11,7 +11,25 @@ class ReviewTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testReviewIndex()
+    public function testReviewIndexAssertJsonStructure() {
+        Review::factory()->create();
+        $response = $this->get(route('reviews.index'));
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'reviews' => [
+                '*' => [
+                    'id',
+                    'author',
+                    'text',
+                    'educational_direction',
+                    'course',
+                    'year_of_issue',
+                    'photo',
+                ]
+            ]
+        ]);
+    }
+    public function testReviewIndexAssertJsonValue()
     {
         $testReview = Review::factory(10)->create()->first();
 
