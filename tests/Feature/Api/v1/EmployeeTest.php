@@ -14,7 +14,7 @@ class EmployeeTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testEmployeeIndexAssertJsonStructure()
+    public function testEmployeesIndexAssertJsonStructure()
     {
         $this->seed([PositionSeeder::class]);
 
@@ -41,7 +41,7 @@ class EmployeeTest extends TestCase
             ]);
     }
 
-    public function testEmployeeIndexAssertJsonValue()
+    public function testEmployeesIndexAssertJsonValue()
     {
         $this->seed([PositionSeeder::class]);
 

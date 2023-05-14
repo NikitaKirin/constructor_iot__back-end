@@ -17,7 +17,13 @@ class ProfessionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => fake()->title,
+            'description' => fake()->text,
+            'vacancies_count' => fake()->numberBetween(),
+            'area_vacancies_count' => fake()->numberBetween(),
+            'maximal_salary' => fake()->numberBetween(),
+            'median_salary' => fake()->numberBetween(),
+            'minimal_salary' => fake()->numberBetween(),
         ];
     }
 }

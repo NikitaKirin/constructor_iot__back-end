@@ -12,7 +12,7 @@ class PositionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testPositionIndexAssertJsonStructure()
+    public function testPositionsIndexAssertJsonStructure()
     {
         $this->seed([PositionSeeder::class]);
         $response = $this->get(route('positions.index'));
@@ -30,7 +30,7 @@ class PositionTest extends TestCase
             );
     }
 
-    public function testPositionIndexAssertJsonValue()
+    public function testPositionsIndexAssertJsonValue()
     {
         $this->seed([PositionSeeder::class]);
         $response = $this->get(route('positions.index'));

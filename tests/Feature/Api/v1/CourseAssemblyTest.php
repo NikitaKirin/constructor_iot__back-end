@@ -40,7 +40,6 @@ class CourseAssemblyTest extends TestCase
                                 'id',
                                 'title',
                                 'description',
-                                'limit',
                                 'realization',
                                 'partner' => [
                                     'id',
@@ -64,7 +63,7 @@ class CourseAssemblyTest extends TestCase
             );
     }
 
-    public function testCourseAssemblyShowAssertJsonValue() {
+    public function testCourseAssembliesShowAssertJsonValue() {
         $this->seed(CourseAssemblySeeder::class);
         $this->seed(CourseAssemblyLevelSeeder::class);
         $professionalTrajectories = ProfessionalTrajectory::factory(2)->create();
@@ -88,7 +87,6 @@ class CourseAssemblyTest extends TestCase
                         ->has('courses', 3, fn(AssertableJson $json) => $json->where('id', $course->id)
                             ->where('title', $course->title)
                             ->where('description', $course->description)
-                            ->where('limit', $course->limit)
                             ->where('realization', $course->realization->title)
                             ->has('partner', fn(AssertableJson $json) => $json->where('id', $partner->id)
                                 ->where('title', $partner->title)
@@ -115,7 +113,7 @@ class CourseAssemblyTest extends TestCase
             );
     }
 
-    public function testCourseAssemblyNonExistingShow() {
+    public function testCourseAssembliesNonExistingShow() {
         $courseAssembly = CourseAssembly::factory(5)
                 ->create()
                 ->last()

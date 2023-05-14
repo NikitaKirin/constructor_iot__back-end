@@ -12,7 +12,7 @@ class PartnerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testPartnerIndexAssertJsonStructure() {
+    public function testPartnersIndexAssertJsonStructure() {
         Partner::factory(5)->create()->sortBy('title')->first();
         $response = $this->get(route('partners.index'));
         $response->assertOk()->assertJsonStructure([

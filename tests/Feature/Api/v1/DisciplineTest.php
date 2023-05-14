@@ -16,7 +16,7 @@ class DisciplineTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDisciplineIndexAssertJsonStructure()
+    public function testDisciplinesIndexAssertJsonStructure()
     {
         $disciplines = Discipline::factory(3)
             ->hasSemesters(2)
@@ -95,7 +95,7 @@ class DisciplineTest extends TestCase
             ]);
     }
 
-    public function testDisciplineShowWithDisciplinesAssertJsonStructure()
+    public function testDisciplinesShowWithDisciplinesAssertJsonStructure()
     {
         $this->seed(CourseAssemblySeeder::class);
         $this->seed(CourseAssemblyLevelSeeder::class);
@@ -144,7 +144,7 @@ class DisciplineTest extends TestCase
     }
 
 
-    public function testDisciplineShowWithNonExistingEducationalModule()
+    public function testDisciplinesShowWithNonExistingEducationalModule()
     {
         $this->get(
             route('disciplines.show', ['discipline' => 1]

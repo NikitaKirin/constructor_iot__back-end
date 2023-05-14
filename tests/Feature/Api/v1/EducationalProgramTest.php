@@ -39,7 +39,7 @@ class EducationalProgramTest extends TestCase
         ]);
     }
 
-    public function testEducationalProgramIndexAssertJsonData()
+    public function testEducationalProgramsIndexAssertJsonData()
     {
         EducationalProgram::factory(3)
             ->hasDisciplines(2)
