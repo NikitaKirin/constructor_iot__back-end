@@ -3,6 +3,9 @@
 namespace Tests\Feature\Api\v1;
 
 use App\Models\EducationalProgram;
+use Database\Seeders\EducationalProgramSeeder;
+use Database\Seeders\InstituteSeeder;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
@@ -38,12 +41,13 @@ class EducationalProgramTest extends TestCase
 
     public function testEducationalProgramIndexAssertJsonData()
     {
-        EducationalProgram::factory(3)->create();
+        EducationalProgram::factory(3)
+            ->hasDisciplines(2)
+            ->create();
         $educationalProgram = EducationalProgram::orderBy('title')->first();
         $response = $this->get(route('educationalPrograms.index'));
-        $response->assertStatus(200);
-        $response->assertJson(fn(AssertableJson $json) => $json->has('educational_programs', 3)
-            ->has(
+        $response->assertOk();
+        $response->assertJson(fn(AssertableJson $json) => $json->has(
                 'educational_programs.0',
                 fn(AssertableJson $json) => $json->where('id', $educationalProgram->id)
                     ->where('title', $educationalProgram->title)

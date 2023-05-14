@@ -19,7 +19,7 @@ class CourseAssemblyFactory extends Factory
         return [
             'title'       => fake()->title(),
             'description' => fake()->realText(),
-            'discipline_id' => Discipline::factory(1)->create()->id,
+            'discipline_id' => Discipline::factory(1)->create()->first->id,
         ];
     }
 }
