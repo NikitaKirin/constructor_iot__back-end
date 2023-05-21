@@ -45,9 +45,6 @@ class CourseListLayout extends Table
                         ->route('platform.courses.profile', $course);
                 }),
 
-            TD::make('seat_limit', __('Лимит мест'))
-                ->sort(),
-
             TD::make('realization_id', __('Вид реализации'))
                 ->render(function (Course $course) {
                     return $course->realization->title;
