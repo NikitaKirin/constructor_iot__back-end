@@ -14,6 +14,7 @@ class EntityStat extends Model
         'entity_id',
         'entity_type',
         'event_type',
+        'educational_program_id',
         'created_at',
     ];
 

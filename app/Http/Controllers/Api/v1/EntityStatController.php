@@ -58,6 +58,7 @@ class EntityStatController extends Controller
             entity_type: $entityType,
             entity_id: $entityData['id'],
             event_type: $entityData['event_type'],
+            educational_program_id: $entityData['educational_program_id'] ?? null,
             created_at: $entityData['created_at']
         );
     }

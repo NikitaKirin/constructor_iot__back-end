@@ -134,7 +134,7 @@ class DetailAnalyticsScreen extends Screen
             fn(Builder $builder) => $builder->where('id', $educationalProgramId)
         );
         $name = ($eventType === EntityStatType::ClickInConstructor->value) ? __('Выбирали в конструкторе') : __('Количество кликов по кнопке "подробнее"');
-        $courseAssemblies = $this->getEntityRecordsWithStats($courseAssemblies, $eventType, $period);
+        $courseAssemblies = $this->getEntityRecordsWithStats($courseAssemblies, $eventType, $period, $educationalProgramId);
         return [
             [
                 'labels' => $courseAssemblies->pluck('title')->toArray(),
@@ -149,7 +149,7 @@ class DetailAnalyticsScreen extends Screen
             fn(Builder $builder) => $builder->where('id', $educationalProgramId)
         );
         $name = ($eventType === EntityStatType::ClickInConstructor->value) ? __('Выбирали в конструкторе') : __('Выбирали из списка готовых');
-        $professionalTrajectories = $this->getEntityRecordsWithStats($professionalTrajectories, $eventType, $period);
+        $professionalTrajectories = $this->getEntityRecordsWithStats($professionalTrajectories, $eventType, $period, $educationalProgramId);
         return [
             [
                 'labels' => $professionalTrajectories->pluck('title')->toArray(),
@@ -187,10 +187,11 @@ class DetailAnalyticsScreen extends Screen
         ];
     }
 
-    private function getEntityRecordsWithStats(Builder $builder, $eventType, ?array $period): Collection {
+    private function getEntityRecordsWithStats(Builder $builder, $eventType, ?array $period, ?int $educationalProgramId = null): Collection {
         if ($period) {
             return $builder->whereHas('stats',
                 fn(Builder $builder) => $builder->where('event_type', $eventType)
+                    ->where('educational_program_id', $educationalProgramId)
                     ->whereBetween('created_at', [$period['start'], $period['end']])
             )->withCount([
                 'stats' => fn(Builder $builder) => $builder->where('event_type', $eventType)
@@ -200,7 +201,9 @@ class DetailAnalyticsScreen extends Screen
                 ->limit(5)
                 ->get();
         } else {
-            return $builder->whereHas('stats', fn(Builder $builder) => $builder->where('event_type', $eventType))
+            return $builder->whereHas('stats', fn(Builder $builder) => $builder->where('event_type', $eventType)
+                ->where('educational_program_id', $educationalProgramId)
+            )
                 ->withCount(['stats' => fn(Builder $builder) => $builder->where('event_type', $eventType)])
                 ->orderBy('stats_count', 'desc')
                 ->limit(5)

@@ -13,6 +13,7 @@ class StoreEntityStatRecordsAction
                 'entity_type' => $entityStatData->entity_type,
                 'entity_id' => $entityStatData->entity_id,
                 'event_type' => $entityStatData->event_type,
+                'educational_program_id' => $entityStatData->educational_program_id,
                 'created_at' => $entityStatData->created_at,
             ];
         })->toArray();

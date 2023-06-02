@@ -9,6 +9,7 @@ class StoreEntityStatData
         public readonly string $entity_type,
         public readonly int    $entity_id,
         public readonly string $event_type,
+        public readonly ?int $educational_program_id,
         public readonly string $created_at
     ) {
     }

@@ -26,5 +26,5 @@ class ProfessionMedianSalaryBarChart extends Chart
 
     protected $target = 'professionMedianSalaries';
 
-    protected $title = 'Сравнение средней заработной платы профессий';
+    protected $title = 'Сравнение медианной заработной платы профессий';
 }
