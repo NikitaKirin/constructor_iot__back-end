@@ -108,7 +108,6 @@ class CourseAssemblyEditScreen extends Screen
             Layout::block([
                 Layout::rows([
                     Relation::make('courses.')
-                            ->required()
                             ->fromModel(Course::class, 'title')
                             ->multiple()
                             ->value($this->courseAssembly->courses)

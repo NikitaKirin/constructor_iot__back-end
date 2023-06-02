@@ -90,7 +90,6 @@ class CourseEditScreen extends Screen
             Layout::block([
                 Layout::rows([
                     Relation::make('courseAssemblies.')
-                        ->required()
                         ->title(__('Курсовые сборки'))
                         ->multiple()
                         ->fromModel(CourseAssembly::class, 'title')
@@ -120,6 +119,7 @@ class CourseEditScreen extends Screen
                     Relation::make('partner_id')
                         ->title(__('Партнер'))
                         ->fromModel(Partner::class, 'title')
+                        ->allowEmpty()
                         ->value($this->course->partner),
 
                     Link::make(__('Создать нового'))

@@ -28,6 +28,7 @@ use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
+use Orchid\Support\Facades\Toast;
 
 class DetailAnalyticsScreen extends Screen
 {
@@ -115,6 +116,7 @@ class DetailAnalyticsScreen extends Screen
     }
 
     public function storeFilter(Request $request): RedirectResponse {
+        Toast::success('Фильтры применены');
         return redirect()->to(route('platform.detail-analytics',
             [
                 'educational_program_id' => $request->get('educational_program_id'),
@@ -123,6 +125,7 @@ class DetailAnalyticsScreen extends Screen
     }
 
     public function resetFilter(): RedirectResponse {
+        Toast::success('Фильтры сброшены');
         return redirect()->to(route('platform.detail-analytics'));
     }
 
