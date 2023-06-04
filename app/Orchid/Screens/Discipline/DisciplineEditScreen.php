@@ -80,9 +80,10 @@ class DisciplineEditScreen extends Screen
         $discipline->fill($request->validated())
                           ->user()->associate(Auth::user());
 
+        $discipline->save();
+
         $discipline->educationalPrograms()->sync($request->get('educationalPrograms', []));
 
-        $discipline->save();
 
         $discipline->semesters()
                           ->sync($request->get('semesters', []));

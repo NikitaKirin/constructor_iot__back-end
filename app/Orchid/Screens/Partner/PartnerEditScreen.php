@@ -36,7 +36,7 @@ class PartnerEditScreen extends Screen
      * @return string|null
      */
     public function name(): ?string {
-        return $this->partner->exists() ? $this->partner->title : "Добавить нового партнера";
+        return $this->partner->exists ? $this->partner->title : "Добавить нового партнера";
     }
 
     /**

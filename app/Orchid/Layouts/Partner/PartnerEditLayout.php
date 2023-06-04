@@ -27,12 +27,12 @@ class PartnerEditLayout extends Rows
     {
         return [
             Input::make('title')
-                ->title(__('Название компании'))
+                ->title(__('Название партнера'))
                 ->required()
                 ->value($this->query->get('partner.title')),
 
             Input::make('site_link')
-                ->title(__('Ссылка на сайт компании'))
+                ->title(__('Ссылка на сайт партнера'))
                 ->type('url')
                 ->value($this->query->get('partner.site_link')),
 

@@ -2,7 +2,7 @@
 
 namespace App\Orchid\Screens\EducationalProgram;
 
-use App\Http\Requests\educationalProgram\CreateeducationalProgramRequest;
+use App\Http\Requests\EducationalProgram\CreateEducationalProgramRequest;
 use App\Models\EducationalProgram;
 use App\Orchid\Layouts\EducationalProgram\EducationalProgramEditLayout;
 use App\Orchid\Layouts\EducationalProgram\EducationalProgramListLayout;

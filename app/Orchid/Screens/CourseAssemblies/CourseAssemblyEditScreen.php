@@ -166,8 +166,7 @@ class CourseAssemblyEditScreen extends Screen
             ->map(fn( $item ) => ['course_assembly_level_digital_value' => $item['course_assembly_level']]);
 
         $courseAssembly->fill($request->validated())
-                   ->user()->associate(Auth::user())
-                   ->save();
+                   ->user()->associate(Auth::user());
 
         $courseAssembly->discipline()->associate($request->input('discipline'))->save();
 
