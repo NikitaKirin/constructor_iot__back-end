@@ -75,8 +75,9 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // Main
-Route::screen('/main', PlatformScreen::class)
-    ->name('platform.main');
+Route::get('/admin', function () {
+   return redirect()->route('platform.educationalPrograms');
+})->name('platform.main');
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)

@@ -43,31 +43,37 @@ class StatsTest extends TestCase
                     [
                         "id"         => $courseAssemblyId,
                         "event_type" => "click_in_constructor",
+                        "educational_program_id" => $educationalProgramId,
                         "created_at" => "2022-12-02 19:33:02",
                     ],
                     [
                         "id"         => $courseAssemblyId,
                         "event_type" => "click_to_more",
+                        "educational_program_id" => $educationalProgramId,
                         "created_at" => "2022-12-02 19:33:02",
                     ],
                     [
                         "id"         => $courseAssemblyId,
                         "event_type" => "click_in_constructor",
+                        "educational_program_id" => $educationalProgramId,
                         "created_at" => "2022-12-02 19:33:02",
                     ],
                     [
                         "id"         => $courseAssemblyId,
                         "event_type" => "click_to_more",
+                        "educational_program_id" => $educationalProgramId,
                         "created_at" => "2022-12-02 19:33:02",
                     ],
                     [
                         "id"         => $courseAssemblyId,
                         "event_type" => "click_in_constructor",
+                        "educational_program_id" => $educationalProgramId,
                         "created_at" => "2022-12-02 19:33:02",
                     ],
                     [
                         "id"         => $courseAssemblyId,
                         "event_type" => "click_to_more",
+                        "educational_program_id" => $educationalProgramId,
                         "created_at" => "2022-12-02 19:33:02",
                     ],
                 ],
@@ -75,11 +81,13 @@ class StatsTest extends TestCase
                     [
                         "id"         => $professionalTrajectoryId,
                         "event_type" => "click_in_constructor",
+                        "educational_program_id" => $educationalProgramId,
                         "created_at" => "2022-12-02 19:32:02",
                     ],
                     [
                         "id"         => $professionalTrajectoryId,
                         "event_type" => "click_in_list",
+                        "educational_program_id" => $educationalProgramId,
                         "created_at" => "2022-12-02 19:32:02",
                     ],
                 ],

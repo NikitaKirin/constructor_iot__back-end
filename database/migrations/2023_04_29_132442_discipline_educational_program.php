@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('discipline_educational_program', function (Blueprint $table){
-            $table->foreignId('discipline_id')->constrained();
-            $table->foreignId('educational_program_id')->constrained();
+            $table->foreignId('discipline_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('educational_program_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

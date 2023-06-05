@@ -33,6 +33,6 @@ class PlatformTest extends TestCase
                         'permissions' => Dashboard::getAllowAllPermission(),
                     ]);
         $status = $this->actingAs($user)->get(route('platform.main'));
-        $status->assertOk();
+        $status->assertStatus(302);
     }
 }

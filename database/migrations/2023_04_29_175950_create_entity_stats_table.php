@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('entity_type');
             $table->bigInteger('entity_id');
             $table->string('event_type');
-            $table->foreignId('educational_program_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('educational_program_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->dateTimeTz('created_at');
         });
     }
